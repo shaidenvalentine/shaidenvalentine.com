@@ -1,0 +1,76 @@
+// Typed content model. Everything the site renders comes from /content.
+// Update a field here → commit → Vercel redeploys. That is the whole CMS.
+
+export interface SocialLink {
+  label: string;
+  href: string;
+  handle?: string;
+}
+
+export interface Profile {
+  name: string;
+  /** The single headline one-liner under the name. */
+  tagline: string;
+  /** Short bio paragraph(s) for the Story section. */
+  bio: string[];
+  location: string;
+  /** Ambient hero portrait loop. Put a real .mp4 at /public/video/. */
+  heroVideo: string;
+  /** Poster / fallback still shown before play and when WebGL is off. */
+  heroPoster: string;
+  /** Full intro film triggered by tap-to-play. */
+  introVideo: string;
+  introPoster: string;
+  socials: SocialLink[];
+  /** Fields used to build the downloadable vCard. */
+  vcard: {
+    firstName: string;
+    lastName: string;
+    org: string;
+    title: string;
+    email: string;
+    phone?: string;
+    url: string;
+  };
+}
+
+export interface Venture {
+  id: string;
+  name: string;
+  /** One-paragraph description. */
+  blurb: string;
+  /** A single current status line — the "in motion" signal. */
+  status: string;
+  /** Outbound link to the venture's own federated domain. */
+  href: string;
+  /** Optional logo/mark in /public/img. Falls back to a typographic mark. */
+  logo?: string;
+  /** Accent used for the orbital glow / mark. */
+  accent: string;
+}
+
+export interface NowItem {
+  date: string; // human label, e.g. "May 2026"
+  line: string;
+}
+
+export interface Product {
+  title: string;
+  blurb: string;
+  price: string;
+  image?: string;
+  /** Hosted checkout (Gumroad / Lemon Squeezy). Link out, no payment API. */
+  checkoutUrl: string;
+}
+
+export interface SiteConfig {
+  domain: string;
+  baseUrl: string;
+  seoTitle: string;
+  seoDescription: string;
+  ogImage: string;
+  /** beehiiv embed URL (the src of their <iframe>). The one external dep. */
+  beehiivEmbedUrl: string;
+  newsletterHeadline: string;
+  newsletterSub: string;
+}

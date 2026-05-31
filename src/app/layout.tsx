@@ -1,0 +1,73 @@
+import type { Metadata, Viewport } from "next";
+import { Cormorant_Garamond, Geist, Geist_Mono } from "next/font/google";
+import { site } from "@content/site";
+import { SmoothScroll } from "@/components/ui/SmoothScroll";
+import "./globals.css";
+
+// Display — Cormorant Garamond. The refined serif for display moments
+// (shared language with the Elysium system).
+const display = Cormorant_Garamond({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["300", "400", "500"],
+  display: "swap",
+});
+
+// Body — Geist. Clean, modern, neutral UI sans.
+const body = Geist({
+  subsets: ["latin"],
+  variable: "--font-body",
+  weight: ["300", "400", "500"],
+  display: "swap",
+});
+
+// Mono — for indices and technical labels.
+const mono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  weight: ["400"],
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  metadataBase: new URL(site.baseUrl),
+  title: { default: site.seoTitle, template: "%s · Shaiden Valentine" },
+  description: site.seoDescription,
+  applicationName: "Shaiden Valentine",
+  appleWebApp: { capable: true, title: "Shaiden Valentine", statusBarStyle: "black-translucent" },
+  formatDetection: { telephone: false },
+  openGraph: {
+    title: site.seoTitle,
+    description: site.seoDescription,
+    type: "website",
+    url: site.baseUrl,
+    siteName: "Shaiden Valentine",
+    locale: "en_US",
+    images: [{ url: site.ogImage }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: site.seoTitle,
+    description: site.seoDescription,
+    creator: "@shaidenvalentine",
+    images: [site.ogImage],
+  },
+  robots: { index: true, follow: true },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0B0B0D",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+      <body>
+        <SmoothScroll>{children}</SmoothScroll>
+      </body>
+    </html>
+  );
+}
