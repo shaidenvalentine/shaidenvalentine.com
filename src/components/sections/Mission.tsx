@@ -9,8 +9,8 @@ export function Mission() {
   return (
     <Section id="mission" eyebrow="Mission" index="00 — Why" className="py-32 md:py-40">
       <Reveal>
-        <blockquote className="mx-auto max-w-[28ch]">
-          <p className="display-1 !leading-[1.05] text-[var(--color-ink)]">
+        <blockquote className="mx-auto max-w-[34ch]">
+          <p className="text-2xl font-normal leading-[1.4] tracking-tight text-[var(--color-ink)] md:text-3xl lg:text-4xl">
             {profile.mission}
           </p>
         </blockquote>

@@ -7,19 +7,17 @@ import { SaveContactButton } from "@/components/ui/SaveContactButton";
 export function Hero() {
   const { scrollY } = useScroll();
 
-  // Gentle parallax — portrait drifts up, content fades as you leave the hero.
+  // Gentle parallax — portrait drifts up as you scroll. No opacity fade on
+  // the text; the bio sits at the bottom of the hero and needs to remain
+  // readable while the user scrolls down to it.
   const portraitY = useTransform(scrollY, [0, 700], [0, -60]);
-  const contentOpacity = useTransform(scrollY, [0, 500], [1, 0]);
 
   return (
     <section
       id="top"
       className="relative grid min-h-[100svh] place-items-center overflow-hidden bg-black py-24"
     >
-      <motion.div
-        style={{ opacity: contentOpacity }}
-        className="container-page relative z-10 flex flex-col items-center text-center"
-      >
+      <div className="container-page relative z-10 flex flex-col items-center text-center">
         {/* Portrait — no border, edges fade gradually into the dark page
             backdrop via a soft radial mask. */}
         <motion.div
@@ -87,14 +85,11 @@ export function Hero() {
             Subscribe
           </a>
         </motion.div>
-      </motion.div>
+      </div>
 
-      <motion.div
-        style={{ opacity: contentOpacity }}
-        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2"
-      >
+      <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2">
         <span className="label-mono">scroll</span>
-      </motion.div>
+      </div>
     </section>
   );
 }
