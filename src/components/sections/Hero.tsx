@@ -23,15 +23,20 @@ export function Hero() {
         style={{ opacity: contentOpacity }}
         className="container-page relative z-10 flex flex-col items-center text-center"
       >
-        {/* Portrait — held inside a liquid-glass amorphism frame.
-            The frame's specular edge highlight + soft shadow give the photo
-            a deliberate, premium border that matches the site's glass language. */}
+        {/* Portrait — no border, edges fade gradually into the dark page
+            backdrop via a soft radial mask. */}
         <motion.div
-          style={{ y: portraitY }}
+          style={{
+            y: portraitY,
+            WebkitMaskImage:
+              "radial-gradient(closest-side at 50% 45%, #000 18%, rgba(0,0,0,0.85) 48%, rgba(0,0,0,0.35) 78%, transparent 100%)",
+            maskImage:
+              "radial-gradient(closest-side at 50% 45%, #000 18%, rgba(0,0,0,0.85) 48%, rgba(0,0,0,0.35) 78%, transparent 100%)",
+          }}
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="relative aspect-square w-[min(94vw,44rem)] overflow-hidden rounded-[2.25rem] glass-strong"
+          className="relative aspect-[4/5] w-[min(96vw,42rem)]"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

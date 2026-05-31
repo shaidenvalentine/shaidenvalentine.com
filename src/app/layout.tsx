@@ -1,13 +1,19 @@
 import type { Metadata, Viewport } from "next";
-import { Space_Grotesk, Geist, Geist_Mono } from "next/font/google";
+import { Homemade_Apple, Space_Grotesk, Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { site } from "@content/site";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
 import "./globals.css";
 
-// Signature variable now points at the same modern Space Grotesk display
-// face. Keeps the variable so the .display-sig utility still works, but the
-// hero name + accents now read clean and modern instead of hand-drawn.
+// Signature — Homemade Apple. A real-pen hand-signed feel, like an actual
+// signature on paper. Used for Shaiden's name and a few signature accent
+// moments.
+const signature = Homemade_Apple({
+  subsets: ["latin"],
+  variable: "--font-signature",
+  weight: ["400"],
+  display: "swap",
+});
 
 // Display — Space Grotesk. Modern geometric sans for headings.
 const display = Space_Grotesk({
@@ -68,7 +74,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+    <html lang="en" className={`${signature.variable} ${display.variable} ${body.variable} ${mono.variable}`}>
       <body>
         <SmoothScroll>{children}</SmoothScroll>
         <Analytics />
