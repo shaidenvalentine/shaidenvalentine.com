@@ -8,6 +8,7 @@ import { Story } from "@/components/sections/Story";
 import { Ethos } from "@/components/sections/Ethos";
 import { Life } from "@/components/sections/Life";
 import { Coaching } from "@/components/sections/Coaching";
+import { Course } from "@/components/sections/Course";
 import { WorkWithMe } from "@/components/sections/WorkWithMe";
 import { Newsletter } from "@/components/sections/Newsletter";
 import { Shop } from "@/components/sections/Shop";
@@ -31,8 +32,9 @@ export default function Home() {
       <Story />
       <Ethos />
       <Life />
-      {/* Offer — book my time / find your purpose */}
+      {/* Offers — book my time, find your purpose */}
       <Coaching />
+      <Course />
       {/* Action — work with me, subscribe, shop, feedback, connect */}
       <WorkWithMe />
       <Newsletter />

@@ -49,7 +49,7 @@ export function WorkWithMe() {
   }
 
   return (
-    <Section id="work" eyebrow={c.eyebrow} index="09 — Collaborate">
+    <Section id="work" eyebrow={c.eyebrow} index="10 — Collaborate">
       <div className="grid gap-12 md:grid-cols-[1fr_1.1fr] md:items-start">
         <Reveal>
           <h2 className="display-2 max-w-[16ch]">{c.headline}</h2>
