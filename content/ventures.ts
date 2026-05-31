@@ -9,7 +9,7 @@ export const ventures: Venture[] = [
     blurb:
       "An AI relationship ecosystem rebuilding the broken incentives of dating apps. Not built to be deleted — a relationship OS that stays with you after the match.",
     status: "TestFlight live · onboarding early users",
-    href: "https://orbit.date",
+    href: "https://orbitdating.ai",
     accent: "#C9A874",
   },
   {
@@ -18,7 +18,7 @@ export const ventures: Venture[] = [
     blurb:
       "A luxury custom van brand — 3D-printed, electric, built to a standard nobody else is touching. The cash-flow engine of the architecture.",
     status: "Phase 1 build shipped · taking first orders",
-    href: "https://mothership.vans",
+    href: "https://mothershipvans.com",
     accent: "#9A958C",
   },
   {
