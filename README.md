@@ -20,6 +20,7 @@ commit → Vercel redeploys.
 - `content/site.ts` — SEO/OG strings + **beehiiv embed URL**
 - `content/collab.ts` — copy + options for the Work-With-Me + Feedback sections
 - `content/personal.ts` — Ethos principles (how I think) + Life/Bali copy & gallery
+- `content/investing.ts` — investing thesis + portfolio (Next Life Sciences, Space Campers, …)
 
 To update a venture's status line, edit one `status` field in `ventures.ts`.
 
@@ -34,6 +35,26 @@ anonymous by design.
 Set these env vars (locally in `.env.local`, and in Vercel) — see `.env.example`:
 `RESEND_API_KEY`, `CONTACT_EMAIL`, `RESEND_FROM`. Until they're set, the forms
 render and validate but report "Email isn't configured yet."
+
+Investment pitches use the **same** Work-With-Me form (roles include "Founder
+pitching an idea" / "Investment opportunity"), so they email you too — the role
+is in the subject line.
+
+## Analytics + /admin
+Traffic runs on **Vercel Web Analytics** (`@vercel/analytics`, mounted in
+`layout.tsx`) — privacy-friendly, no DB. The full dashboard lives on vercel.com.
+Custom events tracked: `venture_click`, `save_contact`, `apply_submit` (with
+role), `feedback_submit`, `pitch_cta`.
+
+**`/admin`** is a private hub (jump to the Vercel dashboard + event legend),
+gated by HTTP Basic Auth in `src/middleware.ts`. Set `ADMIN_USER` /
+`ADMIN_PASSWORD` (locally + Vercel). If unset, `/admin` stays locked.
+Want the dashboard embedded *inside* `/admin` (Beacons-style) later? Swap in
+Umami or Plausible — no other changes needed.
+
+## Local dev ports
+Each project runs on its own port, so they never collide:
+`shaidenvalentine` → **3002**, Mothership → 3000, Find Your Place → 3200.
 
 ## Assets to drop in (`/public`)
 Placeholders degrade gracefully until these exist:
@@ -58,7 +79,9 @@ Until a real hero portrait exists, the frame shows an "SV" monogram placeholder.
 4. Confirm social handles + email/phone in `content/profile.ts`.
 5. Set `RESEND_API_KEY` / `CONTACT_EMAIL` / `RESEND_FROM` in Vercel, and verify
    your sending domain in Resend (so application + feedback emails deliver).
-6. Push to GitHub → import on Vercel → point `shaidenvalentine.com` DNS at it.
+6. Set `ADMIN_USER` / `ADMIN_PASSWORD` in Vercel (gates `/admin`).
+7. Enable Web Analytics for the project in the Vercel dashboard (Analytics tab).
+8. Push to GitHub → import on Vercel → point `shaidenvalentine.com` DNS at it.
 
 ## Dev
 ```bash

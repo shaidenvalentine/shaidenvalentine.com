@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "@vercel/analytics";
 import { profile } from "@content/profile";
 import { buildVCard, downloadVCard } from "@/lib/vcard";
 import { cn } from "@/lib/cn";
@@ -14,6 +15,7 @@ export function SaveContactButton({
   children?: React.ReactNode;
 }) {
   const handle = () => {
+    track("save_contact");
     const vcf = buildVCard(profile.vcard, profile.socials);
     downloadVCard(vcf);
   };

@@ -11,6 +11,8 @@ export interface Profile {
   name: string;
   /** The single headline one-liner under the name. */
   tagline: string;
+  /** The positioning / mission pull-quote (shown large in Story). */
+  mission: string;
   /** Short bio paragraph(s) for the Story section. */
   bio: string[];
   location: string;

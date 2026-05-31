@@ -3,13 +3,15 @@ import type { Profile } from "./types";
 export const profile: Profile = {
   name: "Shaiden Valentine",
   tagline:
-    "I build self-sustaining companies, systems, and environments — architecture that compounds without me.",
+    "I see what's possible — then build it, back it, and bring the teams and capital to make it real.",
+  mission:
+    "My gift is to see opportunities — and to think strategically about how to bring them into reality: the right idea, the right team, the right capital. I build companies, and I invest in the ones building tomorrow. The throughline is simple — leave humanity better than I found it.",
   bio: [
-    "I don't perform entrepreneurship — I build. Every problem is a design problem, and real leverage means it runs without you.",
-    "Right now that takes three shapes: Orbit, an AI relationship ecosystem fixing the broken incentives of dating apps; Mothership, a luxury custom van brand; and Elysium, a fully-staffed co-living villa in Bali. Different surfaces, one thesis — design the system, not the grind.",
-    "I'm building toward Bali, running everything remotely, and treating environment as a cognitive input rather than a preference. Authentic signal compounds. Performative content decays.",
+    "I'm an entrepreneur and investor based in Bali. I don't perform entrepreneurship — I build, and I back others who are building. Every problem is a design problem; real leverage means it runs without you.",
+    "What I do best is see an opportunity, think through how it becomes real, then assemble the teams and capital to get it there. Some of those become my own companies — Orbit, Mothership, Elysium. Others are bets on founders building the future: Next Life Sciences, Space Campers, and more.",
+    "The throughline is simple: I'm here to push the world forward and build a better future for humanity. This page is my digital reputation — the clearest signal of what I'm building and who I am.",
   ],
-  location: "Building toward Bali",
+  location: "Builder & investor · Bali",
   // TODO: drop real files into /public/video and /public/img, then update paths.
   heroVideo: "/video/hero-portrait.mp4",
   heroPoster: "/img/hero-poster.jpg",

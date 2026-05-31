@@ -5,11 +5,13 @@
 export const collab = {
   work: {
     eyebrow: "Work With Me",
-    headline: "Think we should be building together?",
-    sub: "If you have a skill set, a network, or capital that could move one of these projects forward — or you just see an angle I'm missing — make the case. Serious applications only. I read every one.",
+    headline: "Want to build together — or have something I should back?",
+    sub: "If you have a skill set, a network, or capital that moves one of my projects forward — or you're a founder with an idea I should invest in — make the case. Serious inquiries only. I read every one.",
     // What the person is reaching out as. First option is the default prompt.
     roles: [
       "Operator / talent",
+      "Founder pitching an idea",
+      "Investment opportunity",
       "Investor / capital",
       "Partner / collaborator",
       "Advisor / expertise",

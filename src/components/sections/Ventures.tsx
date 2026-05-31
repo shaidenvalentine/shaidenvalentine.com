@@ -1,3 +1,6 @@
+"use client";
+
+import { track } from "@vercel/analytics";
 import { ventures } from "@content/ventures";
 import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
@@ -22,6 +25,7 @@ export function Ventures() {
               href={v.href}
               target="_blank"
               rel="noreferrer"
+              onClick={() => track("venture_click", { venture: v.id })}
               className="group relative flex h-full flex-col overflow-hidden rounded-3xl glass p-7 transition duration-500 hover:-translate-y-1"
             >
               {/* orbital glow */}

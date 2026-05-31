@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { track } from "@vercel/analytics";
 import { collab } from "@content/collab";
 import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
@@ -32,6 +33,7 @@ export function Feedback() {
         setStatus("error");
         return;
       }
+      track("feedback_submit");
       setStatus("done");
     } catch {
       setError("Network error — try again.");
@@ -40,7 +42,7 @@ export function Feedback() {
   }
 
   return (
-    <Section id="feedback" eyebrow={c.eyebrow} index="09 — Anonymous">
+    <Section id="feedback" eyebrow={c.eyebrow} index="10 — Anonymous">
       <Reveal>
         <div className="mx-auto max-w-2xl rounded-3xl glass-strong p-8 md:p-12">
           <div className="text-center">

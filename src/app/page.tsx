@@ -3,6 +3,7 @@ import { Story } from "@/components/sections/Story";
 import { Ethos } from "@/components/sections/Ethos";
 import { Life } from "@/components/sections/Life";
 import { Ventures } from "@/components/sections/Ventures";
+import { Investing } from "@/components/sections/Investing";
 import { Now } from "@/components/sections/Now";
 import { WorkWithMe } from "@/components/sections/WorkWithMe";
 import { Newsletter } from "@/components/sections/Newsletter";
@@ -21,6 +22,7 @@ export default function Home() {
       <Ethos />
       <Life />
       <Ventures />
+      <Investing />
       <Now />
       <WorkWithMe />
       <Newsletter />

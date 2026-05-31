@@ -31,8 +31,8 @@ export const ethos = {
 
 export const life = {
   eyebrow: "Life",
-  headline: "Building toward Bali.",
-  sub: "I run everything remotely and I'm building toward a base in Bali — not as an escape, but as the environment the rest of the architecture is designed around. Sun, deep work, the right people, and a pace that lets the long game actually play out.",
+  headline: "I live in Bali.",
+  sub: "Bali is home base — not an escape, but the environment the rest of the architecture is designed around. I run everything from here: sun, deep work, the right people, and a pace that lets the long game actually play out.",
   // Drop real photos into /public/img and list them here; the grid adapts.
   gallery: [
     { src: "/img/life-1.jpg", caption: "The build" },

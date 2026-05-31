@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { track } from "@vercel/analytics";
 import { collab } from "@content/collab";
 import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
@@ -39,6 +40,7 @@ export function WorkWithMe() {
         setStatus("error");
         return;
       }
+      track("apply_submit", { role: form.role });
       setStatus("done");
     } catch {
       setError("Network error — try again.");
@@ -47,7 +49,7 @@ export function WorkWithMe() {
   }
 
   return (
-    <Section id="work" eyebrow={c.eyebrow} index="06 — Collaborate">
+    <Section id="work" eyebrow={c.eyebrow} index="07 — Collaborate">
       <div className="grid gap-12 md:grid-cols-[1fr_1.1fr] md:items-start">
         <Reveal>
           <h2 className="display-2 max-w-[16ch]">{c.headline}</h2>
