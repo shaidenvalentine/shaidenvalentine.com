@@ -10,7 +10,7 @@ export function Story() {
   const [playing, setPlaying] = useState(false);
 
   return (
-    <Section id="story" eyebrow="Story" index="03 — Who">
+    <Section id="story" eyebrow="Story" index="01 — Who">
       <div className="grid gap-12 md:grid-cols-[1.1fr_1fr] md:items-center">
         <Reveal>
           <h2 className="display-2 max-w-[14ch]">The arc.</h2>

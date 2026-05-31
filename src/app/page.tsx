@@ -1,7 +1,9 @@
 import { Hero } from "@/components/sections/Hero";
+import { Story } from "@/components/sections/Story";
+import { Ethos } from "@/components/sections/Ethos";
+import { Life } from "@/components/sections/Life";
 import { Ventures } from "@/components/sections/Ventures";
 import { Now } from "@/components/sections/Now";
-import { Story } from "@/components/sections/Story";
 import { WorkWithMe } from "@/components/sections/WorkWithMe";
 import { Newsletter } from "@/components/sections/Newsletter";
 import { Shop } from "@/components/sections/Shop";
@@ -14,9 +16,12 @@ export default function Home() {
   return (
     <main>
       <Hero />
+      {/* Identity first — who he is — then the work. */}
+      <Story />
+      <Ethos />
+      <Life />
       <Ventures />
       <Now />
-      <Story />
       <WorkWithMe />
       <Newsletter />
       <Shop />

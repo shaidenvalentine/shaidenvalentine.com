@@ -16,6 +16,9 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       touchMultiplier: 1.5,
     });
 
+    // Expose for tooling / debugging.
+    (window as unknown as { lenis?: Lenis }).lenis = lenis;
+
     let raf = 0;
     const loop = (time: number) => {
       lenis.raf(time);

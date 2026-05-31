@@ -1,15 +1,23 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Geist, Geist_Mono } from "next/font/google";
+import { Caveat, Space_Grotesk, Geist, Geist_Mono } from "next/font/google";
 import { site } from "@content/site";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
 import "./globals.css";
 
-// Display — Cormorant Garamond. The refined serif for display moments
-// (shared language with the Elysium system).
-const display = Cormorant_Garamond({
+// Signature — Caveat. Hand-drawn, modern, cool. Used for Shaiden's name and
+// a few signature accent moments. This is the "him" in the typography.
+const signature = Caveat({
+  subsets: ["latin"],
+  variable: "--font-signature",
+  weight: ["500", "600", "700"],
+  display: "swap",
+});
+
+// Display — Space Grotesk. Modern geometric sans for headings.
+const display = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-display",
-  weight: ["300", "400", "500"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
@@ -64,7 +72,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+    <html lang="en" className={`${signature.variable} ${display.variable} ${body.variable} ${mono.variable}`}>
       <body>
         <SmoothScroll>{children}</SmoothScroll>
       </body>

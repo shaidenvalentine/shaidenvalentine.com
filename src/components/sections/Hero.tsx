@@ -1,68 +1,67 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { profile } from "@content/profile";
-import { useWebGL } from "@/lib/useWebGL";
+import { FlowGradient } from "@/components/ui/FlowGradient";
 import { PortraitMedia } from "@/components/ui/PortraitMedia";
 import { IntroPlayer } from "@/components/ui/IntroPlayer";
 import { SaveContactButton } from "@/components/ui/SaveContactButton";
 
-// R3F canvas is client-only + lazy so it never blocks first paint.
-const HeroCanvas = dynamic(() => import("@/components/three/HeroCanvas"), {
-  ssr: false,
-});
-
 export function Hero() {
-  const webgl = useWebGL();
   const [playing, setPlaying] = useState(false);
   const { scrollY } = useScroll();
 
-  // Glass + portrait refract / drift as you scroll away from the hero.
-  const y = useTransform(scrollY, [0, 600], [0, 80]);
-  const scale = useTransform(scrollY, [0, 600], [1, 1.08]);
-  const opacity = useTransform(scrollY, [0, 500], [1, 0]);
+  // Gentle parallax — portrait drifts up, content fades as you leave the hero.
+  const portraitY = useTransform(scrollY, [0, 700], [0, -60]);
+  const contentOpacity = useTransform(scrollY, [0, 500], [1, 0]);
 
   return (
     <section
       id="top"
-      className="relative grid min-h-[100svh] place-items-center overflow-hidden bg-grad-volcanic grain"
+      className="relative grid min-h-[100svh] place-items-center overflow-hidden grain py-24"
     >
-      {/* Ambient WebGL ember field, or a static volcanic frame */}
-      <motion.div style={{ scale }} className="absolute inset-0">
-        {webgl ? <HeroCanvas /> : <div className="absolute inset-0 bg-grad-ember" />}
-      </motion.div>
+      <FlowGradient />
 
-      {/* Portrait behind glass */}
       <motion.div
-        style={{ y, scale }}
-        className="absolute inset-x-0 top-0 mx-auto h-full w-full max-w-3xl"
-      >
-        <div className="relative mx-auto h-full w-full max-w-md">
-          <PortraitMedia video={profile.heroVideo} poster={profile.heroPoster} />
-        </div>
-      </motion.div>
-
-      {/* Foreground content */}
-      <motion.div
-        style={{ opacity }}
+        style={{ opacity: contentOpacity }}
         className="container-page relative z-10 flex flex-col items-center text-center"
       >
         <motion.span
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="label-mono mb-6"
+          className="label-mono mb-8"
         >
           {profile.location}
         </motion.span>
 
+        {/* Portrait — the identity, front and center */}
+        <motion.div style={{ y: portraitY }} className="relative">
+          <motion.button
+            onClick={() => setPlaying(true)}
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+            className="group relative block aspect-[4/5] w-[min(72vw,20rem)] overflow-hidden rounded-[2rem] glass-strong"
+            aria-label="Play intro"
+          >
+            <PortraitMedia video={profile.heroVideo} poster={profile.heroPoster} />
+            {/* play affordance */}
+            <span className="absolute inset-0 grid place-items-center opacity-90 transition group-hover:opacity-100">
+              <span className="grid h-14 w-14 place-items-center rounded-full glass-strong backdrop-blur-md">
+                <span className="ml-1 border-y-[9px] border-l-[14px] border-y-transparent border-l-[var(--color-ink)]" />
+              </span>
+            </span>
+          </motion.button>
+        </motion.div>
+
+        {/* Signature name */}
         <motion.h1
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.1, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-          className="display-1 max-w-[14ch]"
+          transition={{ duration: 1.1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          className="display-sig mt-8 text-[var(--color-ink)]"
         >
           {profile.name}
         </motion.h1>
@@ -70,31 +69,17 @@ export function Hero() {
         <motion.p
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="body-lg mt-6 max-w-[46ch] text-[var(--color-ink-muted)]"
+          transition={{ duration: 1.1, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
+          className="body-lg mt-4 max-w-[46ch] text-[var(--color-ink-muted)]"
         >
           {profile.tagline}
         </motion.p>
 
-        {/* Tap-to-play intro */}
-        <motion.button
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.4 }}
-          onClick={() => setPlaying(true)}
-          className="mt-8 inline-flex items-center gap-3 text-sm text-[var(--color-ink-muted)] transition hover:text-[var(--color-ink)]"
-        >
-          <span className="grid h-10 w-10 place-items-center rounded-full glass">
-            <span className="ml-0.5 border-y-[6px] border-l-[10px] border-y-transparent border-l-[var(--color-ink)]" />
-          </span>
-          Watch the intro
-        </motion.button>
-
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-10 flex flex-col items-center gap-3 sm:flex-row"
+          transition={{ duration: 1, delay: 0.42, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-9 flex flex-col items-center gap-3 sm:flex-row"
         >
           <SaveContactButton variant="solid" />
           <a
@@ -106,9 +91,8 @@ export function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Scroll cue */}
       <motion.div
-        style={{ opacity }}
+        style={{ opacity: contentOpacity }}
         className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2"
       >
         <span className="label-mono">scroll</span>

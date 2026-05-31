@@ -31,7 +31,8 @@
   --glass-fill-strong: rgba(244, 241, 234, 0.08);
   --glass-edge: rgba(244, 241, 234, 0.22);
 
-  --font-serif: var(--font-display), "Cormorant Garamond", Georgia, serif;
+  --font-signature: var(--font-signature), "Caveat", ui-rounded, cursive;
+  --font-display: var(--font-display), "Space Grotesk", system-ui, sans-serif;
   --font-sans: var(--font-body), "Geist", system-ui, sans-serif;
   --font-mono: var(--font-mono), ui-monospace, "SF Mono", monospace;
 
@@ -85,11 +86,14 @@ body {
   color: var(--color-bg);
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  margin: 0;
+/* In @layer base so utility classes like .display-sig / .signature win. */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
 }
 
 p { margin: 0; }
@@ -103,25 +107,40 @@ button { font-family: inherit; cursor: pointer; }
 @layer utilities {
   /* ——— Typographic scale ——— */
   .display-1 {
-    font-family: var(--font-serif);
-    font-weight: 300;
+    font-family: var(--font-display);
+    font-weight: 500;
     font-size: clamp(3rem, 9vw, 7.5rem);
     line-height: 0.96;
     letter-spacing: -0.04em;
   }
   .display-2 {
-    font-family: var(--font-serif);
-    font-weight: 300;
+    font-family: var(--font-display);
+    font-weight: 500;
     font-size: clamp(2.25rem, 5vw, 4.25rem);
     line-height: 1.04;
     letter-spacing: -0.03em;
   }
   .display-3 {
-    font-family: var(--font-serif);
-    font-weight: 400;
+    font-family: var(--font-display);
+    font-weight: 500;
     font-size: clamp(1.5rem, 3vw, 2.25rem);
     line-height: 1.2;
     letter-spacing: -0.02em;
+  }
+
+  /* Signature — Shaiden's name + hand-drawn accent moments. */
+  .signature {
+    font-family: var(--font-signature);
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 0.9;
+  }
+  .display-sig {
+    font-family: var(--font-signature);
+    font-weight: 600;
+    font-size: clamp(4rem, 14vw, 11rem);
+    line-height: 0.85;
+    letter-spacing: 0;
   }
   .body-lg {
     font-size: clamp(1.05rem, 1.4vw, 1.25rem);
@@ -245,6 +264,31 @@ button { font-family: inherit; cursor: pointer; }
     transition: background-size 0.4s var(--ease-out-expo);
   }
   .link-underline:hover { background-size: 100% 1px; }
+}
+
+/* ——— Flowing gradient (the hero's living color field) ——— */
+@keyframes flow-a {
+  0%   { transform: translate(-12%, -8%) scale(1); }
+  50%  { transform: translate(14%, 10%) scale(1.25); }
+  100% { transform: translate(-12%, -8%) scale(1); }
+}
+@keyframes flow-b {
+  0%   { transform: translate(10%, 6%) scale(1.1); }
+  50%  { transform: translate(-10%, -12%) scale(1.3); }
+  100% { transform: translate(10%, 6%) scale(1.1); }
+}
+@keyframes flow-c {
+  0%   { transform: translate(6%, 14%) scale(1.2); }
+  50%  { transform: translate(-14%, -6%) scale(1); }
+  100% { transform: translate(6%, 14%) scale(1.2); }
+}
+.flow-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(70px);
+  opacity: 0.55;
+  will-change: transform;
+  mix-blend-mode: screen;
 }
 
 @media (prefers-reduced-motion: reduce) {
