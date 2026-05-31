@@ -1,14 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Homemade_Apple, Space_Grotesk, Geist, Geist_Mono } from "next/font/google";
+import { Caveat_Brush, Space_Grotesk, Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { site } from "@content/site";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
 import "./globals.css";
 
-// Signature — Homemade Apple. A real-pen hand-signed feel, like an actual
-// signature on paper. Used for Shaiden's name and a few signature accent
-// moments.
-const signature = Homemade_Apple({
+// Signature — Caveat Brush. Hand-signed with brushy/sketched ink texture.
+// Sits between a script signature and a sketched pen feel. Used for
+// Shaiden's name and a few signature accent moments.
+const signature = Caveat_Brush({
   subsets: ["latin"],
   variable: "--font-signature",
   weight: ["400"],

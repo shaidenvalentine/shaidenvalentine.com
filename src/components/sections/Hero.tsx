@@ -2,7 +2,6 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { profile } from "@content/profile";
-import { FlowGradient } from "@/components/ui/FlowGradient";
 import { SaveContactButton } from "@/components/ui/SaveContactButton";
 
 export function Hero() {
@@ -15,10 +14,8 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative grid min-h-[100svh] place-items-center overflow-hidden grain py-24"
+      className="relative grid min-h-[100svh] place-items-center overflow-hidden bg-black py-24"
     >
-      <FlowGradient />
-
       <motion.div
         style={{ opacity: contentOpacity }}
         className="container-page relative z-10 flex flex-col items-center text-center"
