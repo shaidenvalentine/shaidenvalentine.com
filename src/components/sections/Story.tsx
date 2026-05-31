@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { profile } from "@content/profile";
+import { chapters } from "@content/personal";
 import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { IntroPlayer } from "@/components/ui/IntroPlayer";
@@ -56,6 +57,33 @@ export function Story() {
           </button>
         </Reveal>
       </div>
+
+      {/* Chapters timeline — the life arc as a vertical sequence */}
+      <Reveal>
+        <div className="mt-24 md:mt-32">
+          <span className="signature text-3xl text-[var(--color-brass)]">Chapters</span>
+          <h3 className="display-3 mt-3 max-w-[20ch] text-[var(--color-ink)]">
+            How I got here.
+          </h3>
+        </div>
+      </Reveal>
+
+      <ol className="relative mt-12 flex flex-col gap-10 border-l border-[var(--color-line-strong)] pl-6 md:gap-12 md:pl-10">
+        {chapters.map((c, i) => (
+          <Reveal as="li" key={i} delay={Math.min(i, 4) * 0.06}>
+            <div className="relative">
+              {/* node */}
+              <span
+                aria-hidden
+                className="absolute -left-[1.85rem] top-2 grid h-3 w-3 place-items-center rounded-full bg-[var(--color-brass)] ring-4 ring-[var(--color-bg)] md:-left-[2.85rem]"
+              />
+              <span className="label-mono">{c.era}</span>
+              <h4 className="display-3 mt-2 max-w-[28ch] text-[var(--color-ink)]">{c.title}</h4>
+              <p className="body-base mt-3 max-w-[56ch] text-[var(--color-ink-muted)]">{c.body}</p>
+            </div>
+          </Reveal>
+        ))}
+      </ol>
 
       <IntroPlayer
         open={playing}

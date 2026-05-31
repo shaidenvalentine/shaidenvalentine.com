@@ -5,6 +5,57 @@ export interface Principle {
   body: string;
 }
 
+export interface Chapter {
+  era: string;       // year or year range
+  title: string;     // short headline
+  body: string;      // 1–2 sentences
+}
+
+// The life arc — chapters that frame how he got here. Rendered as a timeline
+// inside the Story section.
+export const chapters: Chapter[] = [
+  {
+    era: "Mountain town",
+    title: "Raised in the mountains of Southern California.",
+    body: "A small mountain town, ski instructor and racer as a kid. Learned early that environment is a choice — and that the people who choose where they live get to choose how they think.",
+  },
+  {
+    era: "17 →",
+    title: "Burning Man, the first time.",
+    body: "Since seventeen. The place that taught me to see a layer over reality that doesn't yet exist — and to treat that vision as the actual starting point for what to build.",
+  },
+  {
+    era: "Left school early",
+    title: "80 countries before most people pick a major.",
+    body: "Left school two years early to travel the world. By my twenties I'd been to eighty countries — doing whatever it took to make it work. The world became the curriculum.",
+  },
+  {
+    era: "2020",
+    title: "Built a van in lockdown. It went viral.",
+    body: "When COVID hit I converted my first van and documented it online. The accident became a company — Mothership Vehicles. Fifteen vans and one million-dollar business later, I had my proof.",
+  },
+  {
+    era: "16 → 28",
+    title: "San Diego home base.",
+    body: "Building, shipping, traveling out from here. The decade where the architecture started taking shape.",
+  },
+  {
+    era: "28",
+    title: "Moved to Bali.",
+    body: "Not as an escape — as the environment I wanted the rest of the architecture designed around. The base from which everything else now runs.",
+  },
+  {
+    era: "Now · 30",
+    title: "Living the life I always pictured.",
+    body: "No formal education. Building Orbit and Elysium. Investing in startups like Next Life Sciences and Space Campers. Traveling freely. Out of the matrix that tells you the path has to look a certain way.",
+  },
+  {
+    era: "Next",
+    title: "Foundation for the rest of it.",
+    body: "Financial freedom, creative impact, a better future for humanity. The next decade is laying foundation — for the kind of leverage that compounds for the long run.",
+  },
+];
+
 export const ethos = {
   eyebrow: "How I Think",
   headline: "The lens behind everything.",
