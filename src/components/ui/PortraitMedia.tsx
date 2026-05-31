@@ -10,10 +10,6 @@ export function PortraitMedia({ video, poster }: { video: string; poster: string
 
   return (
     <div className="absolute inset-0 overflow-hidden">
-      {/* Placeholder backdrop — visible until a real portrait is dropped in. */}
-      <div className="absolute inset-0 bg-grad-ember grid place-items-center">
-        <span className="signature text-5xl text-[var(--color-ink-whisper)]">SV</span>
-      </div>
       {!failed ? (
         <video
           ref={ref}
