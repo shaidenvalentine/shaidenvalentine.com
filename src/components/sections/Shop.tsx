@@ -8,7 +8,7 @@ export function Shop() {
   if (!product) return null;
 
   return (
-    <Section id="shop" eyebrow="Shop" index="05 — Products">
+    <Section id="shop" eyebrow="Shop" index="06 — Products">
       <Reveal>
         <div className="grid gap-8 rounded-3xl glass p-6 md:grid-cols-[1fr_1.2fr] md:items-center md:p-8">
           <div className="relative aspect-square overflow-hidden rounded-2xl bg-grad-ember">
