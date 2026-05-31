@@ -6,7 +6,7 @@ export const site: SiteConfig = {
   seoTitle: "Shaiden Valentine — Founder",
   seoDescription:
     "Shaiden Valentine builds self-sustaining companies, systems, and environments. Orbit, Mothership, Elysium — architecture that compounds without him.",
-  ogImage: "/img/og.jpg",
+  ogImage: "/og.jpg",
   // The one external dependency. Paste the src of your beehiiv embed iframe.
   // e.g. "https://embeds.beehiiv.com/XXXXXXXX-XXXX-XXXX"
   beehiivEmbedUrl: "",

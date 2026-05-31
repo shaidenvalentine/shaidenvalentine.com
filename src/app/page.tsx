@@ -1,4 +1,5 @@
 import { Hero } from "@/components/sections/Hero";
+import { Mission } from "@/components/sections/Mission";
 import { Ventures } from "@/components/sections/Ventures";
 import { Investing } from "@/components/sections/Investing";
 import { Press } from "@/components/sections/Press";
@@ -18,6 +19,8 @@ export default function Home() {
   return (
     <main>
       <Hero />
+      {/* Mission pull-quote leads — the positioning before the work */}
+      <Mission />
       {/* Work-first — what he's building & backing, what's in motion now */}
       <Ventures />
       <Investing />

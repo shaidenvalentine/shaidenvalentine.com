@@ -52,14 +52,14 @@ export const metadata: Metadata = {
     url: site.baseUrl,
     siteName: "Shaiden Valentine",
     locale: "en_US",
-    images: [{ url: site.ogImage }],
+    images: [{ url: site.ogImage, width: 1200, height: 630, alt: site.seoTitle }],
   },
   twitter: {
     card: "summary_large_image",
     title: site.seoTitle,
     description: site.seoDescription,
     creator: "@shaidenvalentine",
-    images: [site.ogImage],
+    images: [{ url: site.ogImage, width: 1200, height: 630, alt: site.seoTitle }],
   },
   robots: { index: true, follow: true },
 };
