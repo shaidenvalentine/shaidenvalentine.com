@@ -1,14 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Shadows_Into_Light_Two, Space_Grotesk, Geist, Geist_Mono } from "next/font/google";
+import { Architects_Daughter, Space_Grotesk, Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { site } from "@content/site";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
 import "./globals.css";
 
-// Signature — Shadows Into Light Two. A pen-sketched, hand-drawn feel.
-// Rougher and more raw than a smooth signature script. Used for Shaiden's
-// name and a few signature accent moments.
-const signature = Shadows_Into_Light_Two({
+// Signature — Architects Daughter. Authentic hand-sketched pencil-on-paper
+// feel, like architect's hand-drawn notes. Used for Shaiden's name and a
+// few signature accent moments.
+const signature = Architects_Daughter({
   subsets: ["latin"],
   variable: "--font-signature",
   weight: ["400"],
