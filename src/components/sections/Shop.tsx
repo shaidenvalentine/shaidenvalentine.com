@@ -4,36 +4,43 @@ import { Reveal } from "@/components/ui/Reveal";
 import { SafeImg } from "@/components/ui/SafeImg";
 
 export function Shop() {
-  const product = products[0];
-  if (!product) return null;
+  if (!products.length) return null;
 
   return (
     <Section id="shop" eyebrow="Shop" index="12 — Products">
       <Reveal>
-        <div className="grid gap-8 rounded-3xl glass p-6 md:grid-cols-[1fr_1.2fr] md:items-center md:p-8">
-          <div className="relative aspect-square overflow-hidden rounded-2xl bg-grad-ember">
-            <SafeImg src={product.image} alt={product.title} className="h-full w-full object-cover" />
-          </div>
-
-          <div className="flex flex-col">
-            <span className="label-eyebrow">Digital product</span>
-            <h2 className="display-3 mt-3 text-[var(--color-ink)]">{product.title}</h2>
-            <p className="body-base mt-4 text-[var(--color-ink-muted)]">{product.blurb}</p>
-
-            <div className="mt-7 flex items-center gap-5">
-              <span className="font-mono text-2xl text-[var(--color-ink)]">{product.price}</span>
-              <a
-                href={product.checkoutUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center rounded-full bg-[var(--color-brass)] px-7 py-3 text-sm font-medium tracking-wide text-[var(--color-bg)] transition hover:brightness-110"
-              >
-                Buy now
-              </a>
-            </div>
-          </div>
-        </div>
+        <h2 className="display-2 max-w-[16ch]">Things I&apos;ve made.</h2>
       </Reveal>
+
+      <div className="mt-12 grid gap-5 md:grid-cols-2">
+        {products.map((product, i) => (
+          <Reveal key={product.title} delay={i * 0.08}>
+            <div className="flex h-full flex-col overflow-hidden rounded-3xl glass">
+              <div className="relative aspect-[16/10] overflow-hidden bg-grad-ember">
+                <SafeImg src={product.image} alt={product.title} className="h-full w-full object-cover" />
+              </div>
+
+              <div className="flex flex-1 flex-col p-7">
+                <span className="label-eyebrow">Digital product</span>
+                <h3 className="display-3 mt-3 text-[var(--color-ink)]">{product.title}</h3>
+                <p className="body-base mt-4 flex-1 text-[var(--color-ink-muted)]">{product.blurb}</p>
+
+                <div className="mt-7 flex items-center gap-5">
+                  <span className="font-mono text-2xl text-[var(--color-ink)]">{product.price}</span>
+                  <a
+                    href={product.checkoutUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center justify-center rounded-full bg-[var(--color-brass)] px-7 py-3 text-sm font-medium tracking-wide text-[var(--color-bg)] transition hover:brightness-110"
+                  >
+                    Buy now
+                  </a>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        ))}
+      </div>
     </Section>
   );
 }

@@ -11,4 +11,12 @@ export const products: Product[] = [
     image: "/img/art-of-flipping.jpg",
     checkoutUrl: "https://shaidenvalentine.gumroad.com/l/art-of-flipping", // TODO: real checkout
   },
+  {
+    title: "Find Your Ikigai",
+    blurb:
+      "The ebook companion to the framework I live by — a clear, no-fluff guide to uncovering what you were put on this earth to do, and designing a life that runs on it. Read it in an afternoon; use it for years.",
+    price: "$—", // TODO: set price
+    image: "/img/ikigai-ebook.jpg",
+    checkoutUrl: "https://shaidenvalentine.gumroad.com/l/find-your-ikigai", // TODO: real checkout
+  },
 ];
