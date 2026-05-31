@@ -4,7 +4,7 @@ import { Reveal } from "@/components/ui/Reveal";
 
 export function Now() {
   return (
-    <Section id="now" eyebrow="In Motion" index="06 — Now">
+    <Section id="now" eyebrow="In Motion" index="03 — Now">
       <Reveal>
         <h2 className="display-2 max-w-[16ch]">What I&apos;m moving on right now.</h2>
       </Reveal>

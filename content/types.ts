@@ -11,6 +11,8 @@ export interface Profile {
   name: string;
   /** The single headline one-liner under the name. */
   tagline: string;
+  /** Quick at-a-glance bio shown right under the tagline on the hero. */
+  quickBio: string;
   /** The positioning / mission pull-quote (shown large in Story). */
   mission: string;
   /** Short bio paragraph(s) for the Story section. */

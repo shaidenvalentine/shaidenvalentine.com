@@ -7,7 +7,7 @@ import { Reveal } from "@/components/ui/Reveal";
 
 export function Ventures() {
   return (
-    <Section id="ventures" eyebrow="The Orbit" index="04 — Ventures">
+    <Section id="ventures" eyebrow="What I'm Building" index="01 — Ventures">
       <Reveal>
         <h2 className="display-2 max-w-[18ch]">
           Three companies, one thesis.

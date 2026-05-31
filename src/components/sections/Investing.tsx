@@ -7,7 +7,7 @@ import { Reveal } from "@/components/ui/Reveal";
 
 export function Investing() {
   return (
-    <Section id="investing" eyebrow={investing.eyebrow} index="05 — Investing">
+    <Section id="investing" eyebrow={investing.eyebrow} index="02 — Investing">
       <div className="grid gap-12 md:grid-cols-[1fr_1fr] md:items-start">
         <Reveal>
           <h2 className="display-2 max-w-[14ch]">{investing.headline}</h2>

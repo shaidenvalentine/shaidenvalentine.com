@@ -4,6 +4,9 @@ export const profile: Profile = {
   name: "Shaiden Valentine",
   tagline:
     "I see what's possible — then build it, back it, and bring the teams and capital to make it real.",
+  /** Quick at-a-glance bio shown right under the tagline on the hero. */
+  quickBio:
+    "Entrepreneur and investor based in Bali. I build companies — Orbit, Mothership, Elysium — and back founders building the future like Next Life Sciences and Space Campers. Turning 30, no formal education, building toward a life of leverage, creativity, and impact.",
   mission:
     "My gift is to see opportunities — and to think strategically about how to bring them into reality: the right idea, the right team, the right capital. I build companies, and I invest in the ones building tomorrow. The throughline is simple — leave humanity better than I found it.",
   bio: [
