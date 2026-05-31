@@ -35,9 +35,8 @@ export function PortraitMedia({ video, poster }: { video: string; poster: string
           }}
         />
       )}
-      {/* Soft inner shading for depth — the hard edges are feathered away by
-          the hero's mask so the portrait melts into the background. */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_58%,rgba(11,11,13,0.3)_100%)]" />
+      {/* No overlay — edges are softened by the hero's mask alone so the
+          portrait blends straight into the site background. */}
     </div>
   );
 }

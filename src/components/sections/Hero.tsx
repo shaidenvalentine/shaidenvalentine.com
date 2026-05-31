@@ -36,14 +36,17 @@ export function Hero() {
           {profile.location}
         </motion.span>
 
-        {/* Portrait — frameless; edges feather into the background (no card) */}
+        {/* Portrait — frameless; edges dissolve gradually into the site
+            background. Aggressive feather + portrait-shaped mask so the video
+            never reads as a rectangle and the dark stone melts straight into
+            the dark page behind it. */}
         <motion.div
           style={{
             y: portraitY,
             WebkitMaskImage:
-              "radial-gradient(ellipse 68% 72% at 50% 44%, #000 34%, transparent 74%)",
+              "radial-gradient(ellipse closest-side at 50% 44%, #000 36%, rgba(0,0,0,0.9) 56%, rgba(0,0,0,0.5) 76%, rgba(0,0,0,0.18) 90%, transparent 100%)",
             maskImage:
-              "radial-gradient(ellipse 68% 72% at 50% 44%, #000 34%, transparent 74%)",
+              "radial-gradient(ellipse closest-side at 50% 44%, #000 36%, rgba(0,0,0,0.9) 56%, rgba(0,0,0,0.5) 76%, rgba(0,0,0,0.18) 90%, transparent 100%)",
           }}
           className="relative"
         >
