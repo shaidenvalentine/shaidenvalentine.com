@@ -1,6 +1,7 @@
 import { Hero } from "@/components/sections/Hero";
 import { Ventures } from "@/components/sections/Ventures";
 import { Investing } from "@/components/sections/Investing";
+import { Press } from "@/components/sections/Press";
 import { Now } from "@/components/sections/Now";
 import { Story } from "@/components/sections/Story";
 import { Ethos } from "@/components/sections/Ethos";
@@ -20,6 +21,7 @@ export default function Home() {
       {/* Work-first — what he's building & backing, what's in motion now */}
       <Ventures />
       <Investing />
+      <Press />
       <Now />
       {/* For people who want to go deeper — the story, the lens, the life */}
       <Story />

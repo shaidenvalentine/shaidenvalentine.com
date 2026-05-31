@@ -42,7 +42,7 @@ export function Feedback() {
   }
 
   return (
-    <Section id="feedback" eyebrow={c.eyebrow} index="10 — Anonymous">
+    <Section id="feedback" eyebrow={c.eyebrow} index="11 — Anonymous">
       <Reveal>
         <div className="mx-auto max-w-2xl rounded-3xl glass-strong p-8 md:p-12">
           <div className="text-center">

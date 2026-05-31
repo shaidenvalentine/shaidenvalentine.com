@@ -11,7 +11,7 @@ export function Story() {
   const [playing, setPlaying] = useState(false);
 
   return (
-    <Section id="story" eyebrow="Story" index="04 — Who">
+    <Section id="story" eyebrow="Story" index="05 — Who">
       <Reveal>
         <blockquote className="mb-16 md:mb-24">
           <span className="signature text-3xl text-[var(--color-brass)]">My mission</span>

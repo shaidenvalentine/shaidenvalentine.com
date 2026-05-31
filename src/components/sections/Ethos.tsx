@@ -4,7 +4,7 @@ import { Reveal } from "@/components/ui/Reveal";
 
 export function Ethos() {
   return (
-    <Section id="ethos" eyebrow={ethos.eyebrow} index="05 — Ethos">
+    <Section id="ethos" eyebrow={ethos.eyebrow} index="06 — Ethos">
       <Reveal>
         <h2 className="display-2 max-w-[16ch]">{ethos.headline}</h2>
         <p className="body-lg mt-5 max-w-[52ch] text-[var(--color-ink-muted)]">{ethos.sub}</p>

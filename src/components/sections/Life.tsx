@@ -5,7 +5,7 @@ import { SafeImg } from "@/components/ui/SafeImg";
 
 export function Life() {
   return (
-    <Section id="life" eyebrow={life.eyebrow} index="06 — Life">
+    <Section id="life" eyebrow={life.eyebrow} index="07 — Life">
       <div className="grid gap-12 md:grid-cols-[1fr_1fr] md:items-center">
         <Reveal>
           <h2 className="display-2 max-w-[12ch]">{life.headline}</h2>
