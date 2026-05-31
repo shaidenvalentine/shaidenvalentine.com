@@ -31,7 +31,7 @@
   --glass-fill-strong: rgba(244, 241, 234, 0.08);
   --glass-edge: rgba(244, 241, 234, 0.22);
 
-  --font-signature: var(--font-signature), "Homemade Apple", cursive;
+  --font-signature: var(--font-signature), "Orbitron", system-ui, sans-serif;
   --font-display: var(--font-display), "Space Grotesk", system-ui, sans-serif;
   --font-sans: var(--font-body), "Geist", system-ui, sans-serif;
   --font-mono: var(--font-mono), ui-monospace, "SF Mono", monospace;
@@ -137,10 +137,11 @@ button { font-family: inherit; cursor: pointer; }
   }
   .display-sig {
     font-family: var(--font-signature);
-    font-weight: 400;
-    font-size: clamp(3.5rem, 11vw, 8.5rem);
-    line-height: 1.05;
-    letter-spacing: 0;
+    font-weight: 600;
+    font-size: clamp(2.5rem, 7vw, 5.25rem);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
   }
   .body-lg {
     font-size: clamp(1.05rem, 1.4vw, 1.25rem);

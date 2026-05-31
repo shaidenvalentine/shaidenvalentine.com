@@ -1,17 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { Caveat_Brush, Space_Grotesk, Geist, Geist_Mono } from "next/font/google";
+import { Orbitron, Space_Grotesk, Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { site } from "@content/site";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
 import "./globals.css";
 
-// Signature — Caveat Brush. Hand-signed with brushy/sketched ink texture.
-// Sits between a script signature and a sketched pen feel. Used for
-// Shaiden's name and a few signature accent moments.
-const signature = Caveat_Brush({
+// Signature — Orbitron. Geometric futuristic display sans, sci-fi/tech feel.
+// Used for Shaiden's name as the hero display moment.
+const signature = Orbitron({
   subsets: ["latin"],
   variable: "--font-signature",
-  weight: ["400"],
+  weight: ["500", "600", "700"],
   display: "swap",
 });
 
