@@ -31,7 +31,6 @@
   --glass-fill-strong: rgba(244, 241, 234, 0.08);
   --glass-edge: rgba(244, 241, 234, 0.22);
 
-  --font-signature: var(--font-signature), "Caveat", ui-rounded, cursive;
   --font-display: var(--font-display), "Space Grotesk", system-ui, sans-serif;
   --font-sans: var(--font-body), "Geist", system-ui, sans-serif;
   --font-mono: var(--font-mono), ui-monospace, "SF Mono", monospace;
@@ -128,19 +127,19 @@ button { font-family: inherit; cursor: pointer; }
     letter-spacing: -0.02em;
   }
 
-  /* Signature — Shaiden's name + hand-drawn accent moments. */
+  /* Display name — modern, clean, tight tracking */
   .signature {
-    font-family: var(--font-signature);
-    font-weight: 600;
-    letter-spacing: 0;
-    line-height: 0.9;
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1;
   }
   .display-sig {
-    font-family: var(--font-signature);
-    font-weight: 600;
-    font-size: clamp(4rem, 14vw, 11rem);
-    line-height: 0.85;
-    letter-spacing: 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(3rem, 9vw, 6.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
   }
   .body-lg {
     font-size: clamp(1.05rem, 1.4vw, 1.25rem);

@@ -31,7 +31,7 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="relative aspect-[4/5] w-[min(92vw,36rem)] overflow-hidden rounded-[2.25rem] glass-strong"
+          className="relative aspect-square w-[min(94vw,44rem)] overflow-hidden rounded-[2.25rem] glass-strong"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
