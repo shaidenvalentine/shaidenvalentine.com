@@ -18,8 +18,21 @@ commit → Vercel redeploys.
 - `content/now.ts` — the In-Motion feed (newest first)
 - `content/shop.ts` — product(s) + hosted checkout URL
 - `content/site.ts` — SEO/OG strings + **beehiiv embed URL**
+- `content/collab.ts` — copy + options for the Work-With-Me + Feedback sections
 
 To update a venture's status line, edit one `status` field in `ventures.ts`.
+
+## Forms (Work With Me + Anonymous Feedback)
+Two serverless routes email each submission via [Resend](https://resend.com) —
+**nothing is stored**. The feedback route reads no name, email, or IP; it's
+anonymous by design.
+
+- `/api/apply` ← Work With Me (validated, honeypot-guarded)
+- `/api/feedback` ← Anonymous Feedback (message + optional topic only)
+
+Set these env vars (locally in `.env.local`, and in Vercel) — see `.env.example`:
+`RESEND_API_KEY`, `CONTACT_EMAIL`, `RESEND_FROM`. Until they're set, the forms
+render and validate but report "Email isn't configured yet."
 
 ## Assets to drop in (`/public`)
 Placeholders degrade gracefully until these exist:
@@ -39,7 +52,9 @@ Placeholders degrade gracefully until these exist:
 2. Paste the beehiiv embed URL into `content/site.ts` (`beehiivEmbedUrl`).
 3. Set the real product price + checkout URL in `content/shop.ts`.
 4. Confirm social handles + email/phone in `content/profile.ts`.
-5. Push to GitHub → import on Vercel → point `shaidenvalentine.com` DNS at it.
+5. Set `RESEND_API_KEY` / `CONTACT_EMAIL` / `RESEND_FROM` in Vercel, and verify
+   your sending domain in Resend (so application + feedback emails deliver).
+6. Push to GitHub → import on Vercel → point `shaidenvalentine.com` DNS at it.
 
 ## Dev
 ```bash
