@@ -29,9 +29,9 @@ export function Hero() {
           style={{
             y: portraitY,
             WebkitMaskImage:
-              "radial-gradient(closest-side at 50% 45%, #000 18%, rgba(0,0,0,0.85) 48%, rgba(0,0,0,0.35) 78%, transparent 100%)",
+              "radial-gradient(closest-side at 50% 50%, #000 76%, rgba(0,0,0,0.65) 92%, transparent 100%)",
             maskImage:
-              "radial-gradient(closest-side at 50% 45%, #000 18%, rgba(0,0,0,0.85) 48%, rgba(0,0,0,0.35) 78%, transparent 100%)",
+              "radial-gradient(closest-side at 50% 50%, #000 76%, rgba(0,0,0,0.65) 92%, transparent 100%)",
           }}
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
