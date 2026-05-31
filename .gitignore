@@ -32,3 +32,6 @@ yarn-error.log*
 
 # private avatar reference photos (never deploy)
 /.private-refs
+
+# ebook working files (sold via Gumroad, not deployed)
+/.ebook

@@ -12,11 +12,11 @@ export const products: Product[] = [
     checkoutUrl: "https://shaidenvalentine.gumroad.com/l/art-of-flipping", // TODO: real checkout
   },
   {
-    title: "Find Your Ikigai",
+    title: "The Game of Life",
     blurb:
-      "The ebook companion to the framework I live by — a clear, no-fluff guide to uncovering what you were put on this earth to do, and designing a life that runs on it. Read it in an afternoon; use it for years.",
+      "My ebook on how I actually play life — purpose, ikigai, integrity, travel, love, and money as a byproduct. A clear, no-fluff field guide (with exercises) to playing the game on your own terms. Read it in an afternoon; use it for years.",
     price: "$—", // TODO: set price
-    image: "/img/ikigai-ebook.jpg",
-    checkoutUrl: "https://shaidenvalentine.gumroad.com/l/find-your-ikigai", // TODO: real checkout
+    image: "/img/game-of-life.jpg",
+    checkoutUrl: "https://shaidenvalentine.gumroad.com/l/the-game-of-life", // TODO: real checkout
   },
 ];
