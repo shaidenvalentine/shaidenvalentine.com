@@ -1,16 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Caveat, Space_Grotesk, Geist, Geist_Mono } from "next/font/google";
+import { Shadows_Into_Light_Two, Space_Grotesk, Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { site } from "@content/site";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
 import "./globals.css";
 
-// Signature — Caveat. Hand-drawn, modern, cool. Used for Shaiden's name and
-// a few signature accent moments. This is the "him" in the typography.
-const signature = Caveat({
+// Signature — Shadows Into Light Two. A pen-sketched, hand-drawn feel.
+// Rougher and more raw than a smooth signature script. Used for Shaiden's
+// name and a few signature accent moments.
+const signature = Shadows_Into_Light_Two({
   subsets: ["latin"],
   variable: "--font-signature",
-  weight: ["500", "600", "700"],
+  weight: ["400"],
   display: "swap",
 });
 

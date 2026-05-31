@@ -23,20 +23,21 @@ export function Hero() {
         style={{ opacity: contentOpacity }}
         className="container-page relative z-10 flex flex-col items-center text-center"
       >
-        {/* Portrait — clean still, no mask, no feather. The portrait's own
-            dark cracked-stone backdrop blends naturally with the page. */}
+        {/* Portrait — held inside a liquid-glass amorphism frame.
+            The frame's specular edge highlight + soft shadow give the photo
+            a deliberate, premium border that matches the site's glass language. */}
         <motion.div
           style={{ y: portraitY }}
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="relative block aspect-[4/5] w-[min(92vw,38rem)]"
+          className="relative aspect-[4/5] w-[min(92vw,36rem)] overflow-hidden rounded-[2.25rem] glass-strong"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={profile.heroPoster}
             alt={profile.name}
-            className="h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full object-cover"
             loading="eager"
             decoding="async"
           />
