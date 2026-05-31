@@ -21,15 +21,16 @@ export const profile: Profile = {
     { label: "Instagram", href: "https://instagram.com/shaidenvalentine", handle: "@shaidenvalentine" },
     { label: "X", href: "https://x.com/shaidenvalentine", handle: "@shaidenvalentine" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/shaidenvalentine", handle: "in/shaidenvalentine" },
-    { label: "Email", href: "mailto:hello@shaidenvalentine.com", handle: "hello@shaidenvalentine.com" },
+    { label: "WhatsApp", href: "https://wa.me/17604021716", handle: "+1 760 402 1716" },
+    { label: "Email", href: "mailto:shaidenvalentine@gmail.com", handle: "shaidenvalentine@gmail.com" },
   ],
   vcard: {
     firstName: "Shaiden",
     lastName: "Valentine",
     org: "Orbit · Mothership · Elysium",
     title: "Founder",
-    email: "hello@shaidenvalentine.com",
-    // phone: "+1 000 000 0000", // add when ready
+    email: "shaidenvalentine@gmail.com",
+    phone: "+17604021716",
     url: "https://shaidenvalentine.com",
   },
 };
