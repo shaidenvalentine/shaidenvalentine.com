@@ -8,7 +8,7 @@ export const profile: Profile = {
   quickBio:
     "Entrepreneur and investor based in Bali. I build companies — Orbit, Mothership, Elysium — and back founders building the future like Next Life Sciences and Space Campers. Turning 30, no formal education, building toward a life of leverage, creativity, and impact.",
   mission:
-    "My gift is to see opportunities — and to think strategically about how to bring them into reality: the right idea, the right team, the right capital. I build companies, and I invest in the ones building tomorrow. The throughline is simple — leave humanity better than I found it.",
+    "My purpose is to see what's possible — then bring it into reality. The right idea, the right team, the right capital. I build companies, and I back the founders building tomorrow. The throughline is simple: leave humanity better than I found it.",
   bio: [
     "I grew up in a small mountain town in Southern California — teaching skiing and racing as a kid, learning early that the people who choose where they live get to choose how they think. I left school two years early to travel. By the time I was twenty-something I'd been to eighty countries, doing whatever it took to make it work.",
     "Then COVID hit and I built my first van — a single conversion I documented online. It went viral. That accident became Mothership Vehicles. Fifteen vans later, that build was a million-dollar business and I had my proof: I could see an opportunity nobody else saw, turn it into a company, and run it without being inside it.",
