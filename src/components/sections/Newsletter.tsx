@@ -4,7 +4,7 @@ import { Reveal } from "@/components/ui/Reveal";
 
 export function Newsletter() {
   return (
-    <Section id="newsletter" eyebrow="Newsletter" index="09 — Subscribe">
+    <Section id="newsletter" eyebrow="Newsletter" index="10 — Subscribe">
       <Reveal>
         <div className="mx-auto max-w-2xl rounded-3xl glass-strong p-8 text-center md:p-12">
           <h2 className="display-2">{site.newsletterHeadline}</h2>

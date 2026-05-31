@@ -27,7 +27,7 @@ export const chapters: Chapter[] = [
   {
     era: "Left school early",
     title: "80 countries before most people pick a major.",
-    body: "Left school two years early to travel the world. By my twenties I'd been to eighty countries — doing whatever it took to make it work. The world became the curriculum.",
+    body: "Top of my class, then gone two years early. My mom flew for an airline, so the world was almost free — I just had to figure out where to sleep. Eighty countries of backpacking, couch-surfing, stretches near-homeless, flipping anything to stay on the road. No degree, no job, ever.",
   },
   {
     era: "2020",

@@ -14,6 +14,7 @@ export const collab = {
       "Investment opportunity",
       "Investor / capital",
       "Partner / collaborator",
+      "Purpose / Ikigai coaching",
       "Advisor / expertise",
       "Something else",
     ],

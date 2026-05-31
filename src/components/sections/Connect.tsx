@@ -7,7 +7,7 @@ import { QRCode } from "@/components/ui/QRCode";
 
 export function Connect() {
   return (
-    <Section id="connect" eyebrow="Connect" index="12 — Card">
+    <Section id="connect" eyebrow="Connect" index="13 — Card">
       <Reveal>
         <div className="grid gap-10 rounded-3xl glass-strong p-8 md:grid-cols-[1fr_auto] md:items-center md:p-12">
           <div className="flex flex-col">
