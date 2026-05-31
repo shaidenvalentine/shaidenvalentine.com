@@ -36,20 +36,29 @@ export function Hero() {
           {profile.location}
         </motion.span>
 
-        {/* Portrait — the identity, front and center */}
-        <motion.div style={{ y: portraitY }} className="relative">
+        {/* Portrait — frameless; edges feather into the background (no card) */}
+        <motion.div
+          style={{
+            y: portraitY,
+            WebkitMaskImage:
+              "radial-gradient(ellipse 68% 72% at 50% 44%, #000 34%, transparent 74%)",
+            maskImage:
+              "radial-gradient(ellipse 68% 72% at 50% 44%, #000 34%, transparent 74%)",
+          }}
+          className="relative"
+        >
           <motion.button
             onClick={() => setPlaying(true)}
-            initial={{ opacity: 0, scale: 0.96 }}
+            initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-            className="group relative block aspect-[4/5] w-[min(72vw,20rem)] overflow-hidden rounded-[2rem] glass-strong"
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="group relative block aspect-[4/5] w-[min(86vw,25rem)]"
             aria-label="Play intro"
           >
             <PortraitMedia video={profile.heroVideo} poster={profile.heroPoster} />
-            {/* play affordance */}
-            <span className="absolute inset-0 grid place-items-center opacity-90 transition group-hover:opacity-100">
-              <span className="grid h-14 w-14 place-items-center rounded-full glass-strong backdrop-blur-md">
+            {/* play affordance — minimal, no frame */}
+            <span className="absolute inset-0 grid place-items-center opacity-70 transition group-hover:opacity-100">
+              <span className="grid h-14 w-14 place-items-center rounded-full border border-white/15 bg-white/5 backdrop-blur-sm">
                 <span className="ml-1 border-y-[9px] border-l-[14px] border-y-transparent border-l-[var(--color-ink)]" />
               </span>
             </span>

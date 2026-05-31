@@ -39,8 +39,9 @@ export function PortraitMedia({ video, poster }: { video: string; poster: string
           }}
         />
       )}
-      {/* Volcanic vignette so text always reads */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(11,11,13,0.55)_75%,rgba(11,11,13,0.9)_100%)]" />
+      {/* Soft inner shading for depth — the hard edges are feathered away by
+          the hero's mask so the portrait melts into the background. */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_58%,rgba(11,11,13,0.3)_100%)]" />
     </div>
   );
 }
