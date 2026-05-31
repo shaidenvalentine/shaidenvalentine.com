@@ -19,6 +19,7 @@ commit → Vercel redeploys.
 - `content/shop.ts` — product(s) + hosted checkout URL
 - `content/site.ts` — SEO/OG strings + **beehiiv embed URL**
 - `content/collab.ts` — copy + options for the Work-With-Me + Feedback sections
+- `content/personal.ts` — Ethos principles (how I think) + Life/Bali copy & gallery
 
 To update a venture's status line, edit one `status` field in `ventures.ts`.
 
@@ -39,13 +40,16 @@ Placeholders degrade gracefully until these exist:
 
 | Path | What |
 |------|------|
-| `public/video/hero-portrait.mp4` | Ambient hero portrait loop |
-| `public/img/hero-poster.jpg` | Hero poster / WebGL-off fallback still |
+| `public/video/hero-portrait.mp4` | Ambient hero portrait loop (fills the hero frame) |
+| `public/img/hero-poster.jpg` | Hero portrait still (shown before/instead of video) |
 | `public/video/intro.mp4` | Full tap-to-play intro film |
 | `public/img/intro-poster.jpg` | Intro poster frame |
+| `public/img/life-1.jpg` … `life-3.jpg` | Life/Bali gallery (set in `content/personal.ts`) |
 | `public/img/art-of-flipping.jpg` | Product cover |
 | `public/img/og.jpg` | Open Graph share image (1200×630) |
 | logos | Optional venture marks (set `logo` in `ventures.ts`) |
+
+Until a real hero portrait exists, the frame shows an "SV" monogram placeholder.
 
 ## Go-live checklist
 1. Add real assets above.
