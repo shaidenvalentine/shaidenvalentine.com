@@ -23,32 +23,23 @@ export function Hero() {
         style={{ opacity: contentOpacity }}
         className="container-page relative z-10 flex flex-col items-center text-center"
       >
-        {/* Portrait — frameless still that dissolves into the backdrop. */}
+        {/* Portrait — clean still, no mask, no feather. The portrait's own
+            dark cracked-stone backdrop blends naturally with the page. */}
         <motion.div
-          style={{
-            y: portraitY,
-            WebkitMaskImage:
-              "radial-gradient(ellipse closest-side at 50% 44%, #000 36%, rgba(0,0,0,0.9) 56%, rgba(0,0,0,0.5) 76%, rgba(0,0,0,0.18) 90%, transparent 100%)",
-            maskImage:
-              "radial-gradient(ellipse closest-side at 50% 44%, #000 36%, rgba(0,0,0,0.9) 56%, rgba(0,0,0,0.5) 76%, rgba(0,0,0,0.18) 90%, transparent 100%)",
-          }}
-          className="relative"
+          style={{ y: portraitY }}
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          className="relative block aspect-[4/5] w-[min(92vw,38rem)]"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="relative block aspect-[4/5] w-[min(92vw,38rem)]"
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={profile.heroPoster}
-              alt={profile.name}
-              className="h-full w-full object-cover"
-              loading="eager"
-              decoding="async"
-            />
-          </motion.div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={profile.heroPoster}
+            alt={profile.name}
+            className="h-full w-full object-cover"
+            loading="eager"
+            decoding="async"
+          />
         </motion.div>
 
         {/* Signature name */}
