@@ -7,37 +7,34 @@ import { SaveContactButton } from "@/components/ui/SaveContactButton";
 export function Hero() {
   const { scrollY } = useScroll();
 
-  // Gentle parallax — portrait drifts up as you scroll. No opacity fade on
-  // the text; the bio sits at the bottom of the hero and needs to remain
-  // readable while the user scrolls down to it.
+  // Gentle parallax — portrait drifts up as you scroll.
   const portraitY = useTransform(scrollY, [0, 700], [0, -60]);
 
   return (
     <section
       id="top"
-      className="relative grid min-h-[100svh] place-items-center overflow-hidden bg-black py-24"
+      className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-black py-24"
     >
-      <div className="container-page relative z-10 flex flex-col items-center text-center">
-        {/* Portrait — no border, edges fade gradually into the dark page
-            backdrop via a soft radial mask. */}
-        <motion.div
-          style={{ y: portraitY }}
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="hero-portrait relative aspect-[4/5] w-screen ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] sm:w-[min(96vw,42rem)] sm:ml-0 sm:mr-0"
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={profile.heroPoster}
-            alt={profile.name}
-            className="absolute inset-0 h-full w-full object-cover"
-            loading="eager"
-            decoding="async"
-          />
-        </motion.div>
+      {/* Portrait — full viewport width on mobile (lives outside container-page
+          to avoid horizontal padding clipping). Soft bottom-fade mask. */}
+      <motion.div
+        style={{ y: portraitY }}
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        className="hero-portrait relative aspect-[4/5] w-full max-w-none sm:w-[min(96vw,42rem)] sm:max-w-[42rem]"
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={profile.heroPoster}
+          alt={profile.name}
+          className="absolute inset-0 h-full w-full object-cover"
+          loading="eager"
+          decoding="async"
+        />
+      </motion.div>
 
-        {/* Signature name */}
+      <div className="container-page relative z-10 flex flex-col items-center text-center">
         <motion.h1
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
