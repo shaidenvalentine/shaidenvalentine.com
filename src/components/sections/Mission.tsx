@@ -11,7 +11,7 @@ export function Mission() {
         <blockquote className="mx-auto max-w-3xl text-center text-balance">
           <p className="display-2 text-[var(--color-ink)]">{profile.mission}</p>
           {profile.missionSub && (
-            <p className="body-lg mx-auto mt-10 max-w-[44ch] text-[var(--color-ink-muted)]">
+            <p className="body-lg mx-auto mt-12 max-w-[50ch] text-[var(--color-ink-muted)]">
               {profile.missionSub}
             </p>
           )}

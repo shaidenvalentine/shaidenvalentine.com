@@ -13,25 +13,6 @@ export function Hero() {
       id="top"
       className="relative flex min-h-[100svh] flex-col items-center overflow-hidden bg-black"
     >
-      {/* Current location pill — floats at the very top of the hero, above the
-          portrait. Pulsing green dot signals "live". */}
-      {profile.currentLocation && (
-        <motion.div
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute left-1/2 top-[max(1rem,env(safe-area-inset-top))] z-20 -translate-x-1/2 sm:top-6"
-        >
-          <div className="flex items-center gap-2.5 rounded-full border border-[var(--color-line-strong)] bg-black/60 px-3.5 py-1.5 text-xs text-[var(--color-ink)] backdrop-blur-md">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-            </span>
-            <span className="label-mono tracking-wider">{profile.currentLocation}</span>
-          </div>
-        </motion.div>
-      )}
-
       {/* Portrait — flush to the top edge of the viewport, full bleed on mobile.
           Direct child of the section (no container-page wrapper) so width truly
           equals 100vw and there are no left/right or top offsets. */}
@@ -50,6 +31,25 @@ export function Hero() {
           loading="eager"
           decoding="async"
         />
+
+        {/* Live location pill — pinned to the bottom edge of the portrait,
+            centered. Pulsing green dot signals "live / currently here". */}
+        {profile.currentLocation && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2"
+          >
+            <div className="flex items-center gap-2.5 rounded-full border border-[var(--color-line-strong)] bg-black/65 px-3.5 py-1.5 text-xs text-[var(--color-ink)] backdrop-blur-md">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+              </span>
+              <span className="label-mono tracking-wider">{profile.currentLocation}</span>
+            </div>
+          </motion.div>
+        )}
       </motion.div>
 
       <div className="container-page relative z-10 flex flex-col items-center pb-24 text-center">
