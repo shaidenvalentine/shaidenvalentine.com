@@ -25,17 +25,25 @@ export function Shop() {
                 <h3 className="display-3 mt-3 text-[var(--color-ink)]">{product.title}</h3>
                 <p className="body-base mt-4 flex-1 text-[var(--color-ink-muted)]">{product.blurb}</p>
 
-                <div className="mt-7 flex items-center gap-5">
-                  <span className="font-mono text-2xl text-[var(--color-ink)]">{product.price}</span>
-                  <a
-                    href={product.checkoutUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center justify-center rounded-full bg-[var(--color-brass)] px-7 py-3 text-sm font-medium tracking-wide text-[var(--color-bg)] transition hover:brightness-110"
-                  >
-                    Buy now
-                  </a>
-                </div>
+                {product.price.includes("—") || product.checkoutUrl === "#" ? (
+                  <div className="mt-7">
+                    <span className="inline-flex items-center justify-center rounded-full glass px-6 py-3 text-sm font-medium tracking-wide text-[var(--color-ink-muted)]">
+                      Coming soon
+                    </span>
+                  </div>
+                ) : (
+                  <div className="mt-7 flex items-center gap-5">
+                    <span className="font-mono text-2xl text-[var(--color-ink)]">{product.price}</span>
+                    <a
+                      href={product.checkoutUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center justify-center rounded-full bg-[var(--color-brass)] px-7 py-3 text-sm font-medium tracking-wide text-[var(--color-bg)] transition hover:brightness-110"
+                    >
+                      Buy now
+                    </a>
+                  </div>
+                )}
               </div>
             </div>
           </Reveal>

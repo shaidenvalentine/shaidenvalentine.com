@@ -22,15 +22,9 @@ export function Newsletter() {
                 style={{ border: "none", background: "transparent" }}
               />
             ) : (
-              // Placeholder until the beehiiv embed URL is added to content/site.ts
-              <div className="rounded-xl border border-dashed border-[var(--color-line-strong)] p-6 text-left">
-                <p className="body-sm">
-                  beehiiv embed slot — paste your embed URL into{" "}
-                  <code className="text-[var(--color-brass)]">content/site.ts</code>{" "}
-                  (<code className="text-[var(--color-brass)]">beehiivEmbedUrl</code>)
-                  and the live form renders here.
-                </p>
-              </div>
+              <span className="inline-flex items-center justify-center rounded-full glass px-6 py-3 text-sm font-medium tracking-wide text-[var(--color-ink-muted)]">
+                Coming soon
+              </span>
             )}
           </div>
         </div>

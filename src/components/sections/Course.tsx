@@ -30,15 +30,21 @@ export function Course() {
             </ul>
 
             <div className="mt-8 flex flex-wrap items-center gap-5">
-              <a
-                href={course.checkoutUrl}
-                target={external ? "_blank" : undefined}
-                rel="noreferrer"
-                onClick={() => track("course_cta")}
-                className="inline-flex items-center justify-center rounded-full bg-[var(--color-brass)] px-8 py-3.5 text-sm font-medium tracking-wide text-[var(--color-bg)] transition hover:brightness-110"
-              >
-                {course.ctaLabel} · {course.price}
-              </a>
+              {course.price.includes("—") || course.checkoutUrl === "#" ? (
+                <span className="inline-flex items-center justify-center rounded-full glass px-8 py-3.5 text-sm font-medium tracking-wide text-[var(--color-ink-muted)]">
+                  Coming soon
+                </span>
+              ) : (
+                <a
+                  href={course.checkoutUrl}
+                  target={external ? "_blank" : undefined}
+                  rel="noreferrer"
+                  onClick={() => track("course_cta")}
+                  className="inline-flex items-center justify-center rounded-full bg-[var(--color-brass)] px-8 py-3.5 text-sm font-medium tracking-wide text-[var(--color-bg)] transition hover:brightness-110"
+                >
+                  {course.ctaLabel} · {course.price}
+                </a>
+              )}
               <span className="label-mono">{course.note}</span>
             </div>
           </div>

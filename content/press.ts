@@ -22,27 +22,9 @@ export const press = {
   eyebrow: "Press",
   headline: "Outside signal.",
   sub: "Where the work shows up beyond me — articles, podcasts, features, viral moments.",
-  items: [
-    {
-      outlet: "TODO — outlet",
-      title: "TODO — the headline or episode title goes here.",
-      href: "#",
-      date: "—",
-      kind: "Article",
-    },
-    {
-      outlet: "TODO — podcast name",
-      title: "TODO — episode title or theme.",
-      href: "#",
-      date: "—",
-      kind: "Podcast",
-    },
-    {
-      outlet: "TODO — outlet",
-      title: "TODO — the Mothership viral moment lives here.",
-      href: "#",
-      date: "—",
-      kind: "Video",
-    },
-  ] as PressItem[],
+  // Empty for launch → the Press section hides itself until real items exist.
+  // To turn it on, add entries like:
+  //   { outlet: "My First Million", title: "How a viral van became Mothership",
+  //     href: "https://…", date: "2025", kind: "Podcast" },
+  items: [] as PressItem[],
 };

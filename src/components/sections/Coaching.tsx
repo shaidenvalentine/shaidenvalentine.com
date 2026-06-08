@@ -28,15 +28,21 @@ export function Coaching() {
 
                 <p className="body-base mt-4 flex-1 text-[var(--color-ink-muted)]">{offer.blurb}</p>
 
-                <a
-                  href={offer.href}
-                  target={external ? "_blank" : undefined}
-                  rel="noreferrer"
-                  onClick={() => track("coaching_cta", { offer: offer.title })}
-                  className="mt-7 inline-flex w-fit items-center justify-center rounded-full bg-[var(--color-brass)] px-7 py-3 text-sm font-medium tracking-wide text-[var(--color-bg)] transition hover:brightness-110"
-                >
-                  {offer.ctaLabel}
-                </a>
+                {offer.href === "#" ? (
+                  <span className="mt-7 inline-flex w-fit items-center justify-center rounded-full glass px-7 py-3 text-sm font-medium tracking-wide text-[var(--color-ink-muted)]">
+                    Coming soon
+                  </span>
+                ) : (
+                  <a
+                    href={offer.href}
+                    target={external ? "_blank" : undefined}
+                    rel="noreferrer"
+                    onClick={() => track("coaching_cta", { offer: offer.title })}
+                    className="mt-7 inline-flex w-fit items-center justify-center rounded-full bg-[var(--color-brass)] px-7 py-3 text-sm font-medium tracking-wide text-[var(--color-bg)] transition hover:brightness-110"
+                  >
+                    {offer.ctaLabel}
+                  </a>
+                )}
               </div>
             </Reveal>
           );
