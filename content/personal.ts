@@ -25,9 +25,9 @@ export const chapters: Chapter[] = [
     body: "Since seventeen. The place that taught me to see a layer over reality that doesn't yet exist — and to treat that vision as the actual starting point for what to build.",
   },
   {
-    era: "Left school early",
-    title: "80 countries before most people pick a major.",
-    body: "Top of my class, then gone two years early. My mom flew for an airline, so the world was almost free — I just had to figure out where to sleep. Eighty countries of backpacking, couch-surfing, stretches near-homeless, flipping anything to stay on the road. No degree, no job, ever.",
+    era: "My 20s",
+    title: "80 countries before I turned 30.",
+    body: "Left school two years early, top of my class, and just went. My mom flew for an airline, so the world was almost free — I just had to figure out where to sleep. Eighty countries through my twenties: backpacking, couch-surfing, stretches near-homeless, flipping anything to stay on the road. No degree, no job, ever — just the world as my classroom.",
   },
   {
     era: "2020",
@@ -57,33 +57,37 @@ export const chapters: Chapter[] = [
 ];
 
 export const ethos = {
-  eyebrow: "How I Think",
-  headline: "The lens behind everything.",
-  sub: "I'm not performing entrepreneurship — I'm building. These are the ideas the work runs on.",
+  eyebrow: "Principles",
+  headline: "Principles I live by.",
+  sub: "The core ideas from The Game of Life — the principles the rest of the architecture runs on.",
   principles: [
     {
-      title: "Every problem is a design problem.",
-      body: "Money, relationships, focus, a company — they're all systems with inputs and incentives. Redesign the system and the symptom disappears.",
+      title: "Only play moves you actually want to make.",
+      body: "Life is a game, but most people are playing someone else's by accident — the shoulds handed down by family, school, and culture. The whole point is to choose your own moves on purpose.",
     },
     {
-      title: "Real leverage means it runs without you.",
-      body: "If it needs me in the room, it's a job, not an asset. I build for the version where I've stepped back and it still compounds.",
+      title: "Integrity is the cheat code.",
+      body: "When your words, beliefs, and actions all line up, you earn your own respect. Self-respect compounds into self-esteem, confidence, magnetism, and almost everything else worth having.",
     },
     {
-      title: "Environment is a cognitive input.",
-      body: "Where and how you live isn't a lifestyle preference — it's an input to how you think. I treat it like one and design it on purpose.",
+      title: "Environment is an input, not a preference.",
+      body: "Where and how you live shapes how you think — the people you see, the air you breathe, the pace of your days. Design it on purpose, or someone else's defaults run you.",
     },
     {
-      title: "Authentic signal compounds.",
-      body: "Performative content decays the moment you stop feeding it. Real signal — built things, honest words — keeps paying out. So I only build the real thing.",
+      title: "Money is the byproduct, not the score.",
+      body: "Get genuinely good at the thing you were put here to do, and the money follows. Chasing the score is how people end up successful and empty — winning a game they didn't choose to play.",
     },
   ] as Principle[],
+  ctaLabel: "Read The Game of Life",
+  ctaHref: "#shop",
 };
 
 export const life = {
   eyebrow: "Life",
   headline: "I live in Bali.",
-  sub: "Mornings in the water, afternoons deep in the work, evenings with the right people. Surf, piano, long dinners, real conversations, room to think. This is the life everything else is built to protect — proof that it's all meant to be enjoyed, not just won.",
+  sub: "I chose Bali on purpose. World-class surf out my front door, deep jungle and waterfalls an hour any direction, and a global community of builders, founders, healers, and adventurers magnetized to the same edge. This isn't the cliché digital-nomad Bali — it's the one where the right people show up because the environment selects for it. Mornings in the water, afternoons deep in the work, evenings around long dinners with real conversations. Cheap enough to live light, hard to leave once you taste it. This is the life everything else is built to protect.",
+  ctaLabel: "Find your place to live",
+  ctaHref: "https://findyourplace.app",
   // Drop real photos into /public/img and list them here; the grid adapts.
   gallery: [
     { src: "/img/life-1.jpg", caption: "The coast" },

@@ -19,7 +19,19 @@ export function Ethos({ bare = false }: { bare?: boolean } = {}) {
     </div>
   );
 
-  if (bare) return grid;
+  const cta = ethos.ctaLabel && ethos.ctaHref && (
+    <div className="mt-10 flex justify-center">
+      <a
+        href={ethos.ctaHref}
+        className="inline-flex items-center gap-2 rounded-full bg-[var(--color-brass)] px-7 py-3 text-sm font-medium tracking-wide text-[var(--color-bg)] transition hover:brightness-110"
+      >
+        {ethos.ctaLabel}
+        <span aria-hidden>→</span>
+      </a>
+    </div>
+  );
+
+  if (bare) return <>{grid}{cta}</>;
 
   return (
     <Section id="ethos" eyebrow={ethos.eyebrow} index="06 — Ethos">
@@ -29,6 +41,7 @@ export function Ethos({ bare = false }: { bare?: boolean } = {}) {
       </Reveal>
 
       <div className="mt-14">{grid}</div>
+      {cta}
     </Section>
   );
 }

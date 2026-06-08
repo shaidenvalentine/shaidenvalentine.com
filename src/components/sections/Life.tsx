@@ -21,11 +21,24 @@ export function Life({ bare = false }: { bare?: boolean } = {}) {
     </div>
   );
 
+  const cta = life.ctaLabel && life.ctaHref ? (
+    <a
+      href={life.ctaHref}
+      target={life.ctaHref.startsWith("http") ? "_blank" : undefined}
+      rel="noreferrer"
+      className="mt-7 inline-flex items-center gap-2 rounded-full bg-[var(--color-brass)] px-7 py-3 text-sm font-medium tracking-wide text-[var(--color-bg)] transition hover:brightness-110"
+    >
+      {life.ctaLabel}
+      <span aria-hidden>{life.ctaHref.startsWith("http") ? "↗" : "→"}</span>
+    </a>
+  ) : null;
+
   if (bare) {
     return (
       <div className="grid gap-12 md:grid-cols-[1fr_1fr] md:items-center">
         <Reveal>
           <p className="body-lg max-w-[46ch] text-[var(--color-ink-muted)]">{life.sub}</p>
+          {cta}
         </Reveal>
         <Reveal delay={0.1}>{gallery}</Reveal>
       </div>
@@ -38,6 +51,7 @@ export function Life({ bare = false }: { bare?: boolean } = {}) {
         <Reveal>
           <h2 className="display-2 max-w-[12ch]">{life.headline}</h2>
           <p className="body-lg mt-8 max-w-[46ch] text-[var(--color-ink-muted)]">{life.sub}</p>
+          {cta}
         </Reveal>
 
         <Reveal delay={0.1}>{gallery}</Reveal>

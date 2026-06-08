@@ -42,17 +42,17 @@ export default function Home() {
         eyebrow="Story"
         index="05 — Who"
         headline="The arc."
-        preview="Raised by a photographer dad and flight attendant mom. Left school early, 80 countries, a viral van, then Bali. The full timeline."
+        preview="Raised by a photographer dad and flight attendant mom. Left school early, 80 countries through my 20s, a viral van, then Bali. The full timeline."
       >
         <Story bare />
       </Collapsible>
 
       <Collapsible
         id="ethos"
-        eyebrow="How I think"
+        eyebrow="Principles"
         index="06 — Lens"
-        headline="The lens behind everything."
-        preview="Four ideas the work actually runs on — design, leverage, environment, signal."
+        headline="Principles I live by."
+        preview="The core ideas from The Game of Life — only play moves you want, integrity is the cheat code, environment is an input, money is a byproduct."
       >
         <Ethos bare />
       </Collapsible>
@@ -62,7 +62,7 @@ export default function Home() {
         eyebrow="Life"
         index="07 — Bali"
         headline="I live in Bali."
-        preview="Surf in the morning, deep work in the afternoon, the right people in the evening. The base everything else is designed around."
+        preview="Why Bali, the rhythm, the scene — and how to find your own place to land."
       >
         <Life bare />
       </Collapsible>
