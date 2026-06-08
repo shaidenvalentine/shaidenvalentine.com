@@ -172,6 +172,7 @@ button { font-family: inherit; cursor: pointer; }
   @media (max-width: 768px) {
     .display-1 { font-size: clamp(2.75rem, 13vw, 5rem); }
     .display-2 { font-size: clamp(2rem, 8vw, 3rem); }
+    .display-sig { font-size: clamp(1.75rem, 8.2vw, 3rem); line-height: 1.08; }
   }
 
   /* ——— Layout containers ——— */
