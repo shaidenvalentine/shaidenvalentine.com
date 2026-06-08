@@ -95,7 +95,7 @@ export function Hero() {
             href="#newsletter"
             className="inline-flex items-center justify-center rounded-full glass px-6 py-3 text-sm font-medium tracking-wide text-[var(--color-ink)] transition hover:bg-[var(--glass-fill-strong)]"
           >
-            Subscribe
+            Follow along
           </a>
         </motion.div>
       </div>

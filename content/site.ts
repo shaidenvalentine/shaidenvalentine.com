@@ -10,7 +10,7 @@ export const site: SiteConfig = {
   // The one external dependency. Paste the src of your beehiiv embed iframe.
   // e.g. "https://embeds.beehiiv.com/XXXXXXXX-XXXX-XXXX"
   beehiivEmbedUrl: "",
-  newsletterHeadline: "Notes from the build",
+  newsletterHeadline: "Follow along.",
   newsletterSub:
-    "The systems, the leverage, and the in-progress thinking behind everything I'm building. No noise.",
+    "Get on the list and follow what I'm building, backing, and learning in real time. Occasional notes — no noise, no spam.",
 };

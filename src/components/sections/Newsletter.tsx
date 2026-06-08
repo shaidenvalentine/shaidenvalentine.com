@@ -10,7 +10,7 @@ export function Newsletter() {
   const [open, setOpen] = useState(false);
 
   return (
-    <Section id="newsletter" eyebrow="Newsletter" index="11 — Subscribe">
+    <Section id="newsletter" eyebrow="Follow along" index="11 — Subscribe">
       <Reveal>
         <div className="mx-auto max-w-2xl rounded-3xl glass-strong p-8 text-center md:p-12">
           <h2 className="display-2">{site.newsletterHeadline}</h2>
@@ -35,10 +35,10 @@ export function Newsletter() {
       <LeadModal
         open={open}
         onClose={() => setOpen(false)}
-        intent="Newsletter — Notes from the build"
-        eyebrow="Newsletter"
+        intent="Follow along — newsletter"
+        eyebrow="Follow along"
         headline="Get on the list"
-        blurb="Occasional notes from the build — the systems, the leverage, the in-progress thinking behind everything I'm making. I only send when there's something real to share."
+        blurb="Follow what I'm building, backing, and learning in real time. Occasional notes — I only send when there's something real to share."
         submitLabel="Subscribe"
       />
     </Section>
