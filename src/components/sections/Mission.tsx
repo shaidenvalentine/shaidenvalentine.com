@@ -2,17 +2,19 @@ import { profile } from "@content/profile";
 import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 
-// Mission pull-quote — sits right after the Hero so the positioning leads,
-// before the work itself (Ventures, Investing, Press). The full bio + chapters
-// arc lives further down in Story for people who want to go deeper.
+// Mission — a typographic transition between the hero and the work, not a
+// second essay. Short headline, quieter support line, generous space.
 export function Mission() {
   return (
     <Section id="mission" eyebrow="Mission" index="00 — Why" className="py-32 md:py-40">
       <Reveal>
         <blockquote className="mx-auto max-w-3xl text-center text-balance">
-          <p className="text-2xl font-light leading-[1.4] tracking-tight text-[var(--color-ink)] md:text-[2rem] md:leading-[1.45]">
-            {profile.mission}
-          </p>
+          <p className="display-2 text-[var(--color-ink)]">{profile.mission}</p>
+          {profile.missionSub && (
+            <p className="body-lg mx-auto mt-7 max-w-[44ch] text-[var(--color-ink-muted)]">
+              {profile.missionSub}
+            </p>
+          )}
         </blockquote>
       </Reveal>
     </Section>

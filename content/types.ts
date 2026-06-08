@@ -13,8 +13,10 @@ export interface Profile {
   tagline: string;
   /** Quick at-a-glance bio shown right under the tagline on the hero. */
   quickBio: string;
-  /** The positioning / mission pull-quote (shown large in Story). */
+  /** Short mantra-style mission headline shown in the Mission section. */
   mission: string;
+  /** Optional supporting tagline below the mission headline. */
+  missionSub?: string;
   /** Short bio paragraph(s) for the Story section. */
   bio: string[];
   location: string;
