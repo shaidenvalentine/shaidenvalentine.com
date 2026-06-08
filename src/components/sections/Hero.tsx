@@ -42,7 +42,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          className="display-sig mt-10 text-[var(--color-ink)]"
+          className="display-sig mt-14 text-[var(--color-ink)]"
         >
           {profile.name}
         </motion.h1>
@@ -51,7 +51,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.1, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
-          className="body-lg mt-7 max-w-[46ch] text-[var(--color-ink)]"
+          className="body-lg mt-10 max-w-[46ch] text-[var(--color-ink)]"
         >
           {profile.tagline}
         </motion.p>
