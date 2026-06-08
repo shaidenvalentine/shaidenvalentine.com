@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { sendMail, esc } from "@/lib/email";
+import { insertApplication, isConfigured } from "@/lib/store";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -11,7 +12,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "Invalid request." }, { status: 400 });
   }
 
-  // Honeypot — bots fill hidden fields. Pretend success, send nothing.
   if (typeof body.company === "string" && body.company.trim() !== "") {
     return NextResponse.json({ message: "Sent." }, { status: 200 });
   }
@@ -27,6 +27,8 @@ export async function POST(req: Request) {
   if (message.length < 20)
     return NextResponse.json({ message: "Tell me a little more (at least a sentence or two)." }, { status: 400 });
 
+  const r = await insertApplication({ name, email, role, link, message });
+
   const html = `
     <div style="font-family:system-ui,sans-serif;line-height:1.6">
       <h2 style="margin:0 0 4px">New application — Work With Me</h2>
@@ -38,7 +40,13 @@ export async function POST(req: Request) {
       <p><strong>Why us / what they bring:</strong></p>
       <p style="white-space:pre-wrap">${esc(message)}</p>
     </div>`;
+  sendMail(`Application: ${name} (${role || "—"})`, html, email).catch(() => undefined);
 
-  const result = await sendMail(`Application: ${name} (${role || "—"})`, html, email);
-  return NextResponse.json({ message: result.message }, { status: result.status });
+  if (r.ok) return NextResponse.json({ message: "Sent." }, { status: 200 });
+  if (!isConfigured())
+    return NextResponse.json(
+      { message: "Submission isn't fully wired yet. Try again in a moment." },
+      { status: 503 }
+    );
+  return NextResponse.json({ message: r.message }, { status: 500 });
 }
