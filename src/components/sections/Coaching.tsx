@@ -13,7 +13,7 @@ export function Coaching() {
     <Section id="coaching" eyebrow={coaching.eyebrow} index="08 — Coaching">
       <Reveal>
         <h2 className="display-2 max-w-[16ch]">{coaching.headline}</h2>
-        <p className="body-lg mt-10 max-w-[56ch] text-[var(--color-ink-muted)]">{coaching.sub}</p>
+        <p className="body-lg mt-16 max-w-[56ch] text-[var(--color-ink-muted)]">{coaching.sub}</p>
       </Reveal>
 
       <div className="mt-14 grid gap-5 md:grid-cols-2">
@@ -27,7 +27,7 @@ export function Coaching() {
                 </span>
               </div>
 
-              <p className="body-base mt-6 flex-1 text-[var(--color-ink-muted)]">{offer.blurb}</p>
+              <p className="body-base mt-10 flex-1 text-[var(--color-ink-muted)]">{offer.blurb}</p>
 
               <button
                 type="button"

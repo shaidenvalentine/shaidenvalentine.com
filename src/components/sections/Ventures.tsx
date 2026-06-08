@@ -10,7 +10,7 @@ export function Ventures() {
     <Section id="ventures" eyebrow="Companies" index="01 — Building">
       <Reveal>
         <h2 className="display-2 max-w-[18ch]">My companies.</h2>
-        <p className="body-lg mt-10 max-w-[52ch] text-[var(--color-ink-muted)]">
+        <p className="body-lg mt-16 max-w-[52ch] text-[var(--color-ink-muted)]">
           Different surfaces — software, hardware, environments — each designed
           to run without me. Tap in.
         </p>
@@ -37,7 +37,7 @@ export function Ventures() {
                   <h3 className="display-3 text-[var(--color-ink)]">{v.name}</h3>
                 </div>
 
-                <p className="body-base mt-6 flex-1 text-[var(--color-ink-muted)]">{v.blurb}</p>
+                <p className="body-base mt-10 flex-1 text-[var(--color-ink-muted)]">{v.blurb}</p>
 
                 <div className="mt-6 border-t border-[var(--color-line)] pt-4">
                   <span className="label-mono block text-[var(--color-brass)]">{v.status}</span>

@@ -14,7 +14,7 @@ export function Newsletter() {
       <Reveal>
         <div className="mx-auto max-w-2xl rounded-3xl glass-strong p-8 text-center md:p-12">
           <h2 className="display-2">{site.newsletterHeadline}</h2>
-          <p className="body-lg mx-auto mt-10 max-w-[48ch] text-[var(--color-ink-muted)]">
+          <p className="body-lg mx-auto mt-16 max-w-[48ch] text-[var(--color-ink-muted)]">
             {site.newsletterSub}
           </p>
 

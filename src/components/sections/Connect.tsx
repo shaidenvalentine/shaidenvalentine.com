@@ -12,7 +12,7 @@ export function Connect() {
         <div className="grid gap-10 rounded-3xl glass-strong p-8 md:grid-cols-[1fr_auto] md:items-center md:p-12">
           <div className="flex flex-col">
             <h2 className="display-2">Let&apos;s stay in orbit.</h2>
-            <p className="body-lg mt-7 max-w-[42ch] text-[var(--color-ink-muted)]">
+            <p className="body-lg mt-12 max-w-[42ch] text-[var(--color-ink-muted)]">
               Save my card, or find me anywhere below. Everything routes back here.
             </p>
 

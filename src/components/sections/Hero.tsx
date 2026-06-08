@@ -32,24 +32,6 @@ export function Hero() {
           decoding="async"
         />
 
-        {/* Live location pill — pinned to the bottom edge of the portrait,
-            centered. Pulsing green dot signals "live / currently here". */}
-        {profile.currentLocation && (
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute -bottom-3 left-1/2 z-20 -translate-x-1/2"
-          >
-            <div className="flex items-center gap-2.5 rounded-full border border-[var(--color-line-strong)] bg-black/65 px-3.5 py-1.5 text-xs text-[var(--color-ink)] backdrop-blur-md">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-              </span>
-              <span className="label-mono tracking-wider">{profile.currentLocation}</span>
-            </div>
-          </motion.div>
-        )}
       </motion.div>
 
       <div className="container-page relative z-10 flex flex-col items-center pb-24 text-center">
@@ -62,12 +44,30 @@ export function Hero() {
           {profile.name}
         </motion.h1>
 
+        {/* Live location pill — sits below the name, full opacity (no gradient over it). */}
+        {profile.currentLocation && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.42, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-8"
+          >
+            <div className="flex items-center gap-2.5 rounded-full border border-[var(--color-line-strong)] bg-[var(--glass-fill-strong)] px-3.5 py-1.5 text-xs text-[var(--color-ink)] backdrop-blur-md">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+              </span>
+              <span className="label-mono tracking-wider">{profile.currentLocation}</span>
+            </div>
+          </motion.div>
+        )}
+
         {/* Identifier line — the four-word "who I am" */}
         <motion.p
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.1, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
-          className="body-lg mt-20 font-medium tracking-tight text-[var(--color-ink)]"
+          className="body-lg mt-10 font-medium tracking-tight text-[var(--color-ink)]"
         >
           {profile.tagline}
         </motion.p>

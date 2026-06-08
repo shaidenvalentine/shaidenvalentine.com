@@ -100,7 +100,7 @@ export function Life({ bare = false }: { bare?: boolean } = {}) {
       <div className="grid gap-12 md:grid-cols-[1fr_1fr] md:items-center">
         <Reveal>
           <h2 className="display-2 max-w-[12ch]">{life.headline}</h2>
-          <p className="body-lg mt-10 max-w-[46ch] text-[var(--color-ink-muted)]">{life.sub}</p>
+          <p className="body-lg mt-16 max-w-[46ch] text-[var(--color-ink-muted)]">{life.sub}</p>
           {ctas}
         </Reveal>
 

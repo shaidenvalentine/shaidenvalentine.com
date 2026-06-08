@@ -11,7 +11,7 @@ export function Investing() {
       <div className="grid gap-12 md:grid-cols-[1fr_1fr] md:items-start">
         <Reveal>
           <h2 className="display-2 max-w-[14ch]">{investing.headline}</h2>
-          <p className="body-lg mt-10 max-w-[46ch] text-[var(--color-ink-muted)]">{investing.sub}</p>
+          <p className="body-lg mt-16 max-w-[46ch] text-[var(--color-ink-muted)]">{investing.sub}</p>
           <a
             href={investing.ctaHref}
             onClick={() => track("pitch_cta")}

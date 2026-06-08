@@ -12,7 +12,7 @@ export function Press() {
     <Section id="press" eyebrow={press.eyebrow} index="03 — Press">
       <Reveal>
         <h2 className="display-2 max-w-[14ch]">{press.headline}</h2>
-        <p className="body-lg mt-10 max-w-[52ch] text-[var(--color-ink-muted)]">{press.sub}</p>
+        <p className="body-lg mt-16 max-w-[52ch] text-[var(--color-ink-muted)]">{press.sub}</p>
       </Reveal>
 
       <ul className="mt-14 grid gap-4 md:grid-cols-3">

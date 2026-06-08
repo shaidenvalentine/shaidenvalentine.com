@@ -117,7 +117,7 @@ button { font-family: inherit; cursor: pointer; }
     font-family: var(--font-display);
     font-weight: 500;
     font-size: clamp(2.25rem, 5vw, 4.25rem);
-    line-height: 1.04;
+    line-height: 1.12;
     letter-spacing: -0.03em;
   }
   .display-3 {
