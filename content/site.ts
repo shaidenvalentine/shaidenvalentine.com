@@ -3,9 +3,9 @@ import type { SiteConfig } from "./types";
 export const site: SiteConfig = {
   domain: "shaidenvalentine.com",
   baseUrl: "https://shaidenvalentine.com",
-  seoTitle: "Shaiden Valentine — Founder",
+  seoTitle: "Shaiden Valentine — Entrepreneur, Investor, Dreamer",
   seoDescription:
-    "Shaiden Valentine builds self-sustaining companies, systems, and environments. Orbit, Mothership, Elysium — architecture that compounds without him.",
+    "Shaiden Valentine — entrepreneur, investor, and dreamer based in Bali. Building companies like Orbit, Mothership, and Elysium, backing founders building the future, and living all of it to the fullest.",
   ogImage: "/og.jpg",
   // The one external dependency. Paste the src of your beehiiv embed iframe.
   // e.g. "https://embeds.beehiiv.com/XXXXXXXX-XXXX-XXXX"

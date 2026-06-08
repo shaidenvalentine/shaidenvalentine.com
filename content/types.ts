@@ -65,6 +65,9 @@ export interface Product {
   image?: string;
   /** Hosted checkout (Gumroad / Lemon Squeezy). Link out, no payment API. */
   checkoutUrl: string;
+  /** If set, the product is a free direct download (e.g. a PDF in /public).
+   *  Takes priority over checkout — renders a "Download free" button. */
+  downloadUrl?: string;
 }
 
 export interface SiteConfig {

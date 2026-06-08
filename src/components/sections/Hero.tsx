@@ -21,17 +21,11 @@ export function Hero() {
         {/* Portrait — no border, edges fade gradually into the dark page
             backdrop via a soft radial mask. */}
         <motion.div
-          style={{
-            y: portraitY,
-            WebkitMaskImage:
-              "radial-gradient(closest-side at 50% 50%, #000 76%, rgba(0,0,0,0.65) 92%, transparent 100%)",
-            maskImage:
-              "radial-gradient(closest-side at 50% 50%, #000 76%, rgba(0,0,0,0.65) 92%, transparent 100%)",
-          }}
+          style={{ y: portraitY }}
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="relative aspect-[4/5] w-[min(96vw,42rem)]"
+          className="hero-portrait relative aspect-[4/5] w-screen ml-[calc(50%-50vw)] mr-[calc(50%-50vw)] sm:w-[min(96vw,42rem)] sm:ml-0 sm:mr-0"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -48,7 +42,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          className="display-sig mt-8 text-[var(--color-ink)]"
+          className="display-sig mt-10 text-[var(--color-ink)]"
         >
           {profile.name}
         </motion.h1>
@@ -57,7 +51,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.1, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
-          className="body-lg mt-4 max-w-[46ch] text-[var(--color-ink)]"
+          className="body-lg mt-7 max-w-[46ch] text-[var(--color-ink)]"
         >
           {profile.tagline}
         </motion.p>

@@ -15,10 +15,10 @@ export const course = {
   eyebrow: "The Course",
   title: "Find Your Purpose",
   subtitle:
-    "A 10-part video series on discovering what you were put on this earth to do — and building a life that actually runs on it. The framework I used to go from no degree, no job, and near-homeless to free.",
+    "A 10-part video series on discovering what you were put on this earth to do — and building a life that actually runs on it. The exact framework behind how I found my own purpose and built everything around it.",
   price: "$—", // TODO set price
   checkoutUrl: "#", // TODO hosted course / checkout link
-  ctaLabel: "Get the course",
+  ctaLabel: "Join the waitlist",
   note: "Lifetime access · watch at your own pace",
   outcomes: [
     "Get brutally clear on your ikigai — your reason for being.",

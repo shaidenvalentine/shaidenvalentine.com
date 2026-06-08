@@ -25,7 +25,7 @@ export const collab = {
   feedback: {
     eyebrow: "Anonymous Feedback",
     headline: "Tell me what I need to hear.",
-    sub: "Everyone has opinions of each other; almost no one gets a space to voice them. This is that space. Fully anonymous — no name, no email, nothing tracked. If you think I'm off-center, or you see something I can't, say it.",
+    sub: "I believe deeply that the fastest way to evolve into the best version of myself is honest feedback from the people around me — and that you'll only ever get it if it's truly safe to give. So this is that space. Fully anonymous — no name, no email, nothing tracked. Literally anything goes; you will not offend me. Tell me my blind spots, where I'm off-center, what you see that I can't. I'm reading every word with an open mind.",
     // Optional framing for what the note is about.
     topics: [
       "General",

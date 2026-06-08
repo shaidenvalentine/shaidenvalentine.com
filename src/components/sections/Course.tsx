@@ -1,12 +1,13 @@
 "use client";
 
-import { track } from "@vercel/analytics";
+import { useState } from "react";
 import { course } from "@content/course";
 import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
+import { LeadModal } from "@/components/ui/LeadModal";
 
 export function Course() {
-  const external = course.checkoutUrl.startsWith("http");
+  const [open, setOpen] = useState(false);
 
   return (
     <Section id="course" eyebrow={course.eyebrow} index="09 — Course">
@@ -30,22 +31,14 @@ export function Course() {
             </ul>
 
             <div className="mt-8 flex flex-wrap items-center gap-5">
-              {course.price.includes("—") || course.checkoutUrl === "#" ? (
-                <span className="inline-flex items-center justify-center rounded-full glass px-8 py-3.5 text-sm font-medium tracking-wide text-[var(--color-ink-muted)]">
-                  Coming soon
-                </span>
-              ) : (
-                <a
-                  href={course.checkoutUrl}
-                  target={external ? "_blank" : undefined}
-                  rel="noreferrer"
-                  onClick={() => track("course_cta")}
-                  className="inline-flex items-center justify-center rounded-full bg-[var(--color-brass)] px-8 py-3.5 text-sm font-medium tracking-wide text-[var(--color-bg)] transition hover:brightness-110"
-                >
-                  {course.ctaLabel} · {course.price}
-                </a>
-              )}
-              <span className="label-mono">{course.note}</span>
+              <button
+                type="button"
+                onClick={() => setOpen(true)}
+                className="inline-flex items-center justify-center rounded-full bg-[var(--color-brass)] px-8 py-3.5 text-sm font-medium tracking-wide text-[var(--color-bg)] transition hover:brightness-110"
+              >
+                {course.ctaLabel}
+              </button>
+              <span className="label-mono">In production · join early</span>
             </div>
           </div>
         </Reveal>
@@ -77,6 +70,16 @@ export function Course() {
           </ul>
         </Reveal>
       </div>
+
+      <LeadModal
+        open={open}
+        onClose={() => setOpen(false)}
+        intent="Waitlist — Find Your Purpose course"
+        eyebrow="Waitlist"
+        headline="Get early access"
+        blurb="The series is in production. Leave your details and you'll be first to know — and first in line — when it drops."
+        submitLabel="Join the waitlist"
+      />
     </Section>
   );
 }

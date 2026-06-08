@@ -83,11 +83,11 @@ export const ethos = {
 export const life = {
   eyebrow: "Life",
   headline: "I live in Bali.",
-  sub: "Bali is home base — not an escape, but the environment the rest of the architecture is designed around. I run everything from here: sun, deep work, the right people, and a pace that lets the long game actually play out.",
+  sub: "Mornings in the water, afternoons deep in the work, evenings with the right people. Surf, piano, long dinners, real conversations, room to think. This is the life everything else is built to protect — proof that it's all meant to be enjoyed, not just won.",
   // Drop real photos into /public/img and list them here; the grid adapts.
   gallery: [
-    { src: "/img/life-1.jpg", caption: "The build" },
-    { src: "/img/life-2.jpg", caption: "Bali" },
-    { src: "/img/life-3.jpg", caption: "The rhythm" },
+    { src: "/img/life-1.jpg", caption: "The coast" },
+    { src: "/img/life-2.jpg", caption: "The jungle" },
+    { src: "/img/life-3.jpg", caption: "The surf" },
   ],
 };

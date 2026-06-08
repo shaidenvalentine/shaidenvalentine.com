@@ -14,12 +14,14 @@ import { Newsletter } from "@/components/sections/Newsletter";
 import { Shop } from "@/components/sections/Shop";
 import { Feedback } from "@/components/sections/Feedback";
 import { Connect } from "@/components/sections/Connect";
+import { JumpNav } from "@/components/ui/JumpNav";
 import { profile } from "@content/profile";
 import { site } from "@content/site";
 
 export default function Home() {
   return (
     <main>
+      <JumpNav />
       <Hero />
       {/* Mission pull-quote leads — the positioning before the work */}
       <Mission />
