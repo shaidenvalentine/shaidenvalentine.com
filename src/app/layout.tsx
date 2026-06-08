@@ -1,16 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { Orbitron, Space_Grotesk, Geist, Geist_Mono } from "next/font/google";
+import { Permanent_Marker, Space_Grotesk, Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { site } from "@content/site";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
 import "./globals.css";
 
-// Signature — Orbitron. Geometric futuristic display sans, sci-fi/tech feel.
-// Used for Shaiden's name as the hero display moment.
-const signature = Orbitron({
+// Signature — Permanent Marker. Bold brush/marker hand-lettered feel
+// (matches the look Shaiden likes from his Beacons page). Used for his name.
+const signature = Permanent_Marker({
   subsets: ["latin"],
   variable: "--font-signature",
-  weight: ["500", "600", "700"],
+  weight: ["400"],
   display: "swap",
 });
 

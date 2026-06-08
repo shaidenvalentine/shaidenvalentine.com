@@ -30,4 +30,22 @@ export const ventures: Venture[] = [
     href: "https://elysium.house",
     accent: "#7A6647",
   },
+  {
+    id: "findyourplace",
+    name: "Find Your Place",
+    blurb:
+      "A city-matching engine that finds where you'll actually thrive — scored to your life and values, not someone else's rankings. The world is big; most people never find their place in it.",
+    status: "In private beta",
+    href: "#", // TODO: set live URL when ready
+    accent: "#8A6A3A",
+  },
+  {
+    id: "pristinebali",
+    name: "Pristine Bali",
+    blurb:
+      "TODO — one-paragraph description of Pristine Bali. (Tell me what it is and I'll write this.)",
+    status: "Coming soon",
+    href: "#", // TODO: set live URL when ready
+    accent: "#1F4A50",
+  },
 ];

@@ -9,9 +9,7 @@ export function Ventures() {
   return (
     <Section id="ventures" eyebrow="What I'm Building" index="01 — Ventures">
       <Reveal>
-        <h2 className="display-2 max-w-[18ch]">
-          Three companies, one thesis.
-        </h2>
+        <h2 className="display-2 max-w-[18ch]">What I&apos;m building.</h2>
         <p className="body-lg mt-5 max-w-[52ch] text-[var(--color-ink-muted)]">
           Different surfaces — software, hardware, environments — each designed
           to run without me. Tap in.
@@ -19,15 +17,10 @@ export function Ventures() {
       </Reveal>
 
       <div className="mt-14 grid gap-5 md:grid-cols-3">
-        {ventures.map((v, i) => (
-          <Reveal key={v.id} delay={i * 0.08}>
-            <a
-              href={v.href}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => track("venture_click", { venture: v.id })}
-              className="group relative flex h-full flex-col overflow-hidden rounded-3xl glass p-7 transition duration-500 hover:-translate-y-1"
-            >
+        {ventures.map((v, i) => {
+          const live = v.href.startsWith("http");
+          const inner = (
+            <>
               {/* orbital glow */}
               <div
                 className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full opacity-30 blur-3xl transition duration-700 group-hover:opacity-60"
@@ -44,25 +37,46 @@ export function Ventures() {
                   <h3 className="display-3 text-[var(--color-ink)]">{v.name}</h3>
                 </div>
 
-                <p className="body-base mt-5 flex-1 text-[var(--color-ink-muted)]">
-                  {v.blurb}
-                </p>
+                <p className="body-base mt-5 flex-1 text-[var(--color-ink-muted)]">{v.blurb}</p>
 
                 <div className="mt-6 border-t border-[var(--color-line)] pt-4">
-                  <span className="label-mono block text-[var(--color-brass)]">
-                    {v.status}
-                  </span>
-                  <span className="mt-4 inline-flex items-center gap-2 text-sm text-[var(--color-ink)]">
-                    Enter {v.name}
-                    <span className="transition-transform duration-300 group-hover:translate-x-1">
-                      →
+                  <span className="label-mono block text-[var(--color-brass)]">{v.status}</span>
+                  {live ? (
+                    <span className="mt-4 inline-flex items-center gap-2 text-sm text-[var(--color-ink)]">
+                      Enter {v.name}
+                      <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
                     </span>
-                  </span>
+                  ) : (
+                    <span className="mt-4 inline-flex text-sm text-[var(--color-ink-muted)]">
+                      Coming soon
+                    </span>
+                  )}
                 </div>
               </div>
-            </a>
-          </Reveal>
-        ))}
+            </>
+          );
+
+          const cls =
+            "group relative flex h-full flex-col overflow-hidden rounded-3xl glass p-7 transition duration-500";
+
+          return (
+            <Reveal key={v.id} delay={(i % 3) * 0.08}>
+              {live ? (
+                <a
+                  href={v.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => track("venture_click", { venture: v.id })}
+                  className={`${cls} hover:-translate-y-1`}
+                >
+                  {inner}
+                </a>
+              ) : (
+                <div className={cls}>{inner}</div>
+              )}
+            </Reveal>
+          );
+        })}
       </div>
     </Section>
   );
