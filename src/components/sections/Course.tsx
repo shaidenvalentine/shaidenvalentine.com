@@ -19,7 +19,7 @@ export function Course() {
           <h2 className="display-2 mt-3 mx-auto max-w-[16ch] text-[var(--color-ink)]">
             {course.title}
           </h2>
-          <p className="body-lg mx-auto mt-8 max-w-[44ch] text-[var(--color-ink-muted)]">
+          <p className="body-lg mx-auto mt-10 max-w-[44ch] text-[var(--color-ink-muted)]">
             {course.subtitle}
           </p>
 

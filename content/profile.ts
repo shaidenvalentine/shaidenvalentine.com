@@ -15,6 +15,7 @@ export const profile: Profile = {
     "So I left school early and went to use both. No degree, no job, ever — just the world as my classroom and whatever I could build to stay in it. One van I converted in lockdown went viral and became a million-dollar company, and that was my proof: I could see an opportunity nobody else saw, turn it into something real, and let it run without me. Today I build and back companies from Bali, still chasing the next thing worth making. The timeline tells the rest.",
   ],
   location: "Builder & investor · Bali",
+  currentLocation: "Bali, Indonesia",
   // TODO: drop real files into /public/video and /public/img, then update paths.
   heroVideo: "/video/hero-portrait.mp4",
   heroPoster: "/img/hero-poster.jpg",

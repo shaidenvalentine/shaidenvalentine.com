@@ -10,7 +10,7 @@ export function Ventures() {
     <Section id="ventures" eyebrow="Companies" index="01 — Building">
       <Reveal>
         <h2 className="display-2 max-w-[18ch]">My companies.</h2>
-        <p className="body-lg mt-8 max-w-[52ch] text-[var(--color-ink-muted)]">
+        <p className="body-lg mt-10 max-w-[52ch] text-[var(--color-ink-muted)]">
           Different surfaces — software, hardware, environments — each designed
           to run without me. Tap in.
         </p>

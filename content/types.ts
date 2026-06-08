@@ -22,6 +22,8 @@ export interface Profile {
   /** Short bio paragraph(s) for the Story section. */
   bio: string[];
   location: string;
+  /** Real-time current location shown as a pulsing pill at the top of the hero. */
+  currentLocation?: string;
   /** Ambient hero portrait loop. Put a real .mp4 at /public/video/. */
   heroVideo: string;
   /** Poster / fallback still shown before play and when WebGL is off. */
