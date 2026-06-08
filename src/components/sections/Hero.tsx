@@ -78,7 +78,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, delay: 0.36, ease: [0.16, 1, 0.3, 1] }}
-            className="body-base mt-6 max-w-[52ch] text-[var(--color-ink-muted)]"
+            className="body-base mt-10 max-w-[52ch] text-[var(--color-ink-muted)]"
           >
             {profile.taglineSub}
           </motion.p>
