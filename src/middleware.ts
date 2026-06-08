@@ -1,38 +1,29 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { ADMIN_COOKIE, adminToken } from "@/lib/adminAuth";
 
-// HTTP Basic Auth gate for /admin. No DB — credentials come from env.
-// Set ADMIN_USER + ADMIN_PASSWORD locally (.env.local) and in Vercel.
+// Cookie-based gate for /admin. Single password (default "password" or
+// ADMIN_PASSWORD env). The login page + API are excluded so people can
+// reach them while unauthenticated.
 
-export const config = { matcher: "/admin/:path*" };
+export const config = { matcher: ["/admin/:path*", "/api/admin/:path*"] };
 
-export function middleware(req: NextRequest) {
-  const user = process.env.ADMIN_USER;
-  const pass = process.env.ADMIN_PASSWORD;
+export async function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
 
-  // If unconfigured, lock it down rather than leaving it open.
-  const challenge = () =>
-    new NextResponse("Authentication required.", {
-      status: 401,
-      headers: { "WWW-Authenticate": 'Basic realm="admin", charset="UTF-8"' },
-    });
-
-  if (!user || !pass) return challenge();
-
-  const header = req.headers.get("authorization");
-  if (!header?.startsWith("Basic ")) return challenge();
-
-  let decoded = "";
-  try {
-    decoded = atob(header.slice(6));
-  } catch {
-    return challenge();
+  // Allow the login page and login API through unauthenticated.
+  if (pathname === "/admin/login" || pathname === "/api/admin/login") {
+    return NextResponse.next();
   }
-  const i = decoded.indexOf(":");
-  const u = decoded.slice(0, i);
-  const p = decoded.slice(i + 1);
 
-  if (u !== user || p !== pass) return challenge();
+  const cookie = req.cookies.get(ADMIN_COOKIE)?.value;
+  const expected = await adminToken();
 
+  if (!cookie || cookie !== expected) {
+    const url = req.nextUrl.clone();
+    url.pathname = "/admin/login";
+    url.searchParams.set("next", pathname);
+    return NextResponse.redirect(url);
+  }
   return NextResponse.next();
 }

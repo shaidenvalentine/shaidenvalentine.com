@@ -1,6 +1,7 @@
 import { listLeads, isConfigured } from "@/lib/store";
 import { fmtDate, toCsv } from "../util";
 import { StatusPill, DeleteButton } from "../RowActions";
+import { Notes, MarkAllReadButton } from "../Notes";
 import { Search } from "../Search";
 
 export const dynamic = "force-dynamic";
@@ -46,6 +47,7 @@ export default async function LeadsPage({ searchParams }: { searchParams: Promis
 
       <div className="flex flex-wrap items-center gap-3">
         <Search placeholder="Search name, email, intent…" />
+        <MarkAllReadButton table="leads" />
         <a
           href={csvHref}
           download={`leads-${new Date().toISOString().slice(0, 10)}.csv`}
@@ -108,7 +110,12 @@ export default async function LeadsPage({ searchParams }: { searchParams: Promis
                       <a href={`https://instagram.com/${l.instagram.replace(/^@/, "")}`} target="_blank" rel="noreferrer" className="link-underline">{l.instagram}</a>
                     ) : <span className="text-[var(--color-ink-whisper)]">—</span>}
                   </td>
-                  <td className="p-4 align-top text-right"><DeleteButton table="leads" id={l.id} /></td>
+                  <td className="p-4 align-top text-right">
+                    <div className="flex flex-col items-end gap-2">
+                      <Notes table="leads" id={l.id} initial={l.notes} />
+                      <DeleteButton table="leads" id={l.id} />
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>

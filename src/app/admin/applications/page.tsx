@@ -1,6 +1,7 @@
 import { listApplications, isConfigured } from "@/lib/store";
 import { fmtDate, toCsv } from "../util";
 import { StatusPill, DeleteButton } from "../RowActions";
+import { Notes, MarkAllReadButton } from "../Notes";
 import { Search } from "../Search";
 
 export const dynamic = "force-dynamic";
@@ -46,6 +47,7 @@ export default async function ApplicationsPage({ searchParams }: { searchParams:
 
       <div className="flex flex-wrap items-center gap-3">
         <Search placeholder="Search name, email, message…" />
+        <MarkAllReadButton table="applications" />
         <a
           href={csvHref}
           download={`applications-${new Date().toISOString().slice(0, 10)}.csv`}
@@ -96,6 +98,10 @@ export default async function ApplicationsPage({ searchParams }: { searchParams:
                   {a.link && <a href={a.link} target="_blank" rel="noreferrer" className="link-underline">{a.link}</a>}
                 </div>
                 <DeleteButton table="applications" id={a.id} />
+              </div>
+              <div className="mt-3 border-t border-[var(--color-line)] pt-3">
+                <span className="label-mono mb-2 block">Private notes</span>
+                <Notes table="applications" id={a.id} initial={a.notes} />
               </div>
             </li>
           ))}

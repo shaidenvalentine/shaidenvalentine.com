@@ -22,8 +22,9 @@ async function ensureTables() {
       created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
   `;
-  // status migration for older rows (idempotent)
+  // idempotent migrations for older rows
   await sql/* sql */`ALTER TABLE leads ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'new'`;
+  await sql/* sql */`ALTER TABLE leads ADD COLUMN IF NOT EXISTS notes TEXT`;
   await sql/* sql */`
     CREATE TABLE IF NOT EXISTS applications (
       id          SERIAL PRIMARY KEY,
@@ -33,9 +34,11 @@ async function ensureTables() {
       link        TEXT,
       message     TEXT NOT NULL,
       status      TEXT NOT NULL DEFAULT 'new',
+      notes       TEXT,
       created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
   `;
+  await sql/* sql */`ALTER TABLE applications ADD COLUMN IF NOT EXISTS notes TEXT`;
   // Anonymous feedback — by design no name/email/IP is stored.
   await sql/* sql */`
     CREATE TABLE IF NOT EXISTS feedback (
@@ -58,6 +61,7 @@ export interface LeadRow {
   instagram: string | null;
   intent: string;
   status: string;
+  notes: string | null;
   created_at: string;
 }
 
@@ -85,7 +89,7 @@ export async function listLeads(limit = 500): Promise<LeadRow[]> {
   if (!isConfigured()) return [];
   await ensureTables();
   const { rows } = await sql<LeadRow>/* sql */`
-    SELECT id, name, email, whatsapp, instagram, intent, status, created_at
+    SELECT id, name, email, whatsapp, instagram, intent, status, notes, created_at
     FROM leads ORDER BY created_at DESC LIMIT ${limit}
   `;
   return rows;
@@ -101,6 +105,7 @@ export interface ApplicationRow {
   link: string | null;
   message: string;
   status: string;
+  notes: string | null;
   created_at: string;
 }
 
@@ -128,10 +133,22 @@ export async function listApplications(limit = 500): Promise<ApplicationRow[]> {
   if (!isConfigured()) return [];
   await ensureTables();
   const { rows } = await sql<ApplicationRow>/* sql */`
-    SELECT id, name, email, role, link, message, status, created_at
+    SELECT id, name, email, role, link, message, status, notes, created_at
     FROM applications ORDER BY created_at DESC LIMIT ${limit}
   `;
   return rows;
+}
+
+export async function updateNotes(table: "leads" | "applications", id: number, notes: string) {
+  if (!isConfigured()) return;
+  if (table === "leads") await sql`UPDATE leads SET notes = ${notes} WHERE id = ${id}`;
+  else await sql`UPDATE applications SET notes = ${notes} WHERE id = ${id}`;
+}
+
+export async function markAllRead(table: "leads" | "applications") {
+  if (!isConfigured()) return;
+  if (table === "leads") await sql`UPDATE leads SET status = 'replied' WHERE status = 'new'`;
+  else await sql`UPDATE applications SET status = 'replied' WHERE status = 'new'`;
 }
 
 // ───── feedback (anonymous — no PII) ─────────────────────────────────────
