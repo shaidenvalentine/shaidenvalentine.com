@@ -1,79 +1,87 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { course } from "@content/course";
 import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { LeadModal } from "@/components/ui/LeadModal";
 
 export function Course() {
-  const [open, setOpen] = useState(false);
+  const [waitlistOpen, setWaitlistOpen] = useState(false);
+  const [showCurriculum, setShowCurriculum] = useState(false);
 
   return (
     <Section id="course" eyebrow={course.eyebrow} index="09 — Course">
-      <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:items-start">
-        {/* Pitch + buy */}
+      <div className="mx-auto max-w-3xl text-center">
         <Reveal>
-          <div className="lg:sticky lg:top-24">
-            <span className="label-mono">10-part video series</span>
-            <h2 className="display-2 mt-3 max-w-[12ch]">{course.title}</h2>
-            <p className="body-lg mt-5 max-w-[48ch] text-[var(--color-ink-muted)]">
-              {course.subtitle}
-            </p>
+          <span className="label-mono">10-part video series</span>
+          <h2 className="display-2 mt-3 mx-auto max-w-[16ch] text-[var(--color-ink)]">
+            {course.title}
+          </h2>
+          <p className="body-lg mx-auto mt-5 max-w-[44ch] text-[var(--color-ink-muted)]">
+            {course.subtitle}
+          </p>
 
-            <ul className="mt-7 flex flex-col gap-3">
-              {course.outcomes.map((o, i) => (
-                <li key={i} className="flex items-start gap-3 body-base text-[var(--color-ink)]">
-                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-brass)]" />
-                  {o}
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-8 flex flex-wrap items-center gap-5">
-              <button
-                type="button"
-                onClick={() => setOpen(true)}
-                className="inline-flex items-center justify-center rounded-full bg-[var(--color-brass)] px-8 py-3.5 text-sm font-medium tracking-wide text-[var(--color-bg)] transition hover:brightness-110"
-              >
-                {course.ctaLabel}
-              </button>
-              <span className="label-mono">In production · join early</span>
-            </div>
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-5">
+            <button
+              type="button"
+              onClick={() => setWaitlistOpen(true)}
+              className="inline-flex items-center justify-center rounded-full bg-[var(--color-brass)] px-8 py-3.5 text-sm font-medium tracking-wide text-[var(--color-bg)] transition hover:brightness-110"
+            >
+              {course.ctaLabel}
+            </button>
+            <span className="label-mono">In production · join early</span>
           </div>
-        </Reveal>
 
-        {/* Curriculum */}
-        <Reveal delay={0.1}>
-          <ul className="overflow-hidden rounded-3xl border border-[var(--color-line)]">
-            {course.modules.map((m, i) => (
-              <li
-                key={m.n}
-                className={`flex items-start gap-5 p-5 md:p-6 ${
-                  i > 0 ? "border-t border-[var(--color-line)]" : ""
-                }`}
-              >
-                <span className="font-mono text-sm text-[var(--color-brass)]">{m.n}</span>
-                <div className="flex-1">
-                  <h3 className="text-base font-medium text-[var(--color-ink)]">{m.title}</h3>
-                  <p className="body-sm mt-1">{m.blurb}</p>
-                </div>
-                {/* lock glyph — signals the paywall */}
-                <span aria-hidden className="mt-0.5 text-[var(--color-ink-whisper)]">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <rect x="3" y="11" width="18" height="11" rx="2" />
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                  </svg>
-                </span>
-              </li>
-            ))}
-          </ul>
+          {/* curriculum reveal — quiet link that opens the full 10 modules */}
+          <button
+            type="button"
+            onClick={() => setShowCurriculum((s) => !s)}
+            aria-expanded={showCurriculum}
+            className="mx-auto mt-10 inline-flex items-center gap-2 text-sm text-[var(--color-ink-muted)] transition hover:text-[var(--color-ink)]"
+          >
+            {showCurriculum ? "Hide the curriculum" : "See the curriculum"}
+            <span
+              aria-hidden
+              className={`text-[var(--color-brass)] transition-transform duration-300 ${
+                showCurriculum ? "rotate-180" : ""
+              }`}
+            >
+              ▾
+            </span>
+          </button>
         </Reveal>
       </div>
 
+      <AnimatePresence initial={false}>
+        {showCurriculum && (
+          <motion.div
+            key="curriculum"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            className="overflow-hidden"
+          >
+            <ul className="mx-auto mt-10 grid max-w-3xl gap-px overflow-hidden rounded-3xl border border-[var(--color-line)] bg-[var(--color-line)] sm:grid-cols-2">
+              {course.modules.map((m) => (
+                <li key={m.n} className="flex items-start gap-4 bg-[var(--color-bg)] p-5">
+                  <span className="font-mono text-sm text-[var(--color-brass)]">{m.n}</span>
+                  <div className="flex-1">
+                    <h3 className="text-base font-medium text-[var(--color-ink)]">{m.title}</h3>
+                    <p className="body-sm mt-1">{m.blurb}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <LeadModal
-        open={open}
-        onClose={() => setOpen(false)}
+        open={waitlistOpen}
+        onClose={() => setWaitlistOpen(false)}
         intent="Waitlist — Find Your Purpose course"
         eyebrow="Waitlist"
         headline="Get early access"

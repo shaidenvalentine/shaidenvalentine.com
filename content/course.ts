@@ -14,8 +14,7 @@ export interface CourseModule {
 export const course = {
   eyebrow: "The Course",
   title: "Find Your Purpose",
-  subtitle:
-    "A 10-part video series on discovering what you were put on this earth to do — and building a life that actually runs on it. The exact framework behind how I found my own purpose and built everything around it.",
+  subtitle: "A 10-part video series on finding your purpose — and building a life that actually runs on it.",
   price: "$—", // TODO set price
   checkoutUrl: "#", // TODO hosted course / checkout link
   ctaLabel: "Join the waitlist",
