@@ -295,13 +295,15 @@ button { font-family: inherit; cursor: pointer; }
 
 /* ——— Hero portrait mask ———
    Mobile: full-bleed cover, hard top/sides, soft fade only along the bottom
-   edge so it melts into the page. Desktop: contained soft radial vignette. */
-.hero-portrait {
+   edge so it melts into the page. Desktop: contained soft radial vignette.
+   Mask is applied to the <img> only — siblings like the location pill stay
+   at full opacity instead of fading with the gradient. */
+.hero-portrait img {
   -webkit-mask-image: linear-gradient(to bottom, #000 72%, rgba(0,0,0,0.6) 88%, transparent 100%);
   mask-image: linear-gradient(to bottom, #000 72%, rgba(0,0,0,0.6) 88%, transparent 100%);
 }
 @media (min-width: 640px) {
-  .hero-portrait {
+  .hero-portrait img {
     -webkit-mask-image: radial-gradient(closest-side at 50% 50%, #000 76%, rgba(0,0,0,0.65) 92%, transparent 100%);
     mask-image: radial-gradient(closest-side at 50% 50%, #000 76%, rgba(0,0,0,0.65) 92%, transparent 100%);
   }

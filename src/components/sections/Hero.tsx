@@ -39,7 +39,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2"
+            className="absolute -bottom-3 left-1/2 z-20 -translate-x-1/2"
           >
             <div className="flex items-center gap-2.5 rounded-full border border-[var(--color-line-strong)] bg-black/65 px-3.5 py-1.5 text-xs text-[var(--color-ink)] backdrop-blur-md">
               <span className="relative flex h-2 w-2">
