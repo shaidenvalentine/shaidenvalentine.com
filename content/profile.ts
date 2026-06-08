@@ -2,8 +2,9 @@ import type { Profile } from "./types";
 
 export const profile: Profile = {
   name: "Shaiden Valentine",
-  tagline:
-    "Entrepreneur, traveler, investor, dreamer. I see the potential in people and ideas earlier than most — and my gift is bringing the right people together to build a better future for all of us.",
+  tagline: "Entrepreneur, adventurer, investor, connector.",
+  taglineSub:
+    "I see the potential in people and ideas earlier than most — and my gift is bringing the right people together to build a better future for all of us.",
   /** Quick at-a-glance bio shown right under the tagline on the hero. */
   quickBio:
     "I live in Bali. I love starting companies, surfing, playing piano, and connecting people. I see a version of reality before it exists, then help make it real — and I'm set on living this one all the way.",

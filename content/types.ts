@@ -9,8 +9,10 @@ export interface SocialLink {
 
 export interface Profile {
   name: string;
-  /** The single headline one-liner under the name. */
+  /** Top headline under the name — a tight identifier line. */
   tagline: string;
+  /** Optional supporting line below the tagline (the longer mission/gift statement). */
+  taglineSub?: string;
   /** Quick at-a-glance bio shown right under the tagline on the hero. */
   quickBio: string;
   /** Short mantra-style mission headline shown in the Mission section. */
