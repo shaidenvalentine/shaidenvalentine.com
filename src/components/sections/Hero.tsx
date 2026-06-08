@@ -50,7 +50,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.42, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-8"
+            className="mt-10"
           >
             <div className="flex items-center gap-2.5 rounded-full border border-[var(--color-line-strong)] bg-[var(--glass-fill-strong)] px-3.5 py-1.5 text-xs text-[var(--color-ink)] backdrop-blur-md">
               <span className="relative flex h-2 w-2">
@@ -67,7 +67,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.1, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
-          className="body-lg mt-10 font-medium tracking-tight text-[var(--color-ink)]"
+          className="body-lg mt-20 font-medium tracking-tight text-[var(--color-ink)]"
         >
           {profile.tagline}
         </motion.p>
