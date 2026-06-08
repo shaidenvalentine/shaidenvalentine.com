@@ -70,7 +70,7 @@ export function Collapsible({
           <div className="mt-6 flex items-start justify-between gap-6">
             <div className="min-w-0 flex-1">
               <h2 className="display-2 max-w-[18ch] text-[var(--color-ink)]">{headline}</h2>
-              <p className="body-lg mt-4 max-w-[52ch] text-[var(--color-ink-muted)]">{preview}</p>
+              <p className="body-lg mt-7 max-w-[52ch] text-[var(--color-ink-muted)]">{preview}</p>
             </div>
             <span
               aria-hidden

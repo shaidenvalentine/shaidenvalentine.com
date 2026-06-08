@@ -150,7 +150,7 @@ export function WorkWithMe({ bare = false }: { bare?: boolean } = {}) {
       <div className="grid gap-12 md:grid-cols-[1fr_1.1fr] md:items-start">
         <Reveal>
           <h2 className="display-2 max-w-[16ch]">{c.headline}</h2>
-          <p className="body-lg mt-5 max-w-[46ch] text-[var(--color-ink-muted)]">{c.sub}</p>
+          <p className="body-lg mt-8 max-w-[46ch] text-[var(--color-ink-muted)]">{c.sub}</p>
         </Reveal>
         {formBox}
       </div>

@@ -29,7 +29,7 @@ export function Shop() {
               <div className="flex flex-1 flex-col p-7">
                 <span className="label-eyebrow">Digital product</span>
                 <h3 className="display-3 mt-3 text-[var(--color-ink)]">{product.title}</h3>
-                <p className="body-base mt-4 flex-1 text-[var(--color-ink-muted)]">{product.blurb}</p>
+                <p className="body-base mt-6 flex-1 text-[var(--color-ink-muted)]">{product.blurb}</p>
 
                 {product.downloadUrl ? (
                   <div className="mt-7 flex items-center gap-5">

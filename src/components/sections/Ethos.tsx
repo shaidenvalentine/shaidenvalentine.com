@@ -25,7 +25,7 @@ export function Ethos({ bare = false }: { bare?: boolean } = {}) {
     <Section id="ethos" eyebrow={ethos.eyebrow} index="06 — Ethos">
       <Reveal>
         <h2 className="display-2 max-w-[16ch]">{ethos.headline}</h2>
-        <p className="body-lg mt-5 max-w-[52ch] text-[var(--color-ink-muted)]">{ethos.sub}</p>
+        <p className="body-lg mt-8 max-w-[52ch] text-[var(--color-ink-muted)]">{ethos.sub}</p>
       </Reveal>
 
       <div className="mt-14">{grid}</div>
