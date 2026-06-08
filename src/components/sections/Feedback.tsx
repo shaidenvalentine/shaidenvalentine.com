@@ -10,7 +10,7 @@ import { Label, Textarea, Select, SubmitButton, Honeypot } from "@/components/ui
 
 const c = collab.feedback;
 
-export function Feedback() {
+export function Feedback({ bare = false }: { bare?: boolean } = {}) {
   const [topic, setTopic] = useState(c.topics[0]);
   const [message, setMessage] = useState("");
   const [company, setCompany] = useState(""); // honeypot
@@ -41,16 +41,16 @@ export function Feedback() {
     }
   }
 
-  return (
-    <Section id="feedback" eyebrow={c.eyebrow} index="13 — Anonymous">
-      <Reveal>
-        <div className="mx-auto max-w-2xl rounded-3xl glass-strong p-8 md:p-12">
+  const inner = (
+    <Reveal>
+      <div className="mx-auto max-w-2xl rounded-3xl glass-strong p-8 md:p-12">
+        {!bare && (
           <div className="text-center">
             <h2 className="display-2">{c.headline}</h2>
             <p className="body-lg mx-auto mt-4 max-w-[50ch] text-[var(--color-ink-muted)]">{c.sub}</p>
           </div>
-
-          <AnimatePresence mode="wait">
+        )}
+        <AnimatePresence mode="wait">
             {status === "done" ? (
               <motion.div
                 key="done"
@@ -105,8 +105,15 @@ export function Feedback() {
               </motion.form>
             )}
           </AnimatePresence>
-        </div>
-      </Reveal>
+      </div>
+    </Reveal>
+  );
+
+  if (bare) return inner;
+
+  return (
+    <Section id="feedback" eyebrow={c.eyebrow} index="13 — Anonymous">
+      {inner}
     </Section>
   );
 }

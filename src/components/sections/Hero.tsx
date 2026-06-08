@@ -56,20 +56,11 @@ export function Hero() {
           {profile.tagline}
         </motion.p>
 
-        <motion.p
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.1, delay: 0.36, ease: [0.16, 1, 0.3, 1] }}
-          className="body-base mt-5 max-w-[52ch] text-[var(--color-ink-muted)]"
-        >
-          {profile.quickBio}
-        </motion.p>
-
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-9 flex flex-col items-center gap-3 sm:flex-row"
+          transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-10 flex flex-col items-center gap-3 sm:flex-row"
         >
           <SaveContactButton variant="solid" />
           <a

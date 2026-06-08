@@ -10,7 +10,7 @@ import { Label, Input, Textarea, Select, SubmitButton, Honeypot } from "@/compon
 
 const c = collab.work;
 
-export function WorkWithMe() {
+export function WorkWithMe({ bare = false }: { bare?: boolean } = {}) {
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -48,16 +48,9 @@ export function WorkWithMe() {
     }
   }
 
-  return (
-    <Section id="work" eyebrow={c.eyebrow} index="10 — Collaborate">
-      <div className="grid gap-12 md:grid-cols-[1fr_1.1fr] md:items-start">
-        <Reveal>
-          <h2 className="display-2 max-w-[16ch]">{c.headline}</h2>
-          <p className="body-lg mt-5 max-w-[46ch] text-[var(--color-ink-muted)]">{c.sub}</p>
-        </Reveal>
-
-        <Reveal delay={0.1}>
-          <div className="rounded-3xl glass p-6 md:p-8">
+  const formBox = (
+    <Reveal delay={bare ? 0 : 0.1}>
+      <div className="rounded-3xl glass p-6 md:p-8">
             <AnimatePresence mode="wait">
               {status === "done" ? (
                 <motion.div
@@ -146,8 +139,20 @@ export function WorkWithMe() {
                 </motion.form>
               )}
             </AnimatePresence>
-          </div>
+      </div>
+    </Reveal>
+  );
+
+  if (bare) return formBox;
+
+  return (
+    <Section id="work" eyebrow={c.eyebrow} index="10 — Collaborate">
+      <div className="grid gap-12 md:grid-cols-[1fr_1.1fr] md:items-start">
+        <Reveal>
+          <h2 className="display-2 max-w-[16ch]">{c.headline}</h2>
+          <p className="body-lg mt-5 max-w-[46ch] text-[var(--color-ink-muted)]">{c.sub}</p>
         </Reveal>
+        {formBox}
       </div>
     </Section>
   );
