@@ -1,9 +1,15 @@
+"use client";
+
+import { useState } from "react";
 import { life } from "@content/personal";
 import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { SafeImg } from "@/components/ui/SafeImg";
+import { LeadModal } from "@/components/ui/LeadModal";
 
 export function Life({ bare = false }: { bare?: boolean } = {}) {
+  const [waitlistIntent, setWaitlistIntent] = useState<string | null>(null);
+
   const gallery = (
     <div className="grid grid-cols-2 gap-3">
       {life.gallery.map((g, i) => (
@@ -21,27 +27,71 @@ export function Life({ bare = false }: { bare?: boolean } = {}) {
     </div>
   );
 
-  const cta = life.ctaLabel && life.ctaHref ? (
-    <a
-      href={life.ctaHref}
-      target={life.ctaHref.startsWith("http") ? "_blank" : undefined}
-      rel="noreferrer"
-      className="mt-7 inline-flex items-center gap-2 rounded-full bg-[var(--color-brass)] px-7 py-3 text-sm font-medium tracking-wide text-[var(--color-bg)] transition hover:brightness-110"
-    >
-      {life.ctaLabel}
-      <span aria-hidden>{life.ctaHref.startsWith("http") ? "↗" : "→"}</span>
-    </a>
-  ) : null;
+  const ctas = (
+    <div className="mt-8 flex flex-wrap gap-3">
+      {life.ctas?.map((c) => {
+        const isLead = c.href.startsWith("lead:");
+        const isExternal = c.href.startsWith("http");
+        const className =
+          c.kind === "primary"
+            ? "inline-flex items-center gap-2 rounded-full bg-[var(--color-brass)] px-7 py-3 text-sm font-medium tracking-wide text-[var(--color-bg)] transition hover:brightness-110"
+            : "inline-flex items-center gap-2 rounded-full glass px-7 py-3 text-sm font-medium tracking-wide text-[var(--color-ink)] transition hover:bg-[var(--glass-fill-strong)]";
+        const arrow = isLead ? "→" : isExternal ? "↗" : "→";
+
+        if (isLead) {
+          const intent = c.href.replace(/^lead:/, "");
+          return (
+            <button
+              key={c.label}
+              type="button"
+              onClick={() => setWaitlistIntent(intent)}
+              className={className}
+            >
+              {c.label}
+              <span aria-hidden>{arrow}</span>
+            </button>
+          );
+        }
+        return (
+          <a
+            key={c.label}
+            href={c.href}
+            target={isExternal ? "_blank" : undefined}
+            rel="noreferrer"
+            className={className}
+          >
+            {c.label}
+            <span aria-hidden>{arrow}</span>
+          </a>
+        );
+      })}
+    </div>
+  );
+
+  const modal = (
+    <LeadModal
+      open={waitlistIntent !== null}
+      onClose={() => setWaitlistIntent(null)}
+      intent={waitlistIntent ?? ""}
+      eyebrow="Waitlist"
+      headline="Get the Living in Bali guide"
+      blurb="The guide is in the works — everything I'd tell a friend moving here: which area, the rhythm, the community, the rentals, the surf, the food. Leave your details and I'll send it your way when it drops."
+      submitLabel="Join the waitlist"
+    />
+  );
 
   if (bare) {
     return (
-      <div className="grid gap-12 md:grid-cols-[1fr_1fr] md:items-center">
-        <Reveal>
-          <p className="body-lg max-w-[46ch] text-[var(--color-ink-muted)]">{life.sub}</p>
-          {cta}
-        </Reveal>
-        <Reveal delay={0.1}>{gallery}</Reveal>
-      </div>
+      <>
+        <div className="grid gap-12 md:grid-cols-[1fr_1fr] md:items-center">
+          <Reveal>
+            <p className="body-lg max-w-[46ch] text-[var(--color-ink-muted)]">{life.sub}</p>
+            {ctas}
+          </Reveal>
+          <Reveal delay={0.1}>{gallery}</Reveal>
+        </div>
+        {modal}
+      </>
     );
   }
 
@@ -51,11 +101,12 @@ export function Life({ bare = false }: { bare?: boolean } = {}) {
         <Reveal>
           <h2 className="display-2 max-w-[12ch]">{life.headline}</h2>
           <p className="body-lg mt-10 max-w-[46ch] text-[var(--color-ink-muted)]">{life.sub}</p>
-          {cta}
+          {ctas}
         </Reveal>
 
         <Reveal delay={0.1}>{gallery}</Reveal>
       </div>
+      {modal}
     </Section>
   );
 }
