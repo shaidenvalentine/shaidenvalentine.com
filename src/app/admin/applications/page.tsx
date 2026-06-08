@@ -41,8 +41,11 @@ export default async function ApplicationsPage({ searchParams }: { searchParams:
   return (
     <div className="flex flex-col gap-6">
       <header>
-        <h1 className="display-2">Applications</h1>
-        <p className="body-sm mt-2">Work-With-Me submissions, founder pitches, and investment opportunities.</p>
+        <span className="label-eyebrow">Inbox · {all.length}</span>
+        <h1 className="display-1 mt-3 max-w-[14ch] text-[var(--color-ink)]">Applications.</h1>
+        <p className="body-lg mt-3 max-w-[52ch] text-[var(--color-ink-muted)]">
+          Work-With-Me submissions, founder pitches, and investment opportunities.
+        </p>
       </header>
 
       <div className="flex flex-wrap items-center gap-3">
@@ -82,7 +85,7 @@ export default async function ApplicationsPage({ searchParams }: { searchParams:
       ) : (
         <ul className="flex flex-col gap-3">
           {filtered.map((a) => (
-            <li key={a.id} className="rounded-2xl border border-[var(--color-line)] p-5 transition hover:bg-[var(--glass-fill)]">
+            <li key={a.id} className="rounded-3xl glass p-6 transition hover:bg-[var(--glass-fill-strong)]">
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--color-line)] pb-3">
                 <div className="flex flex-wrap items-center gap-3">
                   <StatusPill status={a.status} table="applications" id={a.id} />

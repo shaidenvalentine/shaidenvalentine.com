@@ -4,12 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTransition } from "react";
 
-const NAV = [
-  { href: "/admin", label: "Overview" },
-  { href: "/admin/leads", label: "Leads" },
-  { href: "/admin/applications", label: "Applications" },
-  { href: "/admin/feedback", label: "Feedback" },
-  { href: "/admin/settings", label: "Settings" },
+const NAV: { href: string; label: string; glyph: string }[] = [
+  { href: "/admin", label: "Overview", glyph: "◐" },
+  { href: "/admin/leads", label: "Leads", glyph: "◇" },
+  { href: "/admin/applications", label: "Applications", glyph: "✦" },
+  { href: "/admin/feedback", label: "Feedback", glyph: "◌" },
+  { href: "/admin/settings", label: "Settings", glyph: "⚙" },
 ];
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
@@ -27,44 +27,73 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="min-h-[100svh]">
-      <div className="container-page grid gap-10 py-12 md:grid-cols-[14rem_1fr]">
+    <div className="relative min-h-[100svh] overflow-hidden bg-grad-volcanic">
+      {/* ambient atmosphere */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-[28rem] opacity-70"
+        style={{
+          background:
+            "radial-gradient(ellipse 70% 50% at 50% -10%, rgba(201,168,116,0.10) 0%, transparent 65%)",
+        }}
+      />
+      <div className="container-page grid gap-10 py-12 md:grid-cols-[16rem_1fr]">
         <aside className="md:sticky md:top-12 md:self-start">
-          <div className="mb-8">
-            <Link href="/admin" className="label-eyebrow">Shaiden · Admin</Link>
-          </div>
-          <nav className="flex flex-wrap gap-2 md:flex-col">
+          {/* signature mark */}
+          <Link href="/admin" className="block">
+            <span className="label-eyebrow">Private Console</span>
+            <h2 className="signature mt-2 text-3xl text-[var(--color-ink)]">Shaiden</h2>
+            <span className="label-mono mt-1 block text-[var(--color-brass)]">Admin</span>
+          </Link>
+
+          <nav className="mt-10 flex flex-wrap gap-1.5 md:flex-col">
             {NAV.map((n) => {
               const active = n.href === "/admin" ? path === "/admin" : path?.startsWith(n.href);
               return (
                 <Link
                   key={n.href}
                   href={n.href}
-                  className={`rounded-xl px-4 py-2.5 text-sm transition ${
+                  className={`group flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm transition ${
                     active
                       ? "bg-[var(--glass-fill-strong)] text-[var(--color-ink)]"
                       : "text-[var(--color-ink-muted)] hover:bg-[var(--glass-fill)] hover:text-[var(--color-ink)]"
                   }`}
                 >
-                  {n.label}
+                  <span
+                    aria-hidden
+                    className={`inline-grid h-7 w-7 place-items-center rounded-lg text-sm transition ${
+                      active
+                        ? "bg-[var(--color-brass)] text-[var(--color-bg)]"
+                        : "bg-[var(--glass-fill)] text-[var(--color-brass)] group-hover:bg-[var(--glass-fill-strong)]"
+                    }`}
+                  >
+                    {n.glyph}
+                  </span>
+                  <span>{n.label}</span>
                 </Link>
               );
             })}
           </nav>
-          <div className="mt-10 flex flex-col gap-2 border-t border-[var(--color-line)] pt-6 text-xs text-[var(--color-ink-muted)]">
-            <a href="https://vercel.com/dashboard" target="_blank" rel="noreferrer" className="link-underline">Vercel Analytics ↗</a>
-            <a href="/" className="link-underline">Back to site →</a>
+
+          <div className="mt-10 flex flex-col gap-2 border-t border-[var(--color-line)] pt-6 text-xs">
+            <a href="https://vercel.com/dashboard" target="_blank" rel="noreferrer" className="link-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">
+              Vercel Analytics ↗
+            </a>
+            <a href="/" className="link-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">
+              Back to site →
+            </a>
             <button
               type="button"
               onClick={logout}
               disabled={pending}
-              className="self-start text-left text-xs text-[var(--color-ink-muted)] transition hover:text-[var(--color-brass)] disabled:opacity-50"
+              className="mt-2 self-start text-left text-xs text-[var(--color-ink-muted)] transition hover:text-[var(--color-brass)] disabled:opacity-50"
             >
-              {pending ? "Signing out…" : "Sign out ↗"}
+              {pending ? "Signing out…" : "Sign out"}
             </button>
           </div>
         </aside>
-        <section className="min-w-0">{children}</section>
+
+        <section className="relative min-w-0">{children}</section>
       </div>
     </div>
   );

@@ -41,8 +41,11 @@ export default async function LeadsPage({ searchParams }: { searchParams: Promis
   return (
     <div className="flex flex-col gap-6">
       <header>
-        <h1 className="display-2">Leads</h1>
-        <p className="body-sm mt-2">Waitlist signups (coaching, course) and ebook downloads.</p>
+        <span className="label-eyebrow">Inbox · {all.length}</span>
+        <h1 className="display-1 mt-3 max-w-[14ch] text-[var(--color-ink)]">Leads.</h1>
+        <p className="body-lg mt-3 max-w-[52ch] text-[var(--color-ink-muted)]">
+          Waitlist signups (coaching, course) and ebook downloads.
+        </p>
       </header>
 
       <div className="flex flex-wrap items-center gap-3">
@@ -80,7 +83,7 @@ export default async function LeadsPage({ searchParams }: { searchParams: Promis
       {filtered.length === 0 ? (
         <p className="body-sm">No matches.</p>
       ) : (
-        <div className="overflow-x-auto rounded-2xl border border-[var(--color-line)]">
+        <div className="overflow-x-auto rounded-3xl glass">
           <table className="w-full min-w-[64rem] border-collapse text-left text-sm">
             <thead>
               <tr className="border-b border-[var(--color-line)] bg-[var(--glass-fill)]">

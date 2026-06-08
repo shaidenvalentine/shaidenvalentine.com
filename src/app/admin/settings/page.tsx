@@ -37,11 +37,14 @@ export default async function SettingsPage() {
   return (
     <div className="flex flex-col gap-10">
       <header>
-        <h1 className="display-2">Settings</h1>
-        <p className="body-sm mt-2">System health and configuration.</p>
+        <span className="label-eyebrow">Configuration</span>
+        <h1 className="display-1 mt-3 max-w-[14ch] text-[var(--color-ink)]">Settings.</h1>
+        <p className="body-lg mt-3 max-w-[52ch] text-[var(--color-ink-muted)]">
+          System health, the admin password, and the analytics events the site is firing.
+        </p>
       </header>
 
-      <section className="rounded-2xl border border-[var(--color-line)] p-6">
+      <section className="rounded-3xl glass p-7">
         <h2 className="display-3">System status</h2>
         <div className="mt-5 flex flex-col gap-3">
           <Status ok={db} label="Database (Postgres / Neon)" />
@@ -55,7 +58,7 @@ export default async function SettingsPage() {
         </p>
       </section>
 
-      <section className="rounded-2xl border border-[var(--color-line)] p-6">
+      <section className="rounded-3xl glass p-7">
         <h2 className="display-3">Change the admin password</h2>
         <ol className="mt-4 list-decimal pl-5 text-sm leading-7 text-[var(--color-ink-muted)]">
           <li>Vercel → <code>shaidenvalentine</code> project → <strong>Settings</strong> → <strong>Environment Variables</strong>.</li>
@@ -65,7 +68,7 @@ export default async function SettingsPage() {
         <p className="body-sm mt-3">Default if unset: <code>password</code>. Set it for real before you share this URL.</p>
       </section>
 
-      <section className="rounded-2xl border border-[var(--color-line)] p-6">
+      <section className="rounded-3xl glass p-7">
         <h2 className="display-3">Tracked analytics events</h2>
         <ul className="mt-5 overflow-hidden rounded-xl border border-[var(--color-line)]">
           {EVENTS.map((e, i) => (

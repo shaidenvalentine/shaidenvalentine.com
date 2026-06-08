@@ -187,6 +187,77 @@ export async function listFeedback(limit = 500): Promise<FeedbackRow[]> {
   return rows;
 }
 
+// ───── analytics aggregations (for the dashboard charts) ────────────────
+
+export interface DailyBucket {
+  day: string; // ISO date (yyyy-mm-dd)
+  leads: number;
+  applications: number;
+  feedback: number;
+}
+
+/** Returns a day-by-day series of counts for the last `days` days (inclusive of today). */
+export async function dailyActivity(days = 30): Promise<DailyBucket[]> {
+  if (!isConfigured()) return [];
+  await ensureTables();
+  const { rows } = await sql<DailyBucket>/* sql */`
+    WITH days AS (
+      SELECT generate_series(
+        (NOW() AT TIME ZONE 'UTC')::date - (${days - 1} || ' days')::interval,
+        (NOW() AT TIME ZONE 'UTC')::date,
+        '1 day'
+      )::date AS day
+    )
+    SELECT
+      to_char(d.day, 'YYYY-MM-DD') AS day,
+      COALESCE(l.n, 0)::int AS leads,
+      COALESCE(a.n, 0)::int AS applications,
+      COALESCE(f.n, 0)::int AS feedback
+    FROM days d
+    LEFT JOIN (SELECT (created_at AT TIME ZONE 'UTC')::date AS day, COUNT(*) AS n FROM leads GROUP BY 1) l USING (day)
+    LEFT JOIN (SELECT (created_at AT TIME ZONE 'UTC')::date AS day, COUNT(*) AS n FROM applications GROUP BY 1) a USING (day)
+    LEFT JOIN (SELECT (created_at AT TIME ZONE 'UTC')::date AS day, COUNT(*) AS n FROM feedback GROUP BY 1) f USING (day)
+    ORDER BY d.day ASC
+  `;
+  return rows;
+}
+
+export async function intentBreakdown(limit = 8): Promise<{ intent: string; n: number }[]> {
+  if (!isConfigured()) return [];
+  await ensureTables();
+  const { rows } = await sql<{ intent: string; n: number }>/* sql */`
+    SELECT intent, COUNT(*)::int AS n
+    FROM leads GROUP BY intent ORDER BY n DESC LIMIT ${limit}
+  `;
+  return rows;
+}
+
+export async function roleBreakdown(limit = 8): Promise<{ role: string; n: number }[]> {
+  if (!isConfigured()) return [];
+  await ensureTables();
+  const { rows } = await sql<{ role: string; n: number }>/* sql */`
+    SELECT role, COUNT(*)::int AS n
+    FROM applications GROUP BY role ORDER BY n DESC LIMIT ${limit}
+  `;
+  return rows;
+}
+
+export async function statusBreakdown(
+  table: "leads" | "applications"
+): Promise<{ status: string; n: number }[]> {
+  if (!isConfigured()) return [];
+  await ensureTables();
+  const { rows } =
+    table === "leads"
+      ? await sql<{ status: string; n: number }>/* sql */`
+          SELECT status, COUNT(*)::int AS n FROM leads GROUP BY status
+        `
+      : await sql<{ status: string; n: number }>/* sql */`
+          SELECT status, COUNT(*)::int AS n FROM applications GROUP BY status
+        `;
+  return rows;
+}
+
 // ───── counts (cheap, for the overview) ──────────────────────────────────
 
 export async function counts(): Promise<{

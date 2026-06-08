@@ -28,10 +28,11 @@ export default async function FeedbackPage({ searchParams }: { searchParams: Pro
   return (
     <div className="flex flex-col gap-6">
       <header>
-        <h1 className="display-2">Feedback</h1>
-        <p className="body-sm mt-2 max-w-[64ch]">
-          Anonymous feedback. By design, no name, email, or IP is captured — only the topic and message. The
-          space exists so people can say the things they wouldn&apos;t otherwise.
+        <span className="label-eyebrow">Inbox · {all.length}</span>
+        <h1 className="display-1 mt-3 max-w-[14ch] text-[var(--color-ink)]">Feedback.</h1>
+        <p className="body-lg mt-3 max-w-[60ch] text-[var(--color-ink-muted)]">
+          Anonymous by design — no name, email, or IP is captured, only topic and message. The space exists so
+          people can say the things they wouldn&apos;t otherwise.
         </p>
       </header>
 
@@ -51,7 +52,7 @@ export default async function FeedbackPage({ searchParams }: { searchParams: Pro
       ) : (
         <ul className="flex flex-col gap-3">
           {filtered.map((f) => (
-            <li key={f.id} className="rounded-2xl border border-[var(--color-line)] p-5">
+            <li key={f.id} className="rounded-3xl glass p-6">
               <div className="flex items-center justify-between gap-3">
                 <span className="label-mono text-[var(--color-brass)]">{f.topic ?? "General"}</span>
                 <span className="text-xs text-[var(--color-ink-muted)]">{fmtDate(f.created_at)}</span>
