@@ -20,18 +20,18 @@ export const coaching = {
   offers: [
     {
       title: "1:1 Advisory",
-      price: "Limited spots",
+      price: "By the hour",
       blurb:
         "Book my time to think through a venture, a decision, a pivot — or just get unstuck. Most people leave clearer on their next move and why it matters.",
-      ctaLabel: "Join the waitlist",
+      ctaLabel: "Reach out",
       href: "#",
     },
     {
       title: "Purpose & Ikigai Coaching",
-      price: "By application",
+      price: "1:1",
       blurb:
-        "A guided program to find what you were put on this earth to do — your ikigai — and design a life that actually runs on it. For people serious about the work. Limited spots.",
-      ctaLabel: "Join the waitlist",
+        "A guided program to find what you were put on this earth to do — your ikigai — and design a life that actually runs on it. For people serious about the work.",
+      ctaLabel: "Reach out",
       href: "#",
     },
   ] as CoachingOffer[],

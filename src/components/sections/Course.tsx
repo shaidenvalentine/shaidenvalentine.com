@@ -31,7 +31,7 @@ export function Course() {
             >
               {course.ctaLabel}
             </button>
-            <span className="label-mono">In production · join early</span>
+            <span className="label-mono">In production</span>
           </div>
 
           {/* curriculum reveal — quiet link that opens the full 10 modules */}
@@ -82,11 +82,11 @@ export function Course() {
       <LeadModal
         open={waitlistOpen}
         onClose={() => setWaitlistOpen(false)}
-        intent="Waitlist — Find Your Purpose course"
-        eyebrow="Waitlist"
-        headline="Get early access"
-        blurb="The series is in production. Leave your details and you'll be first to know — and first in line — when it drops."
-        submitLabel="Join the waitlist"
+        intent="Course — Find Your Purpose"
+        eyebrow="The Course"
+        headline="Get notified when it's out"
+        blurb="The series is in production. Leave your details and I'll let you know the moment it's ready."
+        submitLabel="Notify me"
       />
     </Section>
   );

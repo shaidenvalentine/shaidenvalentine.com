@@ -31,7 +31,7 @@ export function Coaching() {
 
               <button
                 type="button"
-                onClick={() => setOpenIntent(`Waitlist — ${offer.title}`)}
+                onClick={() => setOpenIntent(`Coaching — ${offer.title}`)}
                 className="mt-7 inline-flex w-fit items-center justify-center rounded-full bg-[var(--color-brass)] px-7 py-3 text-sm font-medium tracking-wide text-[var(--color-bg)] transition hover:brightness-110"
               >
                 {offer.ctaLabel}
@@ -45,10 +45,10 @@ export function Coaching() {
         open={openIntent !== null}
         onClose={() => setOpenIntent(null)}
         intent={openIntent ?? ""}
-        eyebrow="Waitlist"
-        headline="Join the waitlist"
-        blurb="Spots are limited and I take it seriously. Leave your details and I'll reach out personally when the next opening comes up."
-        submitLabel="Join the waitlist"
+        eyebrow="Work with me"
+        headline="Let's talk"
+        blurb="Tell me where you're at and what you're working toward, and I'll reach out personally."
+        submitLabel="Send"
       />
     </Section>
   );

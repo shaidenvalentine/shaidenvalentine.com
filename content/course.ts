@@ -17,7 +17,7 @@ export const course = {
   subtitle: "A 10-part video series on finding your purpose — and building a life that actually runs on it.",
   price: "$—", // TODO set price
   checkoutUrl: "#", // TODO hosted course / checkout link
-  ctaLabel: "Join the waitlist",
+  ctaLabel: "Get notified",
   note: "Lifetime access · watch at your own pace",
   outcomes: [
     "Get brutally clear on your ikigai — your reason for being.",

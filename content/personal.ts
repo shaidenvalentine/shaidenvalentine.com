@@ -94,7 +94,7 @@ export const life = {
     },
     {
       label: "Get the Living in Bali guide",
-      href: "lead:Waitlist — Living in Bali guide",
+      href: "lead:Living in Bali guide",
       kind: "secondary" as const,
     },
   ],

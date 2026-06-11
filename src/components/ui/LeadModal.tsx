@@ -21,8 +21,8 @@ export function LeadModal({
   eyebrow,
   headline,
   blurb,
-  submitLabel = "Join the waitlist",
-  successTitle = "You're on the list.",
+  submitLabel = "Send",
+  successTitle = "Got it.",
   successBody = "I'll reach out personally when it's ready. Talk soon.",
   downloadUrl,
 }: {
