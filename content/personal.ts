@@ -27,7 +27,7 @@ export const chapters: Chapter[] = [
   {
     era: "My 20s",
     title: "80 countries before I turned 30.",
-    body: "Left school two years early, top of my class, and just went. My mom flew for an airline, so the world was almost free — I just had to figure out where to sleep. Eighty countries through my twenties: backpacking, couch-surfing, stretches near-homeless, flipping anything to stay on the road. No degree, no job, ever — just the world as my classroom.",
+    body: "Left school two years early and just went. My mom flew for an airline, so the world was almost free — I just had to figure out where to sleep. Backpacking, couch-surfing, stretches near-homeless, flipping anything to stay on the road. No degree, no job, ever — just the world as my classroom.",
   },
   {
     era: "2020",
@@ -85,7 +85,7 @@ export const ethos = {
 export const life = {
   eyebrow: "Life",
   headline: "I live in Bali.",
-  sub: "I chose Bali on purpose. World-class surf out my front door, deep jungle and waterfalls an hour any direction, and a global community of builders, founders, healers, and adventurers magnetized to the same edge. This isn't the cliché digital-nomad Bali — it's the one where the right people show up because the environment selects for it. Mornings in the water, afternoons deep in the work, evenings around long dinners with real conversations. Cheap enough to live light, hard to leave once you taste it. This is the life everything else is built to protect.",
+  sub: "I chose Bali on purpose. World-class surf out my front door, deep jungle and waterfalls an hour any direction, and a global community of builders, founders, healers, and adventurers magnetized to the same edge. Mornings in the water, afternoons deep in the work, evenings around long dinners with real conversations. Cheap enough to live light, hard to leave once you taste it. This is the life everything else is built to protect.",
   ctas: [
     {
       label: "Find your place to live",

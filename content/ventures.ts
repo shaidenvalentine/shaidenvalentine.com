@@ -8,7 +8,7 @@ export const ventures: Venture[] = [
     id: "elysium",
     name: "Elysium",
     blurb:
-      "A fully-staffed luxury co-living villa in Bali. Nine suites, application-only, the best months of your year — designed as an environment, not a rental.",
+      "A fully-staffed luxury co-living villa in Bali — nine suites, designed as an environment, not a rental.",
     status: "Land acquired · design phase · opens 2028",
     href: "https://elysium.house",
     accent: "#7A6647",
@@ -26,7 +26,7 @@ export const ventures: Venture[] = [
     id: "mothership",
     name: "Mothership",
     blurb:
-      "A luxury custom van brand — 3D-printed, electric, built to a standard nobody else is touching. Fifteen of the finest vans in the world already built; now taking orders for fully custom builds.",
+      "A luxury custom van brand — 3D-printed, electric, and obsessively built. Fifteen built so far; now taking orders for fully custom builds.",
     status: "Taking custom orders · $350K–500K builds",
     href: "https://mothershipvans.com",
     accent: "#9A958C",
