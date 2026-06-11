@@ -2,9 +2,9 @@ import type { Profile } from "./types";
 
 export const profile: Profile = {
   name: "Shaiden Valentine",
-  tagline: "Entrepreneur, adventurer, investor, connector.",
+  tagline: "I build companies and back founders building the future.",
   taglineSub:
-    "I see the potential in people and ideas earlier than most — and my gift is bringing the right people together to build a better future for all of us.",
+    "I see the potential in people and ideas, and I bring the right people together to build a better future for all of us.",
   /** Quick at-a-glance bio shown right under the tagline on the hero. */
   quickBio:
     "I live in Bali. I love starting companies, surfing, playing piano, and connecting people. I see a version of reality before it exists, then help make it real — and I'm set on living this one all the way.",
@@ -13,7 +13,7 @@ export const profile: Profile = {
     "Leave the world meaningfully better than I found it — by building companies that matter, backing founders doing the same, and bringing as many people fully alive as I can along the way. Starting with me.",
   bio: [
     "I was raised in a small mountain town in Southern California by a photographer dad and a flight attendant mom — and looking back, that's the whole blueprint. From my dad I got the eye: how to frame a thing and find the story inside it. From my mom I got the world: I could fly almost anywhere on earth for next to nothing, I just had to figure out where I'd sleep once I landed. A creative lens and a passport with no edges. Naturally, that made me who I am.",
-    "So I left school early and went to use both. No degree, no job, ever — just the world as my classroom and whatever I could build to stay in it. One van I converted in lockdown went viral and became a million-dollar company, and that was my proof: I could see an opportunity nobody else saw, turn it into something real, and let it run without me. Today I build and back companies from Bali, still chasing the next thing worth making. The timeline tells the rest.",
+    "So I left school early and went to use both. No degree, no job, ever — just the world as my classroom and whatever I could build to stay in it. One van I converted in lockdown went viral and became a million-dollar company, and that was my proof: I could see something worth building, make it real, and let it run without me. Today I build and back companies from Bali, still chasing the next thing worth making. The timeline tells the rest.",
   ],
   location: "Builder & investor · Bali",
   currentLocation: "Bali, Indonesia",

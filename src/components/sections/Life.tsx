@@ -73,10 +73,10 @@ export function Life({ bare = false }: { bare?: boolean } = {}) {
       open={waitlistIntent !== null}
       onClose={() => setWaitlistIntent(null)}
       intent={waitlistIntent ?? ""}
-      eyebrow="Waitlist"
+      eyebrow="The Guide"
       headline="Get the Living in Bali guide"
-      blurb="The guide is in the works — everything I'd tell a friend moving here: which area, the rhythm, the community, the rentals, the surf, the food. Leave your details and I'll send it your way when it drops."
-      submitLabel="Join the waitlist"
+      blurb="The guide is in the works — everything I'd tell a friend moving here: which area, the rhythm, the community, the rentals, the surf, the food. Leave your details and I'll send it your way when it's ready."
+      submitLabel="Send it to me"
     />
   );
 

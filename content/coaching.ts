@@ -16,22 +16,22 @@ export interface CoachingOffer {
 export const coaching = {
   eyebrow: "Work With My Mind",
   headline: "Find what you were put here to do.",
-  sub: "I went from no degree, no job, and years near-homeless to building companies and living the life I pictured — by getting brutally clear on purpose and designing a life around it. When I have the bandwidth, I open up a bit of my time to help others do the same.",
+  sub: "I went from no degree, no job, and years near-homeless to building companies and living the life I pictured — by getting brutally clear on purpose and designing a life around it. When I have the bandwidth, I take on a little of this work directly, to help others do the same.",
   offers: [
     {
       title: "1:1 Advisory",
-      price: "Limited spots",
+      price: "By the hour",
       blurb:
         "Book my time to think through a venture, a decision, a pivot — or just get unstuck. Most people leave clearer on their next move and why it matters.",
-      ctaLabel: "Join the waitlist",
+      ctaLabel: "Reach out",
       href: "#",
     },
     {
       title: "Purpose & Ikigai Coaching",
-      price: "By application",
+      price: "1:1",
       blurb:
-        "A guided program to find what you were put on this earth to do — your ikigai — and design a life that actually runs on it. For people serious about the work. Limited spots.",
-      ctaLabel: "Join the waitlist",
+        "A guided program to find what you were put on this earth to do — your ikigai — and design a life that actually runs on it. For people serious about the work.",
+      ctaLabel: "Reach out",
       href: "#",
     },
   ] as CoachingOffer[],
