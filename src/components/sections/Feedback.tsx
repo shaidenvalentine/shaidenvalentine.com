@@ -43,7 +43,7 @@ export function Feedback({ bare = false }: { bare?: boolean } = {}) {
 
   const inner = (
     <Reveal>
-      <div className="mx-auto max-w-2xl rounded-3xl glass-strong p-8 md:p-12">
+      <div className="mx-auto max-w-2xl rounded-3xl glass-strong p-6 md:p-10">
         {!bare && (
           <div className="text-center">
             <h2 className="display-2">{c.headline}</h2>
@@ -56,7 +56,7 @@ export function Feedback({ bare = false }: { bare?: boolean } = {}) {
                 key="done"
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="py-10 text-center"
+                className="flex min-h-[16rem] flex-col items-center justify-center py-8 text-center"
               >
                 <h3 className="display-3 text-[var(--color-ink)]">{c.successTitle}</h3>
                 <p className="body-base mx-auto mt-3 max-w-[34ch] text-[var(--color-ink-muted)]">
@@ -70,7 +70,7 @@ export function Feedback({ bare = false }: { bare?: boolean } = {}) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="relative mt-8 flex flex-col gap-5"
+                className={`relative flex flex-col gap-5 ${bare ? "" : "mt-8"}`}
               >
                 <Honeypot value={company} onChange={setCompany} />
 
@@ -92,13 +92,13 @@ export function Feedback({ bare = false }: { bare?: boolean } = {}) {
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="Say the thing. No filter needed — I won't know who you are."
-                    className="min-h-40"
+                    className="min-h-32 md:min-h-40"
                   />
                 </div>
 
                 {status === "error" && <p className="body-sm text-[var(--color-brass)]">{error}</p>}
 
-                <div className="flex items-center gap-4">
+                <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
                   <SubmitButton loading={status === "loading"}>Send anonymously</SubmitButton>
                   <span className="body-sm">No name · no email · nothing tracked.</span>
                 </div>

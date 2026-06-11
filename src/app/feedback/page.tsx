@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 export default function FeedbackPage() {
   return (
     <main className="flex min-h-[100svh] flex-col bg-black">
-      <header className="container-page flex items-center justify-between py-6">
+      <header className="container-page flex items-center justify-between py-5">
         <Link
           href="/"
           className="text-sm font-medium tracking-tight text-[var(--color-ink)] transition hover:opacity-80"
@@ -32,16 +32,16 @@ export default function FeedbackPage() {
         </Link>
       </header>
 
-      <div className="flex flex-1 flex-col items-center justify-center px-5 py-16">
+      <div className="flex flex-1 flex-col items-center justify-center px-5 py-8 md:py-16">
         <div className="w-full max-w-2xl text-center">
           <span className="label-eyebrow">{c.eyebrow}</span>
-          <h1 className="display-2 mt-4">{c.headline}</h1>
-          <p className="body-lg mx-auto mt-8 max-w-[50ch] text-[var(--color-ink-muted)]">
+          <h1 className="display-2 mt-3">{c.headline}</h1>
+          <p className="body-base mx-auto mt-5 max-w-[44ch] text-[var(--color-ink-muted)]">
             {c.sub}
           </p>
         </div>
 
-        <div className="mt-10 w-full">
+        <div className="mt-8 w-full">
           <Feedback bare />
         </div>
       </div>
