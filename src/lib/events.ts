@@ -1,6 +1,11 @@
 import { sql } from "@vercel/postgres";
 import { THRESHOLD_SEED } from "@content/threshold";
 import { THRESHOLD_TASKS } from "@content/thresholdTasks";
+import {
+  THRESHOLD_ROSTER,
+  THRESHOLD_ROSTER_TASKS,
+  THRESHOLD_ROSTER_CONFIG,
+} from "@content/thresholdRoster";
 
 // ─────────────────────────────────────────────────────────────────────────
 // Events module — a reusable, Postgres-backed store for gatherings (THRESHOLD
@@ -68,6 +73,8 @@ export interface EventRow {
   rooming_by: string | null;
   estate_beds: number;
   payment_details: string | null;
+  tasks_seeded?: boolean;
+  roster_seeded?: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -163,6 +170,7 @@ async function ensureTables() {
   // Production plan / to-do checklist. Seeded once per event (guarded by
   // events.tasks_seeded) so clearing the list doesn't re-spawn the defaults.
   await sql/* sql */`ALTER TABLE events ADD COLUMN IF NOT EXISTS tasks_seeded BOOLEAN NOT NULL DEFAULT FALSE`;
+  await sql/* sql */`ALTER TABLE events ADD COLUMN IF NOT EXISTS roster_seeded BOOLEAN NOT NULL DEFAULT FALSE`;
   await sql/* sql */`
     CREATE TABLE IF NOT EXISTS event_tasks (
       id          SERIAL PRIMARY KEY,
@@ -353,9 +361,53 @@ export async function insertRsvp(
   }
 }
 
+/**
+ * Load the planning roster into the guest list once (guarded by
+ * events.roster_seeded). Also reconciles the few facts the export pins down
+ * (outer cap, venue) and adds the roster-specific open items to the plan.
+ * Runs on admin reads only — kept out of the public capacity path so public
+ * requests stay fast. Skipped silently if real RSVPs already exist.
+ */
+async function seedRoster(slug: string) {
+  if (slug !== THRESHOLD_SEED.slug) return;
+  const ev = await getEvent(slug);
+  if (!ev || ev.roster_seeded) return;
+
+  const existing = await sql<{ n: number }>/* sql */`
+    SELECT COUNT(*)::int AS n FROM event_rsvps WHERE event_slug = ${slug}
+  `;
+  if ((existing.rows[0]?.n ?? 0) === 0) {
+    for (const g of THRESHOLD_ROSTER) {
+      const amountDue = g.comp ? 0 : ev.inner_price;
+      await sql/* sql */`
+        INSERT INTO event_rsvps (event_slug, tier, name, status, amount_due, admin_note)
+        VALUES (${slug}, 'inner', ${g.name}, ${g.status}, ${amountDue}, ${g.note})
+      `;
+    }
+    const base = THRESHOLD_TASKS.length;
+    for (let i = 0; i < THRESHOLD_ROSTER_TASKS.length; i++) {
+      const t = THRESHOLD_ROSTER_TASKS[i];
+      await sql/* sql */`
+        INSERT INTO event_tasks (event_slug, title, category, due_on, notes, sort)
+        VALUES (${slug}, ${t.title}, ${t.category}, ${t.due || null}, ${t.notes || null}, ${base + i})
+      `;
+    }
+  }
+
+  await sql/* sql */`
+    UPDATE events
+    SET outer_cap = ${THRESHOLD_ROSTER_CONFIG.outerCap},
+        venue = ${THRESHOLD_ROSTER_CONFIG.venue},
+        roster_seeded = TRUE,
+        updated_at = NOW()
+    WHERE slug = ${slug}
+  `;
+}
+
 export async function listRsvps(slug: string, limit = 1000): Promise<RsvpRow[]> {
   if (!isConfigured()) return [];
   await ensureTables();
+  await seedRoster(slug);
   const { rows } = await sql<RsvpRow>/* sql */`
     SELECT * FROM event_rsvps
     WHERE event_slug = ${slug}
