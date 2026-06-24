@@ -9,8 +9,13 @@ import {
   markFlag,
   deleteRsvp,
   updateEventConfig,
+  addTask,
+  updateTask,
+  setTaskStatus,
+  deleteTask,
   type RsvpStatus,
   type EventConfigInput,
+  type TaskStatus,
 } from "@/lib/events";
 import { THRESHOLD_SLUG } from "@content/threshold";
 
@@ -57,4 +62,40 @@ export async function saveConfigAction(config: EventConfigInput) {
   revalidateEvents();
   revalidatePath("/admin/events/config");
   revalidatePath("/threshold");
+}
+
+// ───── production plan ───────────────────────────────────────────────────────
+
+function revalidatePlan() {
+  revalidatePath("/admin/events/plan");
+  revalidatePath("/admin/events");
+}
+
+export async function addTaskAction(input: {
+  title: string;
+  category: string;
+  due_on?: string;
+  notes?: string;
+}) {
+  if (!input.title.trim()) return;
+  await addTask({ event_slug: THRESHOLD_SLUG, ...input, title: input.title.trim() });
+  revalidatePlan();
+}
+
+export async function updateTaskAction(
+  id: number,
+  fields: { title?: string; category?: string; due_on?: string | null; notes?: string }
+) {
+  await updateTask(id, fields);
+  revalidatePlan();
+}
+
+export async function setTaskStatusAction(id: number, status: TaskStatus) {
+  await setTaskStatus(id, status);
+  revalidatePlan();
+}
+
+export async function deleteTaskAction(id: number) {
+  await deleteTask(id);
+  revalidatePlan();
 }

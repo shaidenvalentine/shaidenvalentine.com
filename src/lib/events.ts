@@ -1,5 +1,6 @@
 import { sql } from "@vercel/postgres";
 import { THRESHOLD_SEED } from "@content/threshold";
+import { THRESHOLD_TASKS } from "@content/thresholdTasks";
 
 // ─────────────────────────────────────────────────────────────────────────
 // Events module — a reusable, Postgres-backed store for gatherings (THRESHOLD
@@ -158,6 +159,25 @@ async function ensureTables() {
     )
   `;
   await sql/* sql */`CREATE INDEX IF NOT EXISTS event_rsvps_slug_idx ON event_rsvps (event_slug)`;
+
+  // Production plan / to-do checklist. Seeded once per event (guarded by
+  // events.tasks_seeded) so clearing the list doesn't re-spawn the defaults.
+  await sql/* sql */`ALTER TABLE events ADD COLUMN IF NOT EXISTS tasks_seeded BOOLEAN NOT NULL DEFAULT FALSE`;
+  await sql/* sql */`
+    CREATE TABLE IF NOT EXISTS event_tasks (
+      id          SERIAL PRIMARY KEY,
+      event_slug  TEXT NOT NULL,
+      title       TEXT NOT NULL,
+      category    TEXT NOT NULL DEFAULT 'General',
+      due_on      DATE,
+      status      TEXT NOT NULL DEFAULT 'todo',
+      notes       TEXT,
+      sort        INT NOT NULL DEFAULT 0,
+      created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )
+  `;
+  await sql/* sql */`CREATE INDEX IF NOT EXISTS event_tasks_slug_idx ON event_tasks (event_slug)`;
 
   ensured = true;
 }
@@ -465,6 +485,125 @@ export async function eventStats(slug: string): Promise<EventStats> {
       (r) => (r.bed_pref === "estate" || r.bed_pref === "either") && !r.room_assignment
     ).length,
     overCapacity: inner.length > innerCap || outer.length > outerCap,
+  };
+}
+
+// ───── production plan / to-do checklist ────────────────────────────────────
+
+export type TaskStatus = "todo" | "doing" | "done";
+
+export interface TaskRow {
+  id: number;
+  event_slug: string;
+  title: string;
+  category: string;
+  due_on: string | null;
+  status: TaskStatus;
+  notes: string | null;
+  sort: number;
+  created_at: string;
+  updated_at: string;
+}
+
+/** Seed the default checklist once (guarded by events.tasks_seeded). */
+async function seedTasks(slug: string) {
+  if (slug !== THRESHOLD_SEED.slug) return;
+  const { rows } = await sql<{ tasks_seeded: boolean }>/* sql */`
+    SELECT tasks_seeded FROM events WHERE slug = ${slug} LIMIT 1
+  `;
+  if (!rows[0] || rows[0].tasks_seeded) return;
+
+  // Insert all defaults; `sort` preserves the authored order within a date.
+  for (let i = 0; i < THRESHOLD_TASKS.length; i++) {
+    const t = THRESHOLD_TASKS[i];
+    await sql/* sql */`
+      INSERT INTO event_tasks (event_slug, title, category, due_on, notes, sort)
+      VALUES (${slug}, ${t.title}, ${t.category}, ${t.due || null}, ${t.notes || null}, ${i})
+    `;
+  }
+  await sql/* sql */`UPDATE events SET tasks_seeded = TRUE WHERE slug = ${slug}`;
+}
+
+export async function listTasks(slug: string): Promise<TaskRow[]> {
+  if (!isConfigured()) return [];
+  await ensureTables();
+  await getEvent(slug); // ensures the event row exists before seeding
+  await seedTasks(slug);
+  const { rows } = await sql<TaskRow>/* sql */`
+    SELECT * FROM event_tasks
+    WHERE event_slug = ${slug}
+    ORDER BY due_on ASC NULLS LAST, sort ASC, id ASC
+  `;
+  return rows;
+}
+
+export async function addTask(input: {
+  event_slug: string;
+  title: string;
+  category: string;
+  due_on?: string;
+  notes?: string;
+}) {
+  if (!isConfigured()) return;
+  await ensureTables();
+  await sql/* sql */`
+    INSERT INTO event_tasks (event_slug, title, category, due_on, notes)
+    VALUES (${input.event_slug}, ${input.title}, ${input.category}, ${input.due_on || null}, ${input.notes || null})
+  `;
+}
+
+export async function updateTask(
+  id: number,
+  fields: { title?: string; category?: string; due_on?: string | null; notes?: string }
+) {
+  if (!isConfigured()) return;
+  await ensureTables();
+  const cur = (await sql<TaskRow>/* sql */`SELECT * FROM event_tasks WHERE id = ${id} LIMIT 1`).rows[0];
+  if (!cur) return;
+  const title = fields.title ?? cur.title;
+  const category = fields.category ?? cur.category;
+  const due = fields.due_on === undefined ? cur.due_on : fields.due_on || null;
+  const notes = fields.notes === undefined ? cur.notes : fields.notes || null;
+  await sql/* sql */`
+    UPDATE event_tasks
+    SET title = ${title}, category = ${category}, due_on = ${due}, notes = ${notes}, updated_at = NOW()
+    WHERE id = ${id}
+  `;
+}
+
+export async function setTaskStatus(id: number, status: TaskStatus) {
+  if (!isConfigured()) return;
+  await ensureTables();
+  await sql/* sql */`UPDATE event_tasks SET status = ${status}, updated_at = NOW() WHERE id = ${id}`;
+}
+
+export async function deleteTask(id: number) {
+  if (!isConfigured()) return;
+  await ensureTables();
+  await sql/* sql */`DELETE FROM event_tasks WHERE id = ${id}`;
+}
+
+export interface PlanSummary {
+  total: number;
+  done: number;
+  overdue: number;
+  nextDue: { title: string; due_on: string } | null;
+}
+
+export async function planSummary(slug: string): Promise<PlanSummary> {
+  const tasks = await listTasks(slug);
+  const now = Date.now();
+  const done = tasks.filter((t) => t.status === "done").length;
+  const open = tasks.filter((t) => t.status !== "done");
+  const overdue = open.filter((t) => t.due_on && new Date(t.due_on).getTime() < now).length;
+  const upcoming = open
+    .filter((t) => t.due_on && new Date(t.due_on).getTime() >= now)
+    .sort((a, b) => (a.due_on! < b.due_on! ? -1 : 1))[0];
+  return {
+    total: tasks.length,
+    done,
+    overdue,
+    nextDue: upcoming ? { title: upcoming.title, due_on: upcoming.due_on! } : null,
   };
 }
 

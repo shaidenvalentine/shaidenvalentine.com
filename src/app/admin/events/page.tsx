@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getEvent, eventStats, listRsvps, isConfigured } from "@/lib/events";
+import { getEvent, eventStats, listRsvps, planSummary, isConfigured } from "@/lib/events";
 import { THRESHOLD_SLUG } from "@content/threshold";
 
 export const dynamic = "force-dynamic";
@@ -64,11 +64,13 @@ export default async function EventDashboard() {
     );
   }
 
-  const [ev, stats, rsvps] = await Promise.all([
+  const [ev, stats, rsvps, plan] = await Promise.all([
     getEvent(THRESHOLD_SLUG),
     eventStats(THRESHOLD_SLUG),
     listRsvps(THRESHOLD_SLUG),
+    planSummary(THRESHOLD_SLUG),
   ]);
+  const planPct = plan.total ? Math.round((plan.done / plan.total) * 100) : 0;
 
   const now = Date.now();
   const past = (iso: string | null) => (iso ? new Date(iso).getTime() < now : false);
@@ -91,6 +93,31 @@ export default async function EventDashboard() {
         <StatCard label="Outer Circle" value={`${stats.outer.count}/${stats.outer.cap}`} sub={`${stats.outer.remaining} spots left`} />
         <StatCard label="Waitlisted" value={String(stats.waitlisted)} sub="across both tiers" />
         <StatCard label="Total RSVPs" value={String(rsvps.length)} sub="all statuses" />
+      </section>
+
+      {/* Production plan */}
+      <section>
+        <Link
+          href="/admin/events/plan"
+          className="group flex flex-col gap-4 rounded-3xl glass p-7 transition hover:bg-[var(--glass-fill-strong)] sm:flex-row sm:items-center sm:justify-between"
+        >
+          <div>
+            <span className="label-mono text-[var(--color-brass)]">Production plan</span>
+            <h2 className="display-3 mt-1 text-[var(--color-ink)]">
+              {plan.done}/{plan.total} done · {planPct}%
+            </h2>
+            <p className="body-sm mt-1">
+              {plan.overdue > 0 ? `${plan.overdue} overdue · ` : ""}
+              {plan.nextDue ? `next: ${plan.nextDue.title} (${fmtDay(plan.nextDue.due_on)})` : "all scheduled work complete"}
+            </p>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="h-1.5 w-40 overflow-hidden rounded-full bg-[var(--glass-fill-strong)]">
+              <div className="h-full rounded-full bg-[var(--color-brass)]" style={{ width: `${planPct}%` }} />
+            </div>
+            <span className="label-mono text-[var(--color-ink-muted)] transition group-hover:text-[var(--color-ink)]">Open plan →</span>
+          </div>
+        </Link>
       </section>
 
       {/* Money */}
