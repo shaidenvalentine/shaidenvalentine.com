@@ -40,6 +40,34 @@ Investment pitches use the **same** Work-With-Me form (roles include "Founder
 pitching an idea" / "Investment opportunity"), so they email you too — the role
 is in the subject line.
 
+## Events module (THRESHOLD)
+A reusable, invite-only event system. First event: **THRESHOLD** (Shaiden's
+30th). Built on the same Postgres store as the rest of the admin — tables
+(`events`, `event_rsvps`) auto-create on first use, and the THRESHOLD config
+row seeds itself the first time the page or admin loads.
+
+- **Public page:** [`/threshold`](http://localhost:3002/threshold) — invite-gated
+  (word `samhain`, editable in admin). Unlock lives in component state only (no
+  storage), so a refresh re-locks. Two RSVP flows (Inner Circle full weekend /
+  Outer Circle Halloween night) write to `event_rsvps`; live slot counts pull
+  **aggregate-only** capacity (the guest list is never exposed to the client).
+  Full tiers flip to a waitlist instead of erroring.
+- **Admin:** `/admin/events` → Overview (tier counts, committed vs collected,
+  deadline tracker, flags), Guests (filter/sort, per-guest drawer: status,
+  manual payments, room assignment, internal notes, comms flags, CSV export),
+  Accommodation (estate vs nearby bed allocation), Rollups (adventures, dietary,
+  arrivals + CSVs), and Config (edit caps/prices/invite word/dates/payment copy
+  without redeploying).
+- **Copy** lives in [`content/threshold.ts`](./content/threshold.ts) — sections,
+  the day-by-day arc, adventures, FAQ, and the seed facts. Payments are **manual
+  transfers** (no Stripe/cards); admin tracks them. **Placeholders to confirm
+  before launch:** Outer Circle price ($50) and the transfer-details copy.
+
+The data layer is plain `@vercel/postgres` (server-side only) rather than a
+Supabase client — the service-key/RLS goals in the brief are met by never
+touching the DB from the client: the public page reads only aggregates via a
+server route, and all admin reads/writes sit behind the existing `/admin` auth.
+
 ## Analytics + /admin
 Traffic runs on **Vercel Web Analytics** (`@vercel/analytics`, mounted in
 `layout.tsx`) — privacy-friendly, no DB. The full dashboard lives on vercel.com.

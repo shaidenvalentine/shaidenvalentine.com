@@ -9,6 +9,7 @@ const NAV: { href: string; label: string; glyph: string }[] = [
   { href: "/admin/leads", label: "Leads", glyph: "◇" },
   { href: "/admin/applications", label: "Applications", glyph: "✦" },
   { href: "/admin/feedback", label: "Feedback", glyph: "◌" },
+  { href: "/admin/events", label: "Events", glyph: "✶" },
   { href: "/admin/settings", label: "Settings", glyph: "⚙" },
 ];
 
