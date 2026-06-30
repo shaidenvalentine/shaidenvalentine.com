@@ -309,6 +309,38 @@ button { font-family: inherit; cursor: pointer; }
   }
 }
 
+/* ——— Carousel slides (Instagram 4:5 — 1080×1350) ———
+   The canvas is a fixed pixel surface so the on-site viewer and the PNG
+   export render byte-for-byte the same. The viewer scales it down with a
+   transform; the exporter screenshots it at 1:1 (or 2× for retina). */
+.slide-canvas {
+  flex: none;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  isolation: isolate;
+}
+
+/* Scales a slide-canvas to fit its box. --slide-scale set inline by <Stage>. */
+.slide-scale {
+  width: calc(1080px * var(--slide-scale, 1));
+  height: calc(1350px * var(--slide-scale, 1));
+  flex: none;
+}
+.slide-scale > .slide-canvas {
+  transform: scale(var(--slide-scale, 1));
+  transform-origin: top left;
+}
+
+/* Hide scrollbars on the swipe track but keep it scrollable. */
+.swipe-track {
+  scrollbar-width: none;
+}
+.swipe-track::-webkit-scrollbar {
+  display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

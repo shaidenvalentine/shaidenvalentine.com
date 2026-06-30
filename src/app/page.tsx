@@ -102,9 +102,14 @@ export default function Home() {
           <span className="label-mono">
             © {profile.name} · {site.domain}
           </span>
-          <a href="#top" className="label-mono link-underline">
-            back to top ↑
-          </a>
+          <div className="flex items-center gap-6">
+            <a href="/carousels" className="label-mono link-underline">
+              carousels →
+            </a>
+            <a href="#top" className="label-mono link-underline">
+              back to top ↑
+            </a>
+          </div>
         </div>
       </footer>
     </main>
