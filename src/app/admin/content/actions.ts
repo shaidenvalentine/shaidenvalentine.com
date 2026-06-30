@@ -8,17 +8,17 @@ export async function submitIdeaAction(formData: FormData) {
   const idea = String(formData.get("idea") ?? "").trim();
   if (!title || !idea) return;
   await insertIdea({ title, idea });
-  revalidatePath("/admin/carousels");
+  revalidatePath("/admin/content");
   revalidatePath("/admin");
 }
 
 export async function setIdeaStatusAction(id: number, status: IdeaStatus) {
   await updateIdeaStatus(id, status);
-  revalidatePath("/admin/carousels");
+  revalidatePath("/admin/content");
 }
 
 export async function deleteIdeaAction(id: number) {
   await deleteIdea(id);
-  revalidatePath("/admin/carousels");
+  revalidatePath("/admin/content");
   revalidatePath("/admin");
 }

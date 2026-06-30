@@ -6,7 +6,7 @@ import { useTransition } from "react";
 
 const NAV: { href: string; label: string; glyph: string }[] = [
   { href: "/admin", label: "Overview", glyph: "◐" },
-  { href: "/admin/carousels", label: "Carousels", glyph: "❖" },
+  { href: "/admin/content", label: "Content", glyph: "❖" },
   { href: "/admin/leads", label: "Leads", glyph: "◇" },
   { href: "/admin/applications", label: "Applications", glyph: "✦" },
   { href: "/admin/feedback", label: "Feedback", glyph: "◌" },

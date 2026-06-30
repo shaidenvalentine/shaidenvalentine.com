@@ -16,7 +16,7 @@ export default async function AdminCarousels() {
     <div className="flex flex-col gap-14">
       <header>
         <span className="label-eyebrow">Content machine · {carousels.length} live</span>
-        <h1 className="display-1 mt-3 max-w-[16ch] text-[var(--color-ink)]">Carousels.</h1>
+        <h1 className="display-1 mt-3 max-w-[16ch] text-[var(--color-ink)]">Content.</h1>
         <p className="body-lg mt-3 max-w-[54ch] text-[var(--color-ink-muted)]">
           Drop ideas as they come. They land in the inbox below — then get shaped into designed,
           on-brand carousels and published to your public gallery.
