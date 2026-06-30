@@ -26,10 +26,10 @@ async function slugs() {
   for (const f of files) {
     if (f === "types") continue;
     const body = await readFile(path.resolve(`content/carousels/${f}.ts`), "utf8");
-    const m = body.match(/slug:\s*["']([a-z0-9-]+)["']/);
-    if (m) out.push(m[1]);
+    // a file may export one carousel or an array of them — grab every slug.
+    for (const m of body.matchAll(/slug:\s*["']([a-z0-9-]+)["']/g)) out.push(m[1]);
   }
-  return out;
+  return [...new Set(out)];
 }
 
 // Prefer the env's bundled Chromium; fall back to Playwright's own.
