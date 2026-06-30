@@ -1,0 +1,102 @@
+import type { Carousel } from "./types";
+
+// Principles mined from Shaiden's ebook "The Art of Flipping" — Volume II.
+export const artOfFlipping2: Carousel = {
+  slug: "art-of-flipping-ii",
+  title: "The Art of Flipping · II",
+  topic: "The Art of Flipping",
+  date: "2026-06-30",
+  summary:
+    "Nine more principles from The Art of Flipping — the psychology of the close: perception, urgency, and why 'no' is just text.",
+  caption:
+    "The other half of flipping is psychology. These nine principles from The Art of Flipping are how you actually close. The biggest roadblock isn't the deal — it's the fear of a 'no.' And no is just text. Swipe 👇",
+  hashtags: ["theartofflipping", "negotiation", "sales", "sidehustle", "reselling"],
+  slides: [
+    {
+      kind: "cover",
+      eyebrow: "Ebook · Vol. II",
+      title: "The Art of Flipping",
+      glyph: "F",
+      subtitle: "Nine principles for the negotiation and the close.",
+    },
+    {
+      kind: "principle",
+      n: "10",
+      eyebrow: "Psychology",
+      text: "Never let the buyer know you're a flipper. Sell like you simply no longer need the item.",
+      emphasis: "Never let the buyer know you're a flipper",
+      elaboration: "If buyers feel like just another transaction, they second-guess the deal. Frame it as a personal sale and they stop hunting for the catch.",
+    },
+    {
+      kind: "principle",
+      n: "11",
+      eyebrow: "Psychology",
+      text: "Most buyers never do the research. Price high and let them feel like they won.",
+      emphasis: "let them feel like they won",
+      elaboration: "A slight discount off a new item feels like a 'deal.' Pricing just above market signals worth and leaves room to negotiate — everybody walks away happy.",
+    },
+    {
+      kind: "principle",
+      n: "12",
+      eyebrow: "Mindset",
+      text: "The biggest roadblock in flipping is the fear of a 'no.' But it's just text.",
+      emphasis: "it's just text",
+      elaboration: "Send the offer. A reasonable lowball can always be course-corrected with an apology — but the deal you never asked for is gone for sure.",
+    },
+    {
+      kind: "principle",
+      n: "13",
+      eyebrow: "Negotiation",
+      text: "Nobody gives a deal to the guy in a Tesla and a Rolex. Look like you need the discount.",
+      emphasis: "look like you need the discount",
+      elaboration: "People read your appearance and price accordingly. In-person negotiation is a game of perception — don't signal that you can afford to overpay.",
+    },
+    {
+      kind: "principle",
+      n: "14",
+      eyebrow: "Negotiation",
+      text: "Some sellers just need quick cash. Detect that urgency and you've found your edge.",
+      emphasis: "Detect that urgency",
+      elaboration: "Ask open-ended questions about why they're selling. It builds rapport and quietly hands you the leverage that sets the price.",
+    },
+    {
+      kind: "principle",
+      n: "15",
+      eyebrow: "Risk",
+      text: "Not every deal is a home run. The essence of flipping is embracing the risk.",
+      emphasis: "embracing the risk",
+      elaboration: "Risk is baked in — you can't remove it, only manage it. Be thorough to avoid catastrophic losses, but never let fear of a bad flip stop you from flipping.",
+    },
+    {
+      kind: "principle",
+      n: "16",
+      eyebrow: "Ethics",
+      text: "There will be many chances to make a buck by misleading someone. Never cross that line just for profit.",
+      emphasis: "Never cross that line just for profit",
+      elaboration: "Be the educated buyer, not the dishonest one. Trust is what keeps this game alive for you long-term — protect it harder than any single margin.",
+    },
+    {
+      kind: "principle",
+      n: "17",
+      eyebrow: "Negotiation",
+      text: "In person, you read every flinch — and the discomfort of saying 'no' to your face works in your favor.",
+      emphasis: "the discomfort of saying 'no' to your face",
+      elaboration: "Face-to-face you read non-verbal cues and adjust in real time. Most people physically can't lowball you back when you're standing right there.",
+    },
+    {
+      kind: "principle",
+      n: "18",
+      eyebrow: "Freedom",
+      text: "The traditional 9-to-5 is not the ultimate fate for everyone.",
+      emphasis: "not the ultimate fate for everyone",
+      elaboration: "Put in the hours and flipping can out-earn a conventional job. What starts as a side gig can become the venture that buys the life you actually want.",
+    },
+    {
+      kind: "cta",
+      eyebrow: "Your move",
+      title: "Go make the offer.",
+      body: "Pick one principle and use it on your next deal this week. Save this for when you're standing in front of the seller.",
+      handle: "@shaiden",
+    },
+  ],
+};

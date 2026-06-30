@@ -1,0 +1,102 @@
+import type { Carousel } from "./types";
+
+// Principles mined from Shaiden's ebook "The Art of Flipping" — Volume I.
+export const artOfFlipping1: Carousel = {
+  slug: "art-of-flipping-i",
+  title: "The Art of Flipping · I",
+  topic: "The Art of Flipping",
+  date: "2026-06-30",
+  summary:
+    "Nine principles from The Art of Flipping — how to create margin, find mispriced gold, and let capital snowball.",
+  caption:
+    "I flipped candy into MacBooks into camper vans. These are nine principles from The Art of Flipping that made it work. You don't wait for the market — you create your profit the moment you buy. Swipe 👇",
+  hashtags: ["theartofflipping", "flipping", "sidehustle", "reselling", "entrepreneurship"],
+  slides: [
+    {
+      kind: "cover",
+      eyebrow: "Ebook · Vol. I",
+      title: "The Art of Flipping",
+      glyph: "F",
+      subtitle: "Nine principles for turning small money into bigger money.",
+    },
+    {
+      kind: "principle",
+      n: "01",
+      eyebrow: "Margin",
+      text: "Don't bet on the market. Create your profit the moment you buy.",
+      emphasis: "Create your profit the moment you buy",
+      elaboration: "Buy low enough that the margin already exists. The gap between your buy price and your sell price is the proof of your skill, not luck.",
+    },
+    {
+      kind: "principle",
+      n: "02",
+      eyebrow: "Leverage",
+      text: "The magic happens when you know more than the seller.",
+      emphasis: "know more than the seller",
+      elaboration: "My biggest margins come from deals where I'm more educated than the person selling. Information gap is the edge — close it on your side, open it on theirs.",
+    },
+    {
+      kind: "principle",
+      n: "03",
+      eyebrow: "Mindset",
+      text: "The best deals are the ones everyone else scrolls past.",
+      emphasis: "the ones everyone else scrolls past",
+      elaboration: "Boldness backed by research finds the gold. The vague listing with the bad photo that scares off normal buyers is exactly where I've doubled my money.",
+    },
+    {
+      kind: "principle",
+      n: "04",
+      eyebrow: "Deals",
+      text: "A MacBook Pro listed as just a 'laptop' is money on the floor.",
+      emphasis: "money on the floor",
+      elaboration: "The best deals are mislabeled and underpriced because the seller didn't know what they had. Search broad, not narrow, and you'll find the gems filters hide.",
+    },
+    {
+      kind: "principle",
+      n: "05",
+      eyebrow: "Speed",
+      text: "I drop whatever I'm doing to go score a deal. Speed is half the game.",
+      emphasis: "drop whatever I'm doing",
+      elaboration: "Strike while the iron's hot. A timely response gets your low offer accepted before higher offers ever had a chance to land.",
+    },
+    {
+      kind: "principle",
+      n: "06",
+      eyebrow: "Risk",
+      text: "Every deal taught me the same thing: the greater the investment, the richer the rewards.",
+      emphasis: "the greater the investment, the richer the rewards",
+      elaboration: "I started with candy and scaled to MacBooks, motorcycles, camper vans. As your capital grows, so does the size of the wins available to you.",
+    },
+    {
+      kind: "principle",
+      n: "07",
+      eyebrow: "Compounding",
+      text: "Flipping isn't linear, it's exponential. People have flipped a paperclip into a house.",
+      emphasis: "it's exponential",
+      elaboration: "Every successful flip grows your capital and unlocks larger opportunities. Stay disciplined and a modest start can snowball into six figures.",
+    },
+    {
+      kind: "principle",
+      n: "08",
+      eyebrow: "Strategy",
+      text: "Everyone fights over iPhones. Become the premier seller of the thing nobody else is selling.",
+      emphasis: "the thing nobody else is selling",
+      elaboration: "Mainstream products are crowded with sellers. Find a niche and dominate it — you slash your competition and earn real pricing power.",
+    },
+    {
+      kind: "principle",
+      n: "09",
+      eyebrow: "Valuation",
+      text: "Active listings are wishful thinking. Sold listings are the truth.",
+      emphasis: "Sold listings are the truth",
+      elaboration: "Fair market value only lives in completed sales. Pull the sold comparables, set a conservative number, and never overpay again.",
+    },
+    {
+      kind: "cta",
+      eyebrow: "Vol. II next",
+      title: "Now the negotiation.",
+      body: "Volume II covers the psychology — how to price, read, and close. Follow so you catch it.",
+      handle: "@shaiden",
+    },
+  ],
+};
