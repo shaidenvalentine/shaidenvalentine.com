@@ -97,9 +97,16 @@ export type Slide =
   | QuoteSlide
   | CtaSlide;
 
+/** Lifecycle status, managed from the admin. "posted" carousels show on the
+ *  public gallery; review/archived/deleted are hidden from the public. */
+export type CarouselStatus = "review" | "posted" | "archived" | "deleted";
+
 export interface Carousel {
   /** URL slug + export folder name. */
   slug: string;
+  /** Starting lifecycle status if the admin DB has no row yet. Defaults to
+   *  "posted" so existing carousels stay public; new drafts can ship as "review". */
+  status?: CarouselStatus;
   /** Gallery title. */
   title: string;
   /** Category eyebrow, e.g. "Concept", "Principle". */

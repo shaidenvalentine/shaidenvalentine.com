@@ -50,6 +50,16 @@ async function ensureTables() {
       created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
   `;
+  // Carousel lifecycle status, keyed by the code-defined slug. Lets the admin
+  // move carousels through review → posted → archived (and soft-delete) without
+  // a redeploy. Absent row = the carousel's code default (usually "posted").
+  await sql/* sql */`
+    CREATE TABLE IF NOT EXISTS carousel_state (
+      slug        TEXT PRIMARY KEY,
+      status      TEXT NOT NULL DEFAULT 'review',
+      updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )
+  `;
   // Anonymous feedback — by design no name/email/IP is stored.
   await sql/* sql */`
     CREATE TABLE IF NOT EXISTS feedback (
@@ -245,6 +255,32 @@ export async function updateIdeaStatus(id: number, status: IdeaStatus) {
 export async function deleteIdea(id: number) {
   if (!isConfigured()) return;
   await sql`DELETE FROM carousel_ideas WHERE id = ${id}`;
+}
+
+// ───── carousel lifecycle status ────────────────────────────────────────
+
+export type CarouselStatus = "review" | "posted" | "archived" | "deleted";
+
+/** A map of slug → status for every carousel the admin has touched. */
+export async function listCarouselStates(): Promise<Record<string, CarouselStatus>> {
+  if (!isConfigured()) return {};
+  await ensureTables();
+  const { rows } = await sql<{ slug: string; status: string }>/* sql */`
+    SELECT slug, status FROM carousel_state
+  `;
+  const map: Record<string, CarouselStatus> = {};
+  for (const r of rows) map[r.slug] = r.status as CarouselStatus;
+  return map;
+}
+
+export async function setCarouselStatus(slug: string, status: CarouselStatus) {
+  if (!isConfigured()) return;
+  await ensureTables();
+  await sql/* sql */`
+    INSERT INTO carousel_state (slug, status, updated_at)
+    VALUES (${slug}, ${status}, NOW())
+    ON CONFLICT (slug) DO UPDATE SET status = ${status}, updated_at = NOW()
+  `;
 }
 
 // ───── analytics aggregations (for the dashboard charts) ────────────────

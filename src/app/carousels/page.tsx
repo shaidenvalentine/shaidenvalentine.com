@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { carousels } from "@content/carousels";
 import { SlideThumb } from "@/components/carousel/SlideThumb";
+import { postedCarousels } from "@/lib/carouselStatus";
 
 export const metadata: Metadata = {
   title: "Carousels",
@@ -9,7 +9,10 @@ export const metadata: Metadata = {
     "Concepts, principles, and ideas worth sharing — designed as carousels. The thinking behind Shaiden Valentine.",
 };
 
-export default function CarouselsIndex() {
+export const dynamic = "force-dynamic";
+
+export default async function CarouselsIndex() {
+  const carousels = await postedCarousels();
   return (
     <main className="bg-grad-volcanic min-h-screen">
       <div className="container-page py-24 md:py-32">

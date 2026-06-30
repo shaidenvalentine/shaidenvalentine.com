@@ -1,7 +1,30 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { insertIdea, updateIdeaStatus, deleteIdea, type IdeaStatus } from "@/lib/store";
+import {
+  insertIdea,
+  updateIdeaStatus,
+  deleteIdea,
+  setCarouselStatus,
+  type IdeaStatus,
+  type CarouselStatus,
+} from "@/lib/store";
+
+function revalidateCarousels() {
+  revalidatePath("/admin/content");
+  revalidatePath("/carousels");
+  revalidatePath("/");
+}
+
+export async function setCarouselStatusAction(slug: string, status: CarouselStatus) {
+  await setCarouselStatus(slug, status);
+  revalidateCarousels();
+}
+
+export async function deleteCarouselAction(slug: string) {
+  await setCarouselStatus(slug, "deleted");
+  revalidateCarousels();
+}
 
 export async function submitIdeaAction(formData: FormData) {
   const title = String(formData.get("title") ?? "").trim();
