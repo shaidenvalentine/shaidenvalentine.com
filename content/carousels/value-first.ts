@@ -54,8 +54,7 @@ export const valueFirst: Carousel = {
       eyebrow: "Your turn",
       title: "Who can you over-deliver for?",
       body: "Pick one person this week. Give them something real, expect nothing, and watch what it sets in motion.",
-      handle: "@shaidenvalentine",
-      url: "shaidenvalentine.com",
+      handle: "@shaiden",
     },
   ],
 };

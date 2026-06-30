@@ -56,6 +56,20 @@ export interface IkigaiSlide {
   spotlight?: IkigaiKey;
 }
 
+/** A single principle — oversized index, punchy statement, short elaboration.
+ *  The workhorse slide for the ebook principle series. */
+export interface PrincipleSlide {
+  kind: "principle";
+  /** Big faint backdrop numeral, e.g. "01". */
+  n?: string;
+  /** Theme or source, e.g. "The Game of Life". */
+  eyebrow?: string;
+  text: string;
+  /** Exact substring of `text` to paint brass. */
+  emphasis?: string;
+  elaboration?: string;
+}
+
 /** A pull quote. */
 export interface QuoteSlide {
   kind: "quote";
@@ -77,6 +91,7 @@ export interface CtaSlide {
 export type Slide =
   | CoverSlide
   | StatementSlide
+  | PrincipleSlide
   | ListSlide
   | IkigaiSlide
   | QuoteSlide

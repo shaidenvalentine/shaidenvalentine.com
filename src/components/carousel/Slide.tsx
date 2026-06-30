@@ -103,7 +103,7 @@ function Footer({ index, total }: { index: number; total: number }) {
         justifyContent: "space-between",
       }}
     >
-      <span style={{ fontFamily: SIG, fontSize: 36, color: BRASS, lineHeight: 1 }}>Shaiden</span>
+      <span style={{ fontFamily: SIG, fontSize: 36, color: BRASS, lineHeight: 1 }}>@shaiden</span>
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
         {Array.from({ length: total }).map((_, i) => (
           <span
@@ -240,6 +240,56 @@ function SlideBody({ slide }: { slide: SlideT }) {
           {slide.footnote && (
             <p style={{ fontFamily: DISPLAY, fontSize: 27, fontWeight: 300, color: MUTED, marginTop: 48, maxWidth: 760 }}>
               {slide.footnote}
+            </p>
+          )}
+        </div>
+      );
+
+    case "principle":
+      return (
+        <div style={{ ...bodyBox, justifyContent: "center" }}>
+          {/* oversized ghost index — the editorial rhythm of the series */}
+          {slide.n && (
+            <span
+              aria-hidden
+              style={{
+                position: "absolute",
+                top: -56,
+                right: -10,
+                fontFamily: DISPLAY,
+                fontSize: 300,
+                fontWeight: 600,
+                color: "rgba(201,168,116,0.06)",
+                lineHeight: 0.8,
+                letterSpacing: "-0.04em",
+                userSelect: "none",
+              }}
+            >
+              {slide.n}
+            </span>
+          )}
+          {slide.eyebrow && (
+            <div style={{ marginBottom: 28 }}>
+              <Eyebrow text={slide.eyebrow} />
+            </div>
+          )}
+          <Rule />
+          <p
+            style={{
+              fontFamily: DISPLAY,
+              fontSize: 66,
+              fontWeight: 500,
+              lineHeight: 1.12,
+              letterSpacing: "-0.025em",
+              color: INK,
+              marginTop: 34,
+            }}
+          >
+            {emphasize(slide.text, slide.emphasis)}
+          </p>
+          {slide.elaboration && (
+            <p style={{ fontFamily: DISPLAY, fontSize: 29, fontWeight: 300, lineHeight: 1.45, color: MUTED, marginTop: 40, maxWidth: 780 }}>
+              {slide.elaboration}
             </p>
           )}
         </div>

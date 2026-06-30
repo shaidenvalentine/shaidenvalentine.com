@@ -73,8 +73,7 @@ export const ikigai: Carousel = {
       eyebrow: "Your turn",
       title: "Which circle are you missing?",
       body: "Sit with the four questions. Save this, and come back to it when the path feels foggy.",
-      handle: "@shaidenvalentine",
-      url: "shaidenvalentine.com",
+      handle: "@shaiden",
     },
   ],
 };
