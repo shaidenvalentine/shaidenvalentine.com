@@ -39,6 +39,17 @@ async function ensureTables() {
     )
   `;
   await sql/* sql */`ALTER TABLE applications ADD COLUMN IF NOT EXISTS notes TEXT`;
+  // Carousel idea inbox — raw thoughts Shaiden drops in the admin, to be
+  // turned into designed carousels. status: new → building → published.
+  await sql/* sql */`
+    CREATE TABLE IF NOT EXISTS carousel_ideas (
+      id          SERIAL PRIMARY KEY,
+      title       TEXT NOT NULL,
+      idea        TEXT NOT NULL,
+      status      TEXT NOT NULL DEFAULT 'new',
+      created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )
+  `;
   // Anonymous feedback — by design no name/email/IP is stored.
   await sql/* sql */`
     CREATE TABLE IF NOT EXISTS feedback (
@@ -185,6 +196,55 @@ export async function listFeedback(limit = 500): Promise<FeedbackRow[]> {
     FROM feedback ORDER BY created_at DESC LIMIT ${limit}
   `;
   return rows;
+}
+
+// ───── carousel ideas (the content-machine inbox) ───────────────────────
+
+export type IdeaStatus = "new" | "building" | "published" | "archived";
+
+export interface IdeaRow {
+  id: number;
+  title: string;
+  idea: string;
+  status: string;
+  created_at: string;
+}
+
+export async function insertIdea(input: {
+  title: string;
+  idea: string;
+}): Promise<{ ok: boolean; message: string }> {
+  if (!isConfigured()) return { ok: false, message: "DB not configured." };
+  try {
+    await ensureTables();
+    await sql/* sql */`
+      INSERT INTO carousel_ideas (title, idea)
+      VALUES (${input.title}, ${input.idea})
+    `;
+    return { ok: true, message: "Saved." };
+  } catch {
+    return { ok: false, message: "Couldn't save right now." };
+  }
+}
+
+export async function listIdeas(limit = 500): Promise<IdeaRow[]> {
+  if (!isConfigured()) return [];
+  await ensureTables();
+  const { rows } = await sql<IdeaRow>/* sql */`
+    SELECT id, title, idea, status, created_at
+    FROM carousel_ideas ORDER BY created_at DESC LIMIT ${limit}
+  `;
+  return rows;
+}
+
+export async function updateIdeaStatus(id: number, status: IdeaStatus) {
+  if (!isConfigured()) return;
+  await sql`UPDATE carousel_ideas SET status = ${status} WHERE id = ${id}`;
+}
+
+export async function deleteIdea(id: number) {
+  if (!isConfigured()) return;
+  await sql`DELETE FROM carousel_ideas WHERE id = ${id}`;
 }
 
 // ───── analytics aggregations (for the dashboard charts) ────────────────

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { carousels, getCarousel } from "@content/carousels";
 import { CarouselViewer } from "@/components/carousel/CarouselViewer";
 import { CaptionCopy } from "@/components/carousel/CaptionCopy";
+import { SaveToPhotos } from "@/components/carousel/SaveToPhotos";
 
 export function generateStaticParams() {
   return carousels.map((c) => ({ slug: c.slug }));
@@ -36,6 +37,10 @@ export default async function CarouselPage({ params }: { params: Promise<{ slug:
         <div className="mx-auto mt-14 max-w-2xl">
           <h1 className="display-3">{carousel.title}</h1>
           <p className="body-base mt-3 text-[var(--color-ink-muted)]">{carousel.summary}</p>
+
+          <div className="mt-8">
+            <SaveToPhotos slug={carousel.slug} count={carousel.slides.length} title={carousel.title} />
+          </div>
 
           {carousel.caption && <CaptionCopy caption={carousel.caption} hashtags={carousel.hashtags} />}
 
