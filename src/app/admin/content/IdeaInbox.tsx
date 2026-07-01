@@ -1,28 +1,54 @@
 "use client";
 
 import { useRef, useState, useTransition } from "react";
-import { submitIdeaAction, setIdeaStatusAction, deleteIdeaAction } from "./actions";
+import { useRouter } from "next/navigation";
+import { setIdeaStatusAction, deleteIdeaAction } from "./actions";
 import type { IdeaStatus } from "@/lib/store";
 import { fmtDate } from "../util";
 
-// The capture box: drop a raw idea, it's saved to the inbox below. From there
-// it becomes a designed carousel.
+// The capture box: drop a raw idea, it's saved to the inbox below. Posts to a
+// stable API endpoint (not a Server Action) so it can't 404 across deploys.
 export function IdeaForm() {
   const formRef = useRef<HTMLFormElement>(null);
-  const [pending, start] = useTransition();
-  const [saved, setSaved] = useState(false);
+  const router = useRouter();
+  const [pending, setPending] = useState(false);
+  const [note, setNote] = useState<{ ok: boolean; text: string } | null>(null);
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    const title = String(fd.get("title") ?? "").trim();
+    const idea = String(fd.get("idea") ?? "").trim();
+    if (!title || !idea) return;
+
+    setPending(true);
+    setNote(null);
+    try {
+      const res = await fetch("/api/admin/idea", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, idea }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { ok?: boolean; message?: string };
+      if (res.ok && data.ok) {
+        formRef.current?.reset();
+        setNote({ ok: true, text: "Saved to the inbox ✓" });
+        router.refresh();
+        setTimeout(() => setNote(null), 2600);
+      } else {
+        setNote({ ok: false, text: data.message || "Couldn't save — is the database connected?" });
+      }
+    } catch {
+      setNote({ ok: false, text: "Couldn't save right now. Try again." });
+    } finally {
+      setPending(false);
+    }
+  }
 
   return (
     <form
       ref={formRef}
-      action={(fd) =>
-        start(async () => {
-          await submitIdeaAction(fd);
-          formRef.current?.reset();
-          setSaved(true);
-          setTimeout(() => setSaved(false), 2200);
-        })
-      }
+      onSubmit={onSubmit}
       className="flex flex-col gap-3 rounded-3xl glass p-6"
     >
       <input
@@ -47,7 +73,11 @@ export function IdeaForm() {
           {pending ? "Saving…" : "Drop the idea"}
           <span aria-hidden>↵</span>
         </button>
-        {saved && <span className="body-sm text-[var(--color-brass)]">Saved to the inbox ✓</span>}
+        {note && (
+          <span className={`body-sm ${note.ok ? "text-[var(--color-brass)]" : "text-[var(--color-ink-muted)]"}`}>
+            {note.text}
+          </span>
+        )}
       </div>
     </form>
   );
