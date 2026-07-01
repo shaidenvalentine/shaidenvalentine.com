@@ -46,8 +46,8 @@ export const valueFirst: Carousel = {
     },
     {
       kind: "quote",
-      eyebrow: "Remember",
-      text: "Be so generous it looks like a strategy — then never treat it like one.",
+      eyebrow: "What I've found",
+      text: "Every time I gave without keeping score, it came back around — just never how I'd planned.",
     },
     {
       kind: "cta",

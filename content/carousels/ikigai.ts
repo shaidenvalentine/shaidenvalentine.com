@@ -65,8 +65,8 @@ export const ikigai: Carousel = {
     },
     {
       kind: "quote",
-      eyebrow: "Remember",
-      text: "Ikigai isn't found. It's built — one honest answer at a time.",
+      eyebrow: "What I've found",
+      text: "Mine didn't arrive all at once. It came together slowly, one honest answer at a time.",
     },
     {
       kind: "cta",

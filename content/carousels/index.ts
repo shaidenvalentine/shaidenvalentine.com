@@ -1,5 +1,7 @@
 import type { Carousel } from "./types";
 import { gameOfLifePrinciples } from "./game-of-life-principles";
+import { artOfFlippingPrinciples } from "./art-of-flipping-principles";
+import { livingInBaliPrinciples } from "./living-in-bali-principles";
 import { ikigai } from "./ikigai";
 import { valueFirst } from "./value-first";
 
@@ -7,6 +9,8 @@ import { valueFirst } from "./value-first";
 // Carousels are individual principles — one focused idea per carousel.
 export const carousels: Carousel[] = [
   ...gameOfLifePrinciples,
+  ...artOfFlippingPrinciples,
+  ...livingInBaliPrinciples,
   ikigai,
   valueFirst,
 ];

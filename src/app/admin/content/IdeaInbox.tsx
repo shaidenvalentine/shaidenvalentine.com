@@ -28,14 +28,14 @@ export function IdeaForm() {
       <input
         name="title"
         required
-        placeholder="Working title — e.g. “The icky guy”"
+        placeholder="Title"
         className="w-full rounded-xl border border-[var(--color-line)] bg-[var(--color-bg)] px-4 py-3 text-[var(--color-ink)] outline-none transition focus:border-[var(--color-brass)]"
       />
       <textarea
         name="idea"
         required
         rows={5}
-        placeholder="Brain-dump the idea, the thought, the philosophy. As messy as you like — the angle, the key points, why it matters. I'll shape it into a designed carousel."
+        placeholder="What's the idea?"
         className="w-full resize-y rounded-xl border border-[var(--color-line)] bg-[var(--color-bg)] px-4 py-3 text-[var(--color-ink)] outline-none transition focus:border-[var(--color-brass)]"
       />
       <div className="flex items-center gap-4">
