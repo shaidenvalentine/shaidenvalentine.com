@@ -3,7 +3,7 @@
 // beach maze on an ocean gradient; the two crabs are little spiral shells with
 // claws, eyes on stalks, and wiggling legs.
 
-import type { Crab, CrabId, GameState } from "./engine";
+import type { Crab, CrabId, GameState, Monster } from "./engine";
 
 export const THEME: Record<CrabId, { shell: string; shellDark: string; body: string; claw: string; name: string }> = {
   carlisle: { shell: "#FF7A45", shellDark: "#D2551F", body: "#FF9E7A", claw: "#E24A2B", name: "Carlisle" },
@@ -98,6 +98,8 @@ export function draw(
     (a, b) => (a.hungryUntil > now ? 1 : 0) - (b.hungryUntil > now ? 1 : 0),
   );
   for (const crab of crabs) drawCrab(ctx, crab, view, now);
+
+  if (s.monster) drawMonster(ctx, s.monster, view, now);
 
   drawHUD(ctx, s, now, w, topPad);
 }
@@ -253,6 +255,119 @@ function drawCrab(ctx: CanvasRenderingContext2D, crab: Crab, view: View, now: nu
   }
 
   ctx.restore();
+}
+
+function drawMonster(ctx: CanvasRenderingContext2D, m: Monster, view: View, now: number) {
+  const { tile, ox, oy } = view;
+  const x = ox + m.c * tile + tile / 2;
+  const y = oy + m.r * tile + tile / 2;
+
+  if (m.respawnFlash > 0 && Math.floor(m.respawnFlash / 120) % 2 === 0) return;
+
+  const s = tile * 0.38;
+  const P2 = Math.PI * 2;
+  const face = Math.cos(m.facing) >= 0 ? 1 : -1;
+  const swing = Math.sin(m.wiggle) * 0.55;
+  const skin = "#e9b58a";
+  const lime = "#c6ff00";
+  const hair = "#4a3120";
+
+  ctx.save();
+  ctx.translate(x, y);
+
+  // shadow
+  ctx.fillStyle = "rgba(0,0,0,0.28)";
+  ctx.beginPath();
+  ctx.ellipse(0, s * 1.2, s * 0.7, s * 0.22, 0, 0, P2);
+  ctx.fill();
+
+  ctx.scale(face, 1);
+  ctx.lineCap = "round";
+
+  // legs (running)
+  ctx.strokeStyle = skin;
+  ctx.lineWidth = s * 0.28;
+  ctx.beginPath();
+  ctx.moveTo(0, s * 0.2);
+  ctx.lineTo(-s * 0.15 - swing * s, s * 1.1);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(0, s * 0.2);
+  ctx.lineTo(s * 0.3 + swing * s, s * 1.05);
+  ctx.stroke();
+
+  // back arm
+  ctx.strokeStyle = skin;
+  ctx.lineWidth = s * 0.22;
+  ctx.beginPath();
+  ctx.moveTo(0, -s * 0.35);
+  ctx.lineTo(-s * 0.55 - swing * s * 0.5, -s * 0.55);
+  ctx.stroke();
+
+  // torso
+  ctx.fillStyle = skin;
+  ctx.beginPath();
+  ctx.ellipse(0, -s * 0.15, s * 0.48, s * 0.72, 0, 0, P2);
+  ctx.fill();
+
+  // lime mankini — brief + the signature over-the-shoulder strap
+  ctx.fillStyle = lime;
+  ctx.beginPath();
+  ctx.moveTo(-s * 0.42, s * 0.12);
+  ctx.lineTo(s * 0.42, s * 0.12);
+  ctx.lineTo(0, s * 0.62);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = lime;
+  ctx.lineWidth = s * 0.22;
+  ctx.beginPath();
+  ctx.moveTo(-s * 0.08, s * 0.3);
+  ctx.lineTo(s * 0.3, -s * 0.82);
+  ctx.stroke();
+
+  // front arm
+  ctx.strokeStyle = skin;
+  ctx.beginPath();
+  ctx.moveTo(0, -s * 0.35);
+  ctx.lineTo(s * 0.55 + swing * s * 0.5, -s * 0.12);
+  ctx.stroke();
+
+  // head + hair
+  ctx.fillStyle = skin;
+  ctx.beginPath();
+  ctx.arc(s * 0.06, -s * 1.02, s * 0.42, 0, P2);
+  ctx.fill();
+  ctx.fillStyle = hair;
+  ctx.beginPath();
+  ctx.arc(s * 0.06, -s * 1.08, s * 0.44, Math.PI, P2);
+  ctx.closePath();
+  ctx.fill();
+
+  // face — eye + a big dumb grin
+  ctx.fillStyle = "#20140b";
+  ctx.beginPath();
+  ctx.arc(s * 0.22, -s * 1.02, s * 0.06, 0, P2);
+  ctx.fill();
+  ctx.strokeStyle = "#20140b";
+  ctx.lineWidth = s * 0.05;
+  ctx.beginPath();
+  ctx.arc(s * 0.18, -s * 0.94, s * 0.14, 0, Math.PI * 0.85);
+  ctx.stroke();
+
+  ctx.restore();
+
+  // little name tag so everyone knows it's Sasha
+  const tag = "SASHA";
+  ctx.font = `700 ${Math.max(8, Math.round(tile * 0.3))}px ui-sans-serif, system-ui`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  const tw = ctx.measureText(tag).width + tile * 0.4;
+  const ty = y - s * 1.7;
+  ctx.fillStyle = "rgba(140,200,0,0.92)";
+  roundRect(ctx, x - tw / 2, ty - tile * 0.28, tw, tile * 0.56, tile * 0.28);
+  ctx.fill();
+  ctx.fillStyle = "#173a00";
+  ctx.fillText(tag, x, ty + 1);
 }
 
 function drawHUD(ctx: CanvasRenderingContext2D, s: GameState, now: number, w: number, topPad: number) {

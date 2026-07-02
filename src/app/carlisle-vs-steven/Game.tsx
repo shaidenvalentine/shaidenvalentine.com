@@ -36,6 +36,7 @@ export default function Game() {
   const [mode, setMode] = useState<Mode>("solo");
   const [human, setHuman] = useState<CrabId>("carlisle");
   const [difficulty, setDifficulty] = useState<Difficulty>("normal");
+  const [sasha, setSasha] = useState(true);
   const [muted, setMuted] = useState(false);
   const [count, setCount] = useState(3);
   const [result, setResult] = useState<{ winner: CrabId | "draw"; c: number; s: number } | null>(null);
@@ -100,7 +101,9 @@ export default function Game() {
       lastRef.current = t;
 
       const ev = update(s, dt, t);
-      if (ev.chomp) sfx.chomp();
+      if (ev.bonk) sfx.bonk();
+      else if (ev.tackle) sfx.tackle();
+      else if (ev.chomp) sfx.chomp();
       else if (ev.shell) sfx.shell();
       else if (ev.crumb) sfx.crumb();
 
@@ -142,13 +145,13 @@ export default function Game() {
   // ---- start / restart ------------------------------------------------
   const beginCountdown = useCallback(() => {
     initAudio();
-    stateRef.current = newGame({ mode, difficulty, human });
+    stateRef.current = newGame({ mode, difficulty, human, sasha });
     setResult(null);
     resize();
     renderOnce();
     setScreen("countdown");
     setCount(3);
-  }, [mode, difficulty, human, resize, renderOnce]);
+  }, [mode, difficulty, human, sasha, resize, renderOnce]);
 
   // Countdown ticker.
   useEffect(() => {
@@ -352,9 +355,11 @@ export default function Game() {
                 <span style={{ color: THEME.steven.shell }}>Steven</span>
               </h1>
               <p className="mt-2 text-sm leading-relaxed text-white/70">
-                Two hermit crabs we found in Rajaunpot, now settling it in the arena. Scurry the maze,
+                Two hermit crabs we found in Raja Ampat, now settling it in the arena. Scurry the maze,
                 gobble crumbs, grab a <span className="text-amber-300">glowing shell</span> and chomp your rival.
-                Most points when the clock hits zero wins.
+                Most points when the clock hits zero wins. Watch out for{" "}
+                <span className="font-semibold text-lime-300">Sasha</span> — the beach monster hunts whoever&apos;s
+                winning and tackles them back to their corner.
               </p>
             </div>
 
@@ -401,6 +406,17 @@ export default function Game() {
                 side, <b style={{ color: THEME.steven.shell }}>Steven</b> = swipe the right. Or use the two D-pads.
               </p>
             )}
+
+            <Field label="Beach monster">
+              <Segmented
+                options={[
+                  { v: "on", label: "Sasha: ON", color: "#c6ff00" },
+                  { v: "off", label: "Sasha: OFF" },
+                ]}
+                value={sasha ? "on" : "off"}
+                onChange={(v) => setSasha(v === "on")}
+              />
+            </Field>
 
             <button
               onClick={beginCountdown}
@@ -467,11 +483,29 @@ export default function Game() {
                 <span style={{ color: THEME[result.winner].shell }}>{THEME[result.winner].name} wins!</span>
               )}
             </h2>
-            {mode === "solo" && result.winner !== "draw" && (
-              <p className="text-white/70">
-                {result.winner === human ? "You out-crabbed the CPU. 🦀" : "The CPU out-crabbed you. Rematch?"}
-              </p>
-            )}
+            {(() => {
+              const winnerId = result.winner === "draw" ? null : result.winner;
+              const loserId = winnerId ? (winnerId === "carlisle" ? "steven" : "carlisle") : null;
+              const humanWon = mode === "solo" && winnerId === human;
+              const humanLost = mode === "solo" && winnerId !== null && winnerId !== human;
+              if (!winnerId) {
+                return <p className="text-lg font-bold text-white/80">Nobody caught crabs today. 🤝</p>;
+              }
+              if (humanWon) {
+                return <p className="text-2xl font-black tracking-tight text-teal-300">YOU&apos;VE GOT CRABS! 🦀</p>;
+              }
+              if (humanLost) {
+                return <p className="text-2xl font-black tracking-tight text-red-400">GET WREKD 💀</p>;
+              }
+              // versus: crown one, roast the other
+              return (
+                <p className="text-lg font-black leading-tight tracking-tight">
+                  <span className="text-teal-300">{THEME[winnerId].name} HAS CRABS 🦀</span>
+                  <br />
+                  <span className="text-red-400">{THEME[loserId!].name} GOT WREKD 💀</span>
+                </p>
+              );
+            })()}
             <div className="flex w-full items-center justify-center gap-6 rounded-2xl bg-white/10 py-4">
               <Tally id="carlisle" score={result.c} />
               <div className="text-2xl font-black text-white/40">vs</div>
