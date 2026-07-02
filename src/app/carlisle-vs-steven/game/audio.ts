@@ -39,6 +39,24 @@ function blip(freq: number, dur: number, type: OscillatorType, gain = 0.08, slid
   osc.stop(t0 + dur + 0.02);
 }
 
+// Speak a word via the browser's TTS (best-effort; iOS may vary). Used for
+// Christian's creepy lisped "carwyle".
+function say(text: string, pitch = 0.3, rate = 0.72) {
+  if (muted) return;
+  try {
+    const synth = window.speechSynthesis;
+    if (!synth) return;
+    const u = new SpeechSynthesisUtterance(text);
+    u.pitch = pitch;
+    u.rate = rate;
+    u.volume = 1;
+    synth.cancel();
+    synth.speak(u);
+  } catch {
+    /* no speech synthesis available */
+  }
+}
+
 export const sfx = {
   crumb: () => blip(520 + Math.random() * 80, 0.06, "square", 0.04),
   shell: () => {
@@ -68,6 +86,11 @@ export const sfx = {
     // stingray zap — a sharp electric buzz
     blip(900, 0.05, "sawtooth", 0.07, 1400);
     setTimeout(() => blip(1400, 0.08, "square", 0.06, 300), 40);
+  },
+  christian: () => {
+    // creepy descending cackle, then a lisped "carwyle"
+    [200, 168, 140, 120].forEach((f, i) => setTimeout(() => blip(f, 0.13, "sawtooth", 0.075, f * 0.7), i * 120));
+    setTimeout(() => say("carwyle"), 520);
   },
   win: () => {
     [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => blip(f, 0.18, "triangle", 0.07), i * 130));
