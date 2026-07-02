@@ -102,6 +102,7 @@ export default function Game() {
 
       const ev = update(s, dt, t);
       if (ev.bonk) sfx.bonk();
+      else if (ev.christian) sfx.christian();
       else if (ev.sting) sfx.sting();
       else if (ev.tackle) sfx.tackle();
       else if (ev.chomp) sfx.chomp();

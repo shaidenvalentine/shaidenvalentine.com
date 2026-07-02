@@ -395,6 +395,7 @@ export interface Events {
   tackle?: boolean; // Sasha/Josiah caught a crab
   sting?: boolean; // the stingray zapped a crab
   bonk?: boolean; // a hungry crab whacked a boy
+  christian?: boolean; // Christian caught a crab (cue the creepy laugh)
 }
 
 // Advance the simulation. dtMs is frame delta, nowMs a monotonic clock.
@@ -485,6 +486,7 @@ export function update(s: GameState, dtMs: number, nowMs: number): Events {
           } else {
             ev.tackle = true;
             if (m.kind === "josiah") m.taunt = 1200; // Josiah does a taunt dance
+            if (m.kind === "christian") ev.christian = true; // cue the creepy laugh
           }
         }
         break;
