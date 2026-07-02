@@ -4,7 +4,7 @@ import Game from "./Game";
 export const metadata: Metadata = {
   title: "Carlisle vs Steven 🦀",
   description:
-    "A hermit crab showdown from Rajaunpot. Scurry the maze, gobble crumbs, grab a glowing shell and chomp your rival. Play on your phone — solo vs CPU or two players on one screen.",
+    "A hermit crab showdown from the Raja Ampat boys' dive trip. Scurry the maze, gobble crumbs, grab a glowing shell and chomp your rival. Play on your phone — solo vs CPU or two players on one screen.",
   applicationName: "Carlisle vs Steven",
   appleWebApp: { capable: true, title: "Carlisle vs Steven", statusBarStyle: "black-translucent" },
   openGraph: {

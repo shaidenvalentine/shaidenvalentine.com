@@ -13,8 +13,8 @@ export interface Dir {
   y: number;
 }
 
-export interface Crab {
-  id: CrabId;
+// Shared movement state for anything that scurries the maze (crabs + Sasha).
+export interface Mover {
   // Position in TILE units (integer = tile center). Resolution-independent;
   // the renderer multiplies by the current tile pixel size.
   c: number;
@@ -24,6 +24,11 @@ export interface Crab {
   moving: boolean; // mid-corridor between two tile centers
   tCol: number; // target tile while moving
   tRow: number;
+  facing: number; // radians, for rendering
+}
+
+export interface Crab extends Mover {
+  id: CrabId;
   lastCol: number; // last tile whose pellet we processed
   lastRow: number;
   score: number;
@@ -31,9 +36,18 @@ export interface Crab {
   spawnC: number;
   spawnR: number;
   isCPU: boolean;
-  facing: number; // radians, for rendering
   wiggle: number; // leg animation phase
   respawnFlash: number; // ms remaining of respawn flash
+}
+
+// Sasha — the gay beach monster in a Borat mankini who crashes the arena,
+// hunts whoever's winning, and tackles them back to their corner.
+export interface Monster extends Mover {
+  spawnC: number;
+  spawnR: number;
+  wiggle: number;
+  cooldownUntil: number; // ms; can't tackle again until past this
+  respawnFlash: number;
 }
 
 export type Cell = 0 | 1 | 2; // 0 empty, 1 crumb, 2 power shell
@@ -45,6 +59,7 @@ export interface GameState {
   pellets: Cell[][]; // mutable food layer
   crumbsLeft: number;
   crabs: Record<CrabId, Crab>;
+  monster: Monster | null;
   time: number; // ms elapsed in round
   duration: number; // ms total
   over: boolean;
@@ -64,7 +79,11 @@ export const POINTS = {
   crumb: 1,
   shell: 5,
   chomp: 15,
+  bonk: 10, // whacking Sasha while hungry
+  tackle: 5, // points Sasha knocks off the leader
 };
+
+const SASHA_GRACE_MS = 1800; // head start before Sasha wakes up each round
 
 // ---------------------------------------------------------------------------
 // Maze generation — randomized DFS (a "perfect" maze is fully connected by
@@ -166,7 +185,30 @@ export interface NewGameOpts {
   difficulty: Difficulty;
   // Which crab the human controls in solo mode (the other becomes CPU).
   human: CrabId;
+  sasha?: boolean; // spawn the beach monster (default true)
   rng?: RNG;
+}
+
+function toOdd(n: number): number {
+  return n % 2 === 0 ? n + 1 : n;
+}
+
+function makeMonster(c: number, r: number): Monster {
+  return {
+    c,
+    r,
+    dir: { x: 0, y: 0 },
+    next: { x: 0, y: 0 },
+    moving: false,
+    tCol: c,
+    tRow: r,
+    facing: 0,
+    spawnC: c,
+    spawnR: r,
+    wiggle: 0,
+    cooldownUntil: SASHA_GRACE_MS,
+    respawnFlash: 0,
+  };
 }
 
 export function newGame(opts: NewGameOpts): GameState {
@@ -200,6 +242,15 @@ export function newGame(opts: NewGameOpts): GameState {
   pellets[carlisle.r][carlisle.c] = 0;
   pellets[steven.r][steven.c] = 0;
 
+  // Sasha barges in at the middle of the maze.
+  let monster: Monster | null = null;
+  if (opts.sasha ?? true) {
+    const mc = toOdd(Math.floor(cols / 2));
+    const mr = toOdd(Math.floor(rows / 2));
+    monster = makeMonster(mc, mr);
+    pellets[mr][mc] = 0;
+  }
+
   let crumbsLeft = 0;
   for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) if (pellets[r][c] === 1) crumbsLeft++;
 
@@ -210,6 +261,7 @@ export function newGame(opts: NewGameOpts): GameState {
     pellets,
     crumbsLeft,
     crabs: { carlisle, steven },
+    monster,
     time: 0,
     duration: ROUND_MS,
     over: false,
@@ -228,46 +280,46 @@ function open(s: GameState, c: number, r: number): boolean {
   return !s.wall[r][c];
 }
 
-function chooseDir(s: GameState, crab: Crab, ci: number, ri: number): Dir | null {
+function chooseDir(s: GameState, m: Mover, ci: number, ri: number): Dir | null {
   // Prefer the queued direction, then keep going straight.
-  if ((crab.next.x || crab.next.y) && open(s, ci + crab.next.x, ri + crab.next.y)) return crab.next;
-  if ((crab.dir.x || crab.dir.y) && open(s, ci + crab.dir.x, ri + crab.dir.y)) return crab.dir;
+  if ((m.next.x || m.next.y) && open(s, ci + m.next.x, ri + m.next.y)) return m.next;
+  if ((m.dir.x || m.dir.y) && open(s, ci + m.dir.x, ri + m.dir.y)) return m.dir;
   return null;
 }
 
-function stepCrab(s: GameState, crab: Crab, dist: number) {
+function stepMover(s: GameState, m: Mover, dist: number) {
   let guard = 0;
   while (dist > 1e-6 && guard++ < 12) {
-    if (!crab.moving) {
-      const ci = Math.round(crab.c);
-      const ri = Math.round(crab.r);
-      crab.c = ci;
-      crab.r = ri;
-      const d = chooseDir(s, crab, ci, ri);
+    if (!m.moving) {
+      const ci = Math.round(m.c);
+      const ri = Math.round(m.r);
+      m.c = ci;
+      m.r = ri;
+      const d = chooseDir(s, m, ci, ri);
       if (!d) {
-        crab.dir = { x: 0, y: 0 };
+        m.dir = { x: 0, y: 0 };
         break;
       }
-      crab.dir = d;
-      crab.tCol = ci + d.x;
-      crab.tRow = ri + d.y;
-      crab.moving = true;
+      m.dir = d;
+      m.tCol = ci + d.x;
+      m.tRow = ri + d.y;
+      m.moving = true;
     }
-    const dx = crab.tCol - crab.c;
-    const dy = crab.tRow - crab.r;
+    const dx = m.tCol - m.c;
+    const dy = m.tRow - m.r;
     const rem = Math.hypot(dx, dy);
     if (rem <= dist) {
-      crab.c = crab.tCol;
-      crab.r = crab.tRow;
+      m.c = m.tCol;
+      m.r = m.tRow;
       dist -= rem;
-      crab.moving = false;
+      m.moving = false;
     } else {
-      crab.c += (dx / rem) * dist;
-      crab.r += (dy / rem) * dist;
+      m.c += (dx / rem) * dist;
+      m.r += (dy / rem) * dist;
       dist = 0;
     }
   }
-  if (crab.dir.x || crab.dir.y) crab.facing = Math.atan2(crab.dir.y, crab.dir.x);
+  if (m.dir.x || m.dir.y) m.facing = Math.atan2(m.dir.y, m.dir.x);
 }
 
 function eatAt(s: GameState, crab: Crab, now: number) {
@@ -302,12 +354,25 @@ function respawn(crab: Crab) {
   crab.respawnFlash = 900;
 }
 
+function respawnMonster(m: Monster) {
+  m.c = m.spawnC;
+  m.r = m.spawnR;
+  m.dir = { x: 0, y: 0 };
+  m.next = { x: 0, y: 0 };
+  m.moving = false;
+  m.tCol = m.spawnC;
+  m.tRow = m.spawnR;
+  m.respawnFlash = 900;
+}
+
 const DIFF_SPEED: Record<Difficulty, number> = { chill: 0.82, normal: 1, savage: 1.14 };
 
 export interface Events {
   crumb?: boolean;
   shell?: boolean;
   chomp?: boolean;
+  tackle?: boolean; // Sasha caught a crab
+  bonk?: boolean; // a hungry crab whacked Sasha
 }
 
 // Advance the simulation. dtMs is frame delta, nowMs a monotonic clock.
@@ -325,7 +390,7 @@ export function update(s: GameState, dtMs: number, nowMs: number): Events {
     if (crab.isCPU) speed *= DIFF_SPEED[s.difficulty];
 
     const before = { score: crab.score, hungry: crab.hungryUntil > nowMs };
-    stepCrab(s, crab, speed * dt);
+    stepMover(s, crab, speed * dt);
     eatAt(s, crab, nowMs);
     crab.wiggle += dt * (crab.dir.x || crab.dir.y ? 14 : 3);
     if (crab.respawnFlash > 0) crab.respawnFlash = Math.max(0, crab.respawnFlash - dtMs);
@@ -352,6 +417,33 @@ export function update(s: GameState, dtMs: number, nowMs: number): Events {
       b.score += POINTS.chomp;
       respawn(a);
       ev.chomp = true;
+    }
+  }
+
+  // Sasha the beach monster.
+  const m = s.monster;
+  if (m && s.time > SASHA_GRACE_MS) {
+    if (!m.moving) decideSasha(s, m, nowMs);
+    stepMover(s, m, BASE_SPEED * 0.9 * dt);
+    m.wiggle += dt * (m.dir.x || m.dir.y ? 16 : 3);
+    if (m.respawnFlash > 0) m.respawnFlash = Math.max(0, m.respawnFlash - dtMs);
+
+    if (m.cooldownUntil <= nowMs) {
+      for (const crab of [a, b]) {
+        if (Math.hypot(m.c - crab.c, m.r - crab.r) >= EAT_REACH) continue;
+        if (crab.hungryUntil > nowMs) {
+          crab.score += POINTS.bonk; // powered-up crab bonks the monster
+          respawnMonster(m);
+          m.cooldownUntil = nowMs + 1500;
+          ev.bonk = true;
+        } else {
+          crab.score = Math.max(0, crab.score - POINTS.tackle);
+          respawn(crab); // tackled back to your corner
+          m.cooldownUntil = nowMs + 1400;
+          ev.tackle = true;
+        }
+        break;
+      }
     }
   }
 
@@ -418,22 +510,51 @@ function bfsStep(s: GameState, sc: number, sr: number, goal: (c: number, r: numb
   return { x: Math.sign(stepC - sc), y: Math.sign(stepR - sr) };
 }
 
-function fleeDir(s: GameState, crab: Crab, threat: Crab): Dir | null {
-  const ci = Math.round(crab.c);
-  const ri = Math.round(crab.r);
+function fleeDir(s: GameState, mv: Mover, threatC: number, threatR: number): Dir | null {
+  const ci = Math.round(mv.c);
+  const ri = Math.round(mv.r);
   let best: Dir | null = null;
   let bestD = -Infinity;
   for (const d of STEP_DIRS) {
     if (!open(s, ci + d.x, ri + d.y)) continue;
     // avoid a straight reverse unless it's the only exit
-    const reverse = d.x === -crab.dir.x && d.y === -crab.dir.y && (crab.dir.x || crab.dir.y);
-    const nd = Math.hypot(ci + d.x - threat.c, ri + d.y - threat.r) - (reverse ? 0.6 : 0);
+    const reverse = d.x === -mv.dir.x && d.y === -mv.dir.y && (mv.dir.x || mv.dir.y);
+    const nd = Math.hypot(ci + d.x - threatC, ri + d.y - threatR) - (reverse ? 0.6 : 0);
     if (nd > bestD) {
       bestD = nd;
       best = d;
     }
   }
   return best;
+}
+
+// Sasha hunts whoever is winning — but a hungry (powered-up) crab can bonk
+// him, so he keeps his distance from those and goes for the softer target.
+function decideSasha(s: GameState, m: Monster, now: number) {
+  const a = s.crabs.carlisle;
+  const b = s.crabs.steven;
+  const ci = Math.round(m.c);
+  const ri = Math.round(m.r);
+  const aHungry = a.hungryUntil > now;
+  const bHungry = b.hungryUntil > now;
+
+  let dir: Dir | null = null;
+  if (aHungry && bHungry) {
+    // everyone's dangerous — bail from the nearest crab
+    const near = Math.hypot(ci - a.c, ri - a.r) < Math.hypot(ci - b.c, ri - b.r) ? a : b;
+    dir = fleeDir(s, m, near.c, near.r);
+  } else {
+    // chase the leader, unless the leader is powered up
+    let target = a.score >= b.score ? a : b;
+    if ((target === a ? aHungry : bHungry)) target = target === a ? b : a;
+    if (Math.random() < 0.08) {
+      const opts = STEP_DIRS.filter((d) => open(s, ci + d.x, ri + d.y));
+      dir = opts.length ? opts[Math.floor(Math.random() * opts.length)] : null;
+    } else {
+      dir = bfsStep(s, ci, ri, (c, r) => c === Math.round(target.c) && r === Math.round(target.r));
+    }
+  }
+  if (dir) m.next = dir;
 }
 
 function decideCPU(s: GameState, crab: Crab, now: number) {
@@ -454,7 +575,7 @@ function decideCPU(s: GameState, crab: Crab, now: number) {
   } else if (meHungry && !otherHungry) {
     dir = bfsStep(s, ci, ri, (c, r) => c === Math.round(other.c) && r === Math.round(other.r));
   } else if (otherHungry && !meHungry && gap < 6) {
-    dir = bfsStep(s, ci, ri, (c, r) => s.pellets[r][c] === 2) ?? fleeDir(s, crab, other);
+    dir = bfsStep(s, ci, ri, (c, r) => s.pellets[r][c] === 2) ?? fleeDir(s, crab, other.c, other.r);
   } else {
     dir =
       bfsStep(s, ci, ri, (c, r) => s.pellets[r][c] === 2 && gap > 3 && Math.random() < 0.5) ??

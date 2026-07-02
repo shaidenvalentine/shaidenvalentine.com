@@ -54,6 +54,16 @@ export const sfx = {
     setTimeout(() => blip(659, 0.12, "triangle", 0.06), 120);
     setTimeout(() => blip(784, 0.18, "triangle", 0.07), 240);
   },
+  tackle: () => {
+    // Sasha body-slam — a comedic descending womp
+    blip(200, 0.14, "sawtooth", 0.1, 70);
+    setTimeout(() => blip(120, 0.2, "square", 0.08, 55), 60);
+  },
+  bonk: () => {
+    // whacking Sasha — a springy boing
+    blip(180, 0.1, "square", 0.09, 520);
+    setTimeout(() => blip(520, 0.12, "triangle", 0.07, 180), 70);
+  },
   win: () => {
     [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => blip(f, 0.18, "triangle", 0.07), i * 130));
   },
