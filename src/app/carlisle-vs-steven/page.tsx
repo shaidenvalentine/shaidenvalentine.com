@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     "A hermit crab showdown from the Raja Ampat boys' dive trip. Scurry the maze, gobble crumbs, grab a glowing shell and chomp your rival. Play on your phone — solo vs CPU or two players on one screen.",
   applicationName: "Carlisle vs Steven",
   appleWebApp: { capable: true, title: "Carlisle vs Steven", statusBarStyle: "black-translucent" },
+  robots: { index: false, follow: false },
   openGraph: {
     title: "Carlisle vs Steven 🦀",
     description:

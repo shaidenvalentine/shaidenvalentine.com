@@ -36,7 +36,7 @@ export default function Game() {
   const [mode, setMode] = useState<Mode>("solo");
   const [human, setHuman] = useState<CrabId>("carlisle");
   const [difficulty, setDifficulty] = useState<Difficulty>("normal");
-  const [sasha, setSasha] = useState(true);
+  const [chaos, setChaos] = useState(true);
   const [muted, setMuted] = useState(false);
   const [count, setCount] = useState(3);
   const [result, setResult] = useState<{ winner: CrabId | "draw"; c: number; s: number } | null>(null);
@@ -102,6 +102,7 @@ export default function Game() {
 
       const ev = update(s, dt, t);
       if (ev.bonk) sfx.bonk();
+      else if (ev.sting) sfx.sting();
       else if (ev.tackle) sfx.tackle();
       else if (ev.chomp) sfx.chomp();
       else if (ev.shell) sfx.shell();
@@ -145,13 +146,13 @@ export default function Game() {
   // ---- start / restart ------------------------------------------------
   const beginCountdown = useCallback(() => {
     initAudio();
-    stateRef.current = newGame({ mode, difficulty, human, sasha });
+    stateRef.current = newGame({ mode, difficulty, human, chaos });
     setResult(null);
     resize();
     renderOnce();
     setScreen("countdown");
     setCount(3);
-  }, [mode, difficulty, human, sasha, resize, renderOnce]);
+  }, [mode, difficulty, human, chaos, resize, renderOnce]);
 
   // Countdown ticker.
   useEffect(() => {
@@ -355,11 +356,14 @@ export default function Game() {
                 <span style={{ color: THEME.steven.shell }}>Steven</span>
               </h1>
               <p className="mt-2 text-sm leading-relaxed text-white/70">
-                Two hermit crabs we found in Raja Ampat, now settling it in the arena. Scurry the maze,
-                gobble crumbs, grab a <span className="text-amber-300">glowing shell</span> and chomp your rival.
-                Most points when the clock hits zero wins. Watch out for{" "}
-                <span className="font-semibold text-lime-300">Sasha</span> — the beach monster hunts whoever&apos;s
-                winning and tackles them back to their corner.
+                Two hermit crabs from the <span className="font-semibold text-white/90">Anne Bonnie</span> — the
+                boys-only Raja Ampat dive trip. Scurry the reef, hoover up{" "}
+                <span className="font-semibold text-red-400">sambal</span> 🌶️, grab the{" "}
+                <span className="font-semibold text-sky-300">comet</span> ☄️ for beast mode and chomp your rival.
+                Dodge the <span className="text-cyan-300">blue-spotted stingray</span>, and whatever you do, don&apos;t
+                let <span className="font-semibold text-lime-300">Sasha</span> (mankini) or{" "}
+                <span className="font-semibold text-orange-300">Josiah</span> catch you. Mustaches mandatory. Most
+                points when the clock hits zero wins.
               </p>
             </div>
 
@@ -407,14 +411,14 @@ export default function Game() {
               </p>
             )}
 
-            <Field label="Beach monster">
+            <Field label="Trip chaos (Sasha · Josiah · stingray)">
               <Segmented
                 options={[
-                  { v: "on", label: "Sasha: ON", color: "#c6ff00" },
-                  { v: "off", label: "Sasha: OFF" },
+                  { v: "on", label: "Chaos: ON", color: "#c6ff00" },
+                  { v: "off", label: "Chaos: OFF" },
                 ]}
-                value={sasha ? "on" : "off"}
-                onChange={(v) => setSasha(v === "on")}
+                value={chaos ? "on" : "off"}
+                onChange={(v) => setChaos(v === "on")}
               />
             </Field>
 

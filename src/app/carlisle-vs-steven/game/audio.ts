@@ -60,9 +60,14 @@ export const sfx = {
     setTimeout(() => blip(120, 0.2, "square", 0.08, 55), 60);
   },
   bonk: () => {
-    // whacking Sasha — a springy boing
+    // whacking a boy — a springy boing
     blip(180, 0.1, "square", 0.09, 520);
     setTimeout(() => blip(520, 0.12, "triangle", 0.07, 180), 70);
+  },
+  sting: () => {
+    // stingray zap — a sharp electric buzz
+    blip(900, 0.05, "sawtooth", 0.07, 1400);
+    setTimeout(() => blip(1400, 0.08, "square", 0.06, 300), 40);
   },
   win: () => {
     [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => blip(f, 0.18, "triangle", 0.07), i * 130));
