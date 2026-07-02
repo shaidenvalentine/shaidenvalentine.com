@@ -44,7 +44,8 @@ export interface Crab extends Mover {
 //  - sasha: the beach monster in a lime Borat mankini, hunts whoever's winning
 //  - josiah: mustachioed boy who chases the nearest crab
 //  - stingray: the blue-spotted ray gliding the reef, stings on contact
-export type MonsterKind = "sasha" | "josiah" | "stingray";
+//  - christian: an evil red-glowing floating head in a fishing hat, relentless
+export type MonsterKind = "sasha" | "josiah" | "stingray" | "christian";
 
 export interface Monster extends Mover {
   kind: MonsterKind;
@@ -261,6 +262,7 @@ export function newGame(opts: NewGameOpts): GameState {
       ["sasha", mc, mr],
       ["josiah", mc, Math.max(1, mr - 2)],
       ["stingray", mc, Math.min(rows - 2, mr + 2)],
+      ["christian", Math.min(cols - 2, mc + 2), mr],
     ];
     for (const [kind, c, r] of spots) {
       if (wall[r][c]) continue; // rooms sit on odd coords, so these are open
@@ -384,7 +386,7 @@ function respawnMonster(m: Monster) {
 }
 
 const DIFF_SPEED: Record<Difficulty, number> = { chill: 0.82, normal: 1, savage: 1.14 };
-const MONSTER_SPEED: Record<MonsterKind, number> = { sasha: 0.9, josiah: 0.96, stingray: 0.72 };
+const MONSTER_SPEED: Record<MonsterKind, number> = { sasha: 0.9, josiah: 0.96, stingray: 0.72, christian: 1.02 };
 
 export interface Events {
   crumb?: boolean;
@@ -469,7 +471,7 @@ export function update(s: GameState, dtMs: number, nowMs: number): Events {
           crab.score += POINTS.bonk; // powered-up crab bosses the hazard
           respawnMonster(m);
           m.cooldownUntil = nowMs + 1800;
-          if (m.kind !== "stingray") {
+          if (m.kind === "sasha" || m.kind === "josiah") {
             m.cry = 1500; // the boys cry when eaten
             m.respawnFlash = 0; // show the tears instead of blinking
           }

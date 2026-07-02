@@ -360,8 +360,10 @@ export default function Game() {
                 boys-only Raja Ampat dive trip. Scurry the reef, hoover up{" "}
                 <span className="font-semibold text-red-400">sambal</span> 🌶️, grab the{" "}
                 <span className="font-semibold text-sky-300">comet</span> ☄️ for beast mode and chomp your rival.
-                Dodge the <span className="text-cyan-300">blue-spotted stingray</span>, and whatever you do, don&apos;t
-                let <span className="font-semibold text-lime-300">Sasha</span> (mankini) or{" "}
+                Dodge the <span className="text-cyan-300">blue-spotted stingray</span> and{" "}
+                <span className="font-semibold text-red-400">evil Christian</span>, and whatever you do, don&apos;t let{" "}
+                <span className="font-semibold text-lime-300">Sasha</span> (mankini, celebrating his{" "}
+                <span className="text-amber-300">40th</span> 🎂) or{" "}
                 <span className="font-semibold text-orange-300">Josiah</span> catch you. Mustaches mandatory. Most
                 points when the clock hits zero wins.
               </p>
@@ -411,7 +413,7 @@ export default function Game() {
               </p>
             )}
 
-            <Field label="Trip chaos (Sasha · Josiah · stingray)">
+            <Field label="Trip chaos (Sasha · Josiah · Christian · stingray)">
               <Segmented
                 options={[
                   { v: "on", label: "Chaos: ON", color: "#c6ff00" },

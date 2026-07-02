@@ -22,7 +22,8 @@ export default function GatePage() {
         <div className="text-5xl">🦀🔒🦀</div>
         <h1 className="mt-3 text-2xl font-bold">Carlisle vs Steven</h1>
         <p className="mt-2 text-sm text-white/60">
-          Crew only. Boys from the <span className="text-white/90">Anne Bonnie</span> know the password.
+          Crew only. Boys from the <span className="text-white/90">Anne Bonnie</span> — Sasha&apos;s 40th 🎂 — know
+          the password.
         </p>
         <GateForm />
       </div>
