@@ -336,40 +336,61 @@ function drawMonster(ctx: CanvasRenderingContext2D, m: Monster, view: View, now:
 }
 
 // A mustachioed boy in swimwear — Sasha (lime mankini) or Josiah (shorts).
+// Poses: running (chasing), taunt dance (after a tackle), crying (when eaten).
 function drawBoy(ctx: CanvasRenderingContext2D, x: number, y: number, tile: number, m: Monster, kit: string, mankini: boolean) {
   const s = tile * 0.38;
   const P2 = Math.PI * 2;
-  const face = Math.cos(m.facing) >= 0 ? 1 : -1;
-  const swing = Math.sin(m.wiggle) * 0.55;
   const skin = "#e9b58a";
   const hair = "#4a3120";
+  const taunting = m.taunt > 0;
+  const crying = m.cry > 0;
+  const swing = Math.sin(m.wiggle) * (taunting ? 0.75 : 0.55);
+  const face = taunting ? 1 : Math.cos(m.facing) >= 0 ? 1 : -1;
+  const bounce = taunting ? -Math.abs(Math.sin(m.wiggle)) * s * 0.3 : 0;
+  const shake = crying ? Math.sin(m.wiggle * 6) * s * 0.05 : 0;
 
   ctx.save();
   ctx.translate(x, y);
+  // shadow stays on the ground
   ctx.fillStyle = "rgba(0,0,0,0.28)";
   ctx.beginPath();
   ctx.ellipse(0, s * 1.2, s * 0.7, s * 0.22, 0, 0, P2);
   ctx.fill();
+  ctx.translate(shake, bounce);
   ctx.scale(face, 1);
   ctx.lineCap = "round";
 
   // legs
   ctx.strokeStyle = skin;
   ctx.lineWidth = s * 0.28;
-  ctx.beginPath();
-  ctx.moveTo(0, s * 0.2);
-  ctx.lineTo(-s * 0.15 - swing * s, s * 1.1);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.moveTo(0, s * 0.2);
-  ctx.lineTo(s * 0.3 + swing * s, s * 1.05);
-  ctx.stroke();
+  if (crying) {
+    // stand, knees together
+    ctx.beginPath();
+    ctx.moveTo(-s * 0.05, s * 0.2);
+    ctx.lineTo(-s * 0.12, s * 1.1);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(s * 0.05, s * 0.2);
+    ctx.lineTo(s * 0.12, s * 1.1);
+    ctx.stroke();
+  } else {
+    ctx.beginPath();
+    ctx.moveTo(0, s * 0.2);
+    ctx.lineTo(-s * 0.15 - swing * s, s * 1.1);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(0, s * 0.2);
+    ctx.lineTo(s * 0.3 + swing * s, s * 1.05);
+    ctx.stroke();
+  }
 
   // back arm
   ctx.lineWidth = s * 0.22;
   ctx.beginPath();
   ctx.moveTo(0, -s * 0.35);
-  ctx.lineTo(-s * 0.55 - swing * s * 0.5, -s * 0.55);
+  if (taunting) ctx.lineTo(-s * 0.5, -s * 1.05 - swing * s * 0.4); // thrown up
+  else if (crying) ctx.lineTo(-s * 0.28, -s * 0.95); // hand to face
+  else ctx.lineTo(-s * 0.55 - swing * s * 0.5, -s * 0.55);
   ctx.stroke();
 
   // torso
@@ -379,7 +400,6 @@ function drawBoy(ctx: CanvasRenderingContext2D, x: number, y: number, tile: numb
   ctx.fill();
 
   if (mankini) {
-    // brief + over-the-shoulder strap
     ctx.fillStyle = kit;
     ctx.beginPath();
     ctx.moveTo(-s * 0.42, s * 0.12);
@@ -394,7 +414,6 @@ function drawBoy(ctx: CanvasRenderingContext2D, x: number, y: number, tile: numb
     ctx.lineTo(s * 0.3, -s * 0.82);
     ctx.stroke();
   } else {
-    // board shorts
     ctx.fillStyle = kit;
     roundRect(ctx, -s * 0.46, s * 0.04, s * 0.92, s * 0.62, s * 0.16);
     ctx.fill();
@@ -405,9 +424,12 @@ function drawBoy(ctx: CanvasRenderingContext2D, x: number, y: number, tile: numb
 
   // front arm
   ctx.strokeStyle = skin;
+  ctx.lineWidth = s * 0.22;
   ctx.beginPath();
   ctx.moveTo(0, -s * 0.35);
-  ctx.lineTo(s * 0.55 + swing * s * 0.5, -s * 0.12);
+  if (taunting) ctx.lineTo(s * 0.5, -s * 1.05 + swing * s * 0.4); // both arms up, waving
+  else if (crying) ctx.lineTo(s * 0.28, -s * 0.95); // hand to face
+  else ctx.lineTo(s * 0.55 + swing * s * 0.5, -s * 0.12);
   ctx.stroke();
 
   // head + hair
@@ -421,11 +443,48 @@ function drawBoy(ctx: CanvasRenderingContext2D, x: number, y: number, tile: numb
   ctx.closePath();
   ctx.fill();
 
-  // eye
+  // face
+  ctx.strokeStyle = "#20140b";
   ctx.fillStyle = "#20140b";
-  ctx.beginPath();
-  ctx.arc(s * 0.24, -s * 1.04, s * 0.06, 0, P2);
-  ctx.fill();
+  if (crying) {
+    // squeezed-shut eyes ^ ^
+    ctx.lineWidth = s * 0.06;
+    for (const ex of [-s * 0.08, s * 0.22]) {
+      ctx.beginPath();
+      ctx.moveTo(ex - s * 0.08, -s * 1.0);
+      ctx.lineTo(ex, -s * 1.08);
+      ctx.lineTo(ex + s * 0.08, -s * 1.0);
+      ctx.stroke();
+    }
+    // frown
+    ctx.lineWidth = s * 0.07;
+    ctx.beginPath();
+    ctx.arc(s * 0.07, -s * 0.72, s * 0.16, Math.PI * 1.15, Math.PI * 1.85);
+    ctx.stroke();
+    // tears
+    ctx.fillStyle = "#6cc6ff";
+    for (const [tx, off] of [
+      [-s * 0.08, 0],
+      [s * 0.22, s * 0.12],
+    ] as const) {
+      const drop = ((m.wiggle * 40 + off * 60) % (s * 0.6)) - s * 0.05;
+      ctx.beginPath();
+      ctx.ellipse(tx, -s * 0.9 + drop, s * 0.06, s * 0.09, 0, 0, P2);
+      ctx.fill();
+    }
+  } else {
+    // eye
+    ctx.beginPath();
+    ctx.arc(s * 0.24, -s * 1.04, s * 0.06, 0, P2);
+    ctx.fill();
+    if (taunting) {
+      // open grin + tongue out
+      ctx.fillStyle = "#7a1500";
+      ctx.beginPath();
+      ctx.arc(s * 0.18, -s * 0.78, s * 0.12, 0, Math.PI);
+      ctx.fill();
+    }
+  }
 
   // mustache — everyone had one
   ctx.strokeStyle = "#2a180c";

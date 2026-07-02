@@ -53,6 +53,8 @@ export interface Monster extends Mover {
   wiggle: number;
   cooldownUntil: number; // ms; can't tackle again until past this
   respawnFlash: number;
+  taunt: number; // ms remaining of a taunt dance (after a tackle)
+  cry: number; // ms remaining of crying (after getting bonked)
 }
 
 export type Cell = 0 | 1 | 2; // 0 empty, 1 crumb, 2 power shell
@@ -214,6 +216,8 @@ function makeMonster(kind: MonsterKind, c: number, r: number): Monster {
     wiggle: 0,
     cooldownUntil: SASHA_GRACE_MS,
     respawnFlash: 0,
+    taunt: 0,
+    cry: 0,
   };
 }
 
@@ -439,10 +443,24 @@ export function update(s: GameState, dtMs: number, nowMs: number): Events {
   // The trip crew — Sasha, Josiah, and the blue-spotted stingray.
   if (s.time > SASHA_GRACE_MS) {
     for (const m of s.monsters) {
+      if (m.respawnFlash > 0) m.respawnFlash = Math.max(0, m.respawnFlash - dtMs);
+
+      if (m.cry > 0) {
+        // sit and sob in place
+        m.cry = Math.max(0, m.cry - dtMs);
+        m.wiggle += dt * 3;
+        continue;
+      }
+      if (m.taunt > 0) {
+        // celebrate the tackle with a little dance, no chasing
+        m.taunt = Math.max(0, m.taunt - dtMs);
+        m.wiggle += dt * 22;
+        continue;
+      }
+
       if (!m.moving) decideMonster(s, m, nowMs);
       stepMover(s, m, BASE_SPEED * MONSTER_SPEED[m.kind] * dt);
       m.wiggle += dt * (m.dir.x || m.dir.y ? 16 : 3);
-      if (m.respawnFlash > 0) m.respawnFlash = Math.max(0, m.respawnFlash - dtMs);
       if (m.cooldownUntil > nowMs) continue;
 
       for (const crab of [a, b]) {
@@ -450,14 +468,22 @@ export function update(s: GameState, dtMs: number, nowMs: number): Events {
         if (crab.hungryUntil > nowMs) {
           crab.score += POINTS.bonk; // powered-up crab bosses the hazard
           respawnMonster(m);
-          m.cooldownUntil = nowMs + 1500;
+          m.cooldownUntil = nowMs + 1800;
+          if (m.kind !== "stingray") {
+            m.cry = 1500; // the boys cry when eaten
+            m.respawnFlash = 0; // show the tears instead of blinking
+          }
           ev.bonk = true;
         } else {
           crab.score = Math.max(0, crab.score - POINTS.tackle);
           respawn(crab); // knocked back to your corner
           m.cooldownUntil = nowMs + 1400;
-          if (m.kind === "stingray") ev.sting = true;
-          else ev.tackle = true;
+          if (m.kind === "stingray") {
+            ev.sting = true;
+          } else {
+            ev.tackle = true;
+            if (m.kind === "josiah") m.taunt = 1200; // Josiah does a taunt dance
+          }
         }
         break;
       }
