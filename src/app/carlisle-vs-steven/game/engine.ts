@@ -40,9 +40,14 @@ export interface Crab extends Mover {
   respawnFlash: number; // ms remaining of respawn flash
 }
 
-// Sasha — the gay beach monster in a Borat mankini who crashes the arena,
-// hunts whoever's winning, and tackles them back to their corner.
+// The Raja Ampat crew crashing the arena.
+//  - sasha: the beach monster in a lime Borat mankini, hunts whoever's winning
+//  - josiah: mustachioed boy who chases the nearest crab
+//  - stingray: the blue-spotted ray gliding the reef, stings on contact
+export type MonsterKind = "sasha" | "josiah" | "stingray";
+
 export interface Monster extends Mover {
+  kind: MonsterKind;
   spawnC: number;
   spawnR: number;
   wiggle: number;
@@ -59,7 +64,7 @@ export interface GameState {
   pellets: Cell[][]; // mutable food layer
   crumbsLeft: number;
   crabs: Record<CrabId, Crab>;
-  monster: Monster | null;
+  monsters: Monster[];
   time: number; // ms elapsed in round
   duration: number; // ms total
   over: boolean;
@@ -185,7 +190,7 @@ export interface NewGameOpts {
   difficulty: Difficulty;
   // Which crab the human controls in solo mode (the other becomes CPU).
   human: CrabId;
-  sasha?: boolean; // spawn the beach monster (default true)
+  chaos?: boolean; // spawn the trip crew of hazards (default true)
   rng?: RNG;
 }
 
@@ -193,8 +198,9 @@ function toOdd(n: number): number {
   return n % 2 === 0 ? n + 1 : n;
 }
 
-function makeMonster(c: number, r: number): Monster {
+function makeMonster(kind: MonsterKind, c: number, r: number): Monster {
   return {
+    kind,
     c,
     r,
     dir: { x: 0, y: 0 },
@@ -242,13 +248,21 @@ export function newGame(opts: NewGameOpts): GameState {
   pellets[carlisle.r][carlisle.c] = 0;
   pellets[steven.r][steven.c] = 0;
 
-  // Sasha barges in at the middle of the maze.
-  let monster: Monster | null = null;
-  if (opts.sasha ?? true) {
+  // The crew barges into the middle of the maze.
+  const monsters: Monster[] = [];
+  if (opts.chaos ?? true) {
     const mc = toOdd(Math.floor(cols / 2));
     const mr = toOdd(Math.floor(rows / 2));
-    monster = makeMonster(mc, mr);
-    pellets[mr][mc] = 0;
+    const spots: Array<[MonsterKind, number, number]> = [
+      ["sasha", mc, mr],
+      ["josiah", mc, Math.max(1, mr - 2)],
+      ["stingray", mc, Math.min(rows - 2, mr + 2)],
+    ];
+    for (const [kind, c, r] of spots) {
+      if (wall[r][c]) continue; // rooms sit on odd coords, so these are open
+      monsters.push(makeMonster(kind, c, r));
+      pellets[r][c] = 0;
+    }
   }
 
   let crumbsLeft = 0;
@@ -261,7 +275,7 @@ export function newGame(opts: NewGameOpts): GameState {
     pellets,
     crumbsLeft,
     crabs: { carlisle, steven },
-    monster,
+    monsters,
     time: 0,
     duration: ROUND_MS,
     over: false,
@@ -366,13 +380,15 @@ function respawnMonster(m: Monster) {
 }
 
 const DIFF_SPEED: Record<Difficulty, number> = { chill: 0.82, normal: 1, savage: 1.14 };
+const MONSTER_SPEED: Record<MonsterKind, number> = { sasha: 0.9, josiah: 0.96, stingray: 0.72 };
 
 export interface Events {
   crumb?: boolean;
   shell?: boolean;
   chomp?: boolean;
-  tackle?: boolean; // Sasha caught a crab
-  bonk?: boolean; // a hungry crab whacked Sasha
+  tackle?: boolean; // Sasha/Josiah caught a crab
+  sting?: boolean; // the stingray zapped a crab
+  bonk?: boolean; // a hungry crab whacked a boy
 }
 
 // Advance the simulation. dtMs is frame delta, nowMs a monotonic clock.
@@ -420,27 +436,28 @@ export function update(s: GameState, dtMs: number, nowMs: number): Events {
     }
   }
 
-  // Sasha the beach monster.
-  const m = s.monster;
-  if (m && s.time > SASHA_GRACE_MS) {
-    if (!m.moving) decideSasha(s, m, nowMs);
-    stepMover(s, m, BASE_SPEED * 0.9 * dt);
-    m.wiggle += dt * (m.dir.x || m.dir.y ? 16 : 3);
-    if (m.respawnFlash > 0) m.respawnFlash = Math.max(0, m.respawnFlash - dtMs);
+  // The trip crew — Sasha, Josiah, and the blue-spotted stingray.
+  if (s.time > SASHA_GRACE_MS) {
+    for (const m of s.monsters) {
+      if (!m.moving) decideMonster(s, m, nowMs);
+      stepMover(s, m, BASE_SPEED * MONSTER_SPEED[m.kind] * dt);
+      m.wiggle += dt * (m.dir.x || m.dir.y ? 16 : 3);
+      if (m.respawnFlash > 0) m.respawnFlash = Math.max(0, m.respawnFlash - dtMs);
+      if (m.cooldownUntil > nowMs) continue;
 
-    if (m.cooldownUntil <= nowMs) {
       for (const crab of [a, b]) {
         if (Math.hypot(m.c - crab.c, m.r - crab.r) >= EAT_REACH) continue;
         if (crab.hungryUntil > nowMs) {
-          crab.score += POINTS.bonk; // powered-up crab bonks the monster
+          crab.score += POINTS.bonk; // powered-up crab bosses the hazard
           respawnMonster(m);
           m.cooldownUntil = nowMs + 1500;
           ev.bonk = true;
         } else {
           crab.score = Math.max(0, crab.score - POINTS.tackle);
-          respawn(crab); // tackled back to your corner
+          respawn(crab); // knocked back to your corner
           m.cooldownUntil = nowMs + 1400;
-          ev.tackle = true;
+          if (m.kind === "stingray") ev.sting = true;
+          else ev.tackle = true;
         }
         break;
       }
@@ -528,31 +545,44 @@ function fleeDir(s: GameState, mv: Mover, threatC: number, threatR: number): Dir
   return best;
 }
 
-// Sasha hunts whoever is winning — but a hungry (powered-up) crab can bonk
-// him, so he keeps his distance from those and goes for the softer target.
-function decideSasha(s: GameState, m: Monster, now: number) {
+// Each hazard hunts differently: Sasha goes for whoever's winning, Josiah for
+// the nearest crab, and the stingray just glides the reef. A hungry crab can
+// boss any of them, so the boys keep their distance from powered-up crabs.
+function decideMonster(s: GameState, m: Monster, now: number) {
   const a = s.crabs.carlisle;
   const b = s.crabs.steven;
   const ci = Math.round(m.c);
   const ri = Math.round(m.r);
   const aHungry = a.hungryUntil > now;
   const bHungry = b.hungryUntil > now;
+  const nearest = Math.hypot(ci - a.c, ri - a.r) < Math.hypot(ci - b.c, ri - b.r) ? a : b;
+  const targetTile = (t: Crab) => bfsStep(s, ci, ri, (c, r) => c === Math.round(t.c) && r === Math.round(t.r));
+  const randomStep = () => {
+    const opts = STEP_DIRS.filter((d) => open(s, ci + d.x, ri + d.y));
+    return opts.length ? opts[Math.floor(Math.random() * opts.length)] : null;
+  };
 
   let dir: Dir | null = null;
-  if (aHungry && bHungry) {
-    // everyone's dangerous — bail from the nearest crab
-    const near = Math.hypot(ci - a.c, ri - a.r) < Math.hypot(ci - b.c, ri - b.r) ? a : b;
-    dir = fleeDir(s, m, near.c, near.r);
-  } else {
-    // chase the leader, unless the leader is powered up
-    let target = a.score >= b.score ? a : b;
-    if ((target === a ? aHungry : bHungry)) target = target === a ? b : a;
-    if (Math.random() < 0.08) {
+
+  if (m.kind === "stingray") {
+    // glide the reef — mostly wander, occasionally drift toward a crab
+    if (Math.random() < 0.3) dir = targetTile(nearest);
+    if (!dir) {
       const opts = STEP_DIRS.filter((d) => open(s, ci + d.x, ri + d.y));
-      dir = opts.length ? opts[Math.floor(Math.random() * opts.length)] : null;
-    } else {
-      dir = bfsStep(s, ci, ri, (c, r) => c === Math.round(target.c) && r === Math.round(target.r));
+      const forward = opts.filter((d) => !(d.x === -m.dir.x && d.y === -m.dir.y));
+      const pool = forward.length ? forward : opts;
+      dir = pool.length ? pool[Math.floor(Math.random() * pool.length)] : null;
     }
+    if (dir) m.next = dir;
+    return;
+  }
+
+  if (aHungry && bHungry) {
+    dir = fleeDir(s, m, nearest.c, nearest.r);
+  } else {
+    let target = m.kind === "sasha" ? (a.score >= b.score ? a : b) : nearest;
+    if ((target === a ? aHungry : bHungry)) target = target === a ? b : a; // don't chase a powered-up crab
+    dir = Math.random() < 0.08 ? randomStep() : targetTile(target);
   }
   if (dir) m.next = dir;
 }
