@@ -321,6 +321,11 @@ function drawMonster(ctx: CanvasRenderingContext2D, m: Monster, view: View, now:
     drawStingray(ctx, x, y, tile, m);
     return;
   }
+  if (m.kind === "christian") {
+    drawChristian(ctx, x, y, tile, m, now);
+    nameTag(ctx, x, y - tile * 0.42 * 1.9, tile, "CHRISTIAN", "rgba(220,40,30,0.96)", "#fff");
+    return;
+  }
 
   const sasha = m.kind === "sasha";
   drawBoy(ctx, x, y, tile, m, sasha ? "#c6ff00" : "#12557a", sasha);
@@ -442,6 +447,33 @@ function drawBoy(ctx: CanvasRenderingContext2D, x: number, y: number, tile: numb
   ctx.arc(s * 0.06, -s * 1.08, s * 0.44, Math.PI, P2);
   ctx.closePath();
   ctx.fill();
+
+  // birthday party hat — Sasha's 40th
+  if (mankini) {
+    const hx = s * 0.06;
+    const hy = -s * 1.36;
+    ctx.fillStyle = "#ff4d9d";
+    ctx.beginPath();
+    ctx.moveTo(hx - s * 0.36, hy);
+    ctx.lineTo(hx + s * 0.34, hy);
+    ctx.lineTo(hx + s * 0.02, hy - s * 0.6);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = "#ffd54a";
+    ctx.lineWidth = s * 0.06;
+    ctx.beginPath();
+    ctx.moveTo(hx - s * 0.18, hy - s * 0.08);
+    ctx.lineTo(hx - s * 0.02, hy - s * 0.26);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(hx + s * 0.04, hy - s * 0.06);
+    ctx.lineTo(hx + s * 0.16, hy - s * 0.2);
+    ctx.stroke();
+    ctx.fillStyle = "#ffe27a";
+    ctx.beginPath();
+    ctx.arc(hx + s * 0.02, hy - s * 0.6, s * 0.1, 0, P2);
+    ctx.fill();
+  }
 
   // face
   ctx.strokeStyle = "#20140b";
@@ -567,6 +599,118 @@ function drawStingray(ctx: CanvasRenderingContext2D, x: number, y: number, tile:
   ctx.fill();
   ctx.beginPath();
   ctx.arc(R * 0.52, -R * 0.12, R * 0.055, 0, P2);
+  ctx.fill();
+
+  ctx.restore();
+}
+
+// Christian — an evil, red-glowing floating head in a fishing bucket hat.
+function drawChristian(ctx: CanvasRenderingContext2D, x: number, y: number, tile: number, m: Monster, now: number) {
+  const R = tile * 0.42;
+  const P2 = Math.PI * 2;
+  const bob = Math.sin(m.wiggle * 0.4) * R * 0.12;
+  const pulse = 0.7 + 0.3 * Math.sin(now / 170);
+
+  ctx.save();
+  ctx.translate(x, y + bob);
+
+  // evil red aura
+  const aura = ctx.createRadialGradient(0, 0, R * 0.4, 0, 0, R * 2);
+  aura.addColorStop(0, `rgba(255,45,20,${0.6 * pulse})`);
+  aura.addColorStop(1, "rgba(255,0,0,0)");
+  ctx.fillStyle = aura;
+  ctx.beginPath();
+  ctx.arc(0, 0, R * 2, 0, P2);
+  ctx.fill();
+
+  // pale head, red-lit
+  ctx.fillStyle = "#ecc9ab";
+  ctx.beginPath();
+  ctx.arc(0, 0, R, 0, P2);
+  ctx.fill();
+  ctx.fillStyle = `rgba(215,30,18,${0.28 + 0.12 * pulse})`;
+  ctx.beginPath();
+  ctx.arc(0, 0, R, 0, P2);
+  ctx.fill();
+
+  // stubble on the jaw
+  ctx.fillStyle = "rgba(35,22,16,0.5)";
+  const stubble: Array<[number, number]> = [
+    [-R * 0.4, R * 0.35], [-R * 0.2, R * 0.5], [0, R * 0.58], [R * 0.2, R * 0.5],
+    [R * 0.4, R * 0.35], [-R * 0.3, R * 0.62], [R * 0.3, R * 0.62], [-R * 0.55, R * 0.15],
+    [R * 0.55, R * 0.15], [0, R * 0.72], [-R * 0.12, R * 0.66], [R * 0.12, R * 0.66],
+  ];
+  for (const [dx, dy] of stubble) {
+    ctx.beginPath();
+    ctx.arc(dx, dy, R * 0.045, 0, P2);
+    ctx.fill();
+  }
+
+  // angry glowing eyes
+  ctx.save();
+  ctx.shadowColor = "#ff2a10";
+  ctx.shadowBlur = R * 0.7 * pulse;
+  ctx.fillStyle = "#ff3418";
+  for (const sx of [-1, 1]) {
+    ctx.beginPath();
+    ctx.ellipse(sx * R * 0.32, -R * 0.12, R * 0.16, R * 0.1, sx * -0.5, 0, P2);
+    ctx.fill();
+  }
+  ctx.restore();
+  // pupils
+  ctx.fillStyle = "#3a0000";
+  for (const sx of [-1, 1]) {
+    ctx.beginPath();
+    ctx.arc(sx * R * 0.32, -R * 0.1, R * 0.05, 0, P2);
+    ctx.fill();
+  }
+
+  // furrowed brows
+  ctx.strokeStyle = "#2a1810";
+  ctx.lineWidth = R * 0.11;
+  ctx.lineCap = "round";
+  for (const sx of [-1, 1]) {
+    ctx.beginPath();
+    ctx.moveTo(sx * R * 0.12, -R * 0.32);
+    ctx.lineTo(sx * R * 0.52, -R * 0.18);
+    ctx.stroke();
+  }
+
+  // menacing toothy grin
+  ctx.fillStyle = "#360000";
+  ctx.beginPath();
+  ctx.moveTo(-R * 0.42, R * 0.26);
+  ctx.quadraticCurveTo(0, R * 0.62, R * 0.42, R * 0.26);
+  ctx.quadraticCurveTo(0, R * 0.36, -R * 0.42, R * 0.26);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = "#fff";
+  ctx.lineWidth = R * 0.03;
+  for (const tx of [-0.24, -0.08, 0.08, 0.24]) {
+    ctx.beginPath();
+    ctx.moveTo(R * tx, R * 0.28);
+    ctx.lineTo(R * tx, R * 0.42);
+    ctx.stroke();
+  }
+
+  // fishing bucket hat
+  ctx.fillStyle = "#5f6b3f";
+  ctx.beginPath();
+  ctx.ellipse(0, -R * 0.62, R * 1.05, R * 0.28, 0, 0, P2); // brim
+  ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(-R * 0.66, -R * 0.62);
+  ctx.quadraticCurveTo(-R * 0.6, -R * 1.3, 0, -R * 1.32);
+  ctx.quadraticCurveTo(R * 0.6, -R * 1.3, R * 0.66, -R * 0.62);
+  ctx.closePath();
+  ctx.fill();
+  ctx.fillStyle = "#4a5531";
+  roundRect(ctx, -R * 0.66, -R * 0.78, R * 1.32, R * 0.2, R * 0.06); // band
+  ctx.fill();
+  // a little fishing fly on the band
+  ctx.fillStyle = "#ffd54a";
+  ctx.beginPath();
+  ctx.arc(R * 0.5, -R * 0.68, R * 0.07, 0, P2);
   ctx.fill();
 
   ctx.restore();

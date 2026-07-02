@@ -1,12 +1,12 @@
 // Crew gate for the Carlisle vs Steven game — a single shared password so
-// only the Raja Ampat boys can get in. Default "annebonnie"; override with the
-// CREW_PASSWORD env var in Vercel (the repo is public, so set a real one).
-// Web Crypto SHA-256 is edge-runtime compatible (works in middleware).
+// only the Raja Ampat boys can get in. Default "oldman" (Sasha's 40th);
+// override with the CREW_PASSWORD env var in Vercel for a real secret, since
+// the repo is public. Web Crypto SHA-256 works in the edge runtime.
 
 export const CREW_COOKIE = "sv_crew";
 
 export function getCrewPassword(): string {
-  return process.env.CREW_PASSWORD || "annebonnie";
+  return process.env.CREW_PASSWORD || "oldman";
 }
 
 export async function crewToken(): Promise<string> {
