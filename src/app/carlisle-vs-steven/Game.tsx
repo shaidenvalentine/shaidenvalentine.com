@@ -276,6 +276,7 @@ export default function Game() {
 
   const toggleMute = () => {
     const m = !muted;
+    if (!m) initAudio(); // unmuting is a gesture — (re)unlock iOS audio
     setMuted(m);
     setAudioMuted(m);
   };
@@ -458,6 +459,7 @@ export default function Game() {
             <h2 className="text-2xl font-bold">Paused</h2>
             <button
               onClick={() => {
+                initAudio();
                 setScreen("playing");
                 startLoop();
               }}
