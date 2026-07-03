@@ -4,16 +4,54 @@
 
 let ctx: AudioContext | null = null;
 let muted = false;
+let speechWarmed = false;
 
+// Call this from inside a real user gesture (tap). Handles every iOS Safari
+// audio quirk: unlock the AudioContext, route through the "playback" audio
+// session so the ring/silent switch doesn't kill it, and warm up TTS.
 export function initAudio() {
+  // iOS 16.4+: play in the "playback" category so a flipped silent switch
+  // doesn't mute the game.
+  try {
+    const ns = navigator as unknown as { audioSession?: { type: string } };
+    if (ns.audioSession && ns.audioSession.type !== "playback") {
+      ns.audioSession.type = "playback";
+    }
+  } catch {
+    /* audioSession not supported */
+  }
+
+  if (!ctx) {
+    const AC =
+      window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+    if (AC) ctx = new AC();
+  }
   if (ctx) {
     if (ctx.state === "suspended") void ctx.resume();
-    return;
+    // Belt-and-suspenders unlock: play one silent sample inside the gesture.
+    try {
+      const buf = ctx.createBuffer(1, 1, 22050);
+      const src = ctx.createBufferSource();
+      src.buffer = buf;
+      src.connect(ctx.destination);
+      src.start(0);
+    } catch {
+      /* ignore */
+    }
   }
-  const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-  if (!AC) return;
-  ctx = new AC();
-  if (ctx.state === "suspended") void ctx.resume();
+
+  // Warm up speech synthesis so Christian can talk from the game loop later.
+  try {
+    const synth = window.speechSynthesis;
+    if (synth && !speechWarmed) {
+      const u = new SpeechSynthesisUtterance(" ");
+      u.volume = 0;
+      synth.speak(u);
+      speechWarmed = true;
+    }
+  } catch {
+    /* no speech synthesis */
+  }
 }
 
 export function setMuted(m: boolean) {
