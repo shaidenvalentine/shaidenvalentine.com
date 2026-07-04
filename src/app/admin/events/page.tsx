@@ -18,10 +18,10 @@ function fmtDay(iso: string | null) {
 
 function StatCard({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
-    <div className="rounded-3xl glass p-6">
+    <div className="@container rounded-3xl glass p-6">
       <span className="label-mono">{label}</span>
       <div className="mt-3 flex items-baseline gap-2">
-        <span className="display-2 text-[var(--color-ink)]">{value}</span>
+        <span className="display-stat text-[var(--color-ink)]">{value}</span>
       </div>
       {sub && <span className="label-mono mt-2 block text-[var(--color-ink-muted)]">{sub}</span>}
     </div>

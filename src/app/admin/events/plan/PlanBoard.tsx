@@ -78,19 +78,19 @@ export function PlanBoard({ tasks }: { tasks: TaskRow[] }) {
     <div className="flex flex-col gap-8">
       {/* Summary */}
       <section className="grid gap-4 sm:grid-cols-3">
-        <div className="rounded-3xl glass p-6">
+        <div className="@container rounded-3xl glass p-6">
           <span className="label-mono">Progress</span>
           <div className="mt-3 flex items-baseline gap-2">
-            <span className="display-2 text-[var(--color-ink)]">{done}</span>
+            <span className="display-stat text-[var(--color-ink)]">{done}</span>
             <span className="label-mono text-[var(--color-ink-muted)]">/ {tasks.length} done · {pct}%</span>
           </div>
           <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-[var(--glass-fill-strong)]">
             <div className="h-full rounded-full bg-[var(--color-brass)] transition-all" style={{ width: `${pct}%` }} />
           </div>
         </div>
-        <div className="rounded-3xl glass p-6">
+        <div className="@container rounded-3xl glass p-6">
           <span className="label-mono">Overdue</span>
-          <div className="mt-3 display-2" style={{ color: overdue ? "var(--color-brass)" : "var(--color-ink)" }}>
+          <div className="mt-3 display-stat" style={{ color: overdue ? "var(--color-brass)" : "var(--color-ink)" }}>
             {overdue}
           </div>
           <span className="label-mono mt-2 block text-[var(--color-ink-muted)]">past their deadline</span>

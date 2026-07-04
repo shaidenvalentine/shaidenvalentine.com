@@ -127,6 +127,15 @@ button { font-family: inherit; cursor: pointer; }
     line-height: 1.2;
     letter-spacing: -0.02em;
   }
+  /* Big numbers inside stat cards — sized against the card (needs an
+     `@container` ancestor), so values like "$21,000" never overflow it */
+  .display-stat {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.6rem, 24cqw, 3.75rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
 
   /* Signature — hand-signed name + accent moments */
   .signature {

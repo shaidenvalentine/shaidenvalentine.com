@@ -9,9 +9,9 @@ const ACTIVE = ["invited", "rsvp_received", "deposit_paid", "paid_in_full", "con
 
 function Stat({ label, value, sub }: { label: string; value: string | number; sub?: string }) {
   return (
-    <div className="rounded-3xl glass p-6">
+    <div className="@container rounded-3xl glass p-6">
       <span className="label-mono">{label}</span>
-      <div className="mt-2 display-2 text-[var(--color-ink)]">{value}</div>
+      <div className="mt-2 display-stat text-[var(--color-ink)]">{value}</div>
       {sub && <span className="label-mono mt-1 block text-[var(--color-ink-muted)]">{sub}</span>}
     </div>
   );

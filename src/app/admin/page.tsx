@@ -35,7 +35,7 @@ function StatCard({
   return (
     <Link
       href={href}
-      className="group relative flex flex-col gap-4 overflow-hidden rounded-3xl glass p-6 transition hover:bg-[var(--glass-fill-strong)]"
+      className="group @container relative flex flex-col gap-4 overflow-hidden rounded-3xl glass p-6 transition hover:bg-[var(--glass-fill-strong)]"
     >
       <div
         aria-hidden
@@ -51,7 +51,7 @@ function StatCard({
         ) : null}
       </div>
       <div className="relative z-10 flex items-baseline gap-3">
-        <span className="display-2 text-[var(--color-ink)]">{n}</span>
+        <span className="display-stat text-[var(--color-ink)]">{n}</span>
         <span className="label-mono text-[var(--color-ink-muted)]">all-time</span>
       </div>
       <div className="relative z-10">
