@@ -4,6 +4,7 @@ import { artOfFlippingPrinciples } from "./art-of-flipping-principles";
 import { livingInBaliPrinciples } from "./living-in-bali-principles";
 import { ikigai } from "./ikigai";
 import { valueFirst } from "./value-first";
+import { wealthRocketLaunch } from "./wealth-rocket-launch";
 
 // The registry. This order drives the /carousels gallery.
 // Carousels are individual principles — one focused idea per carousel.
@@ -13,6 +14,7 @@ export const carousels: Carousel[] = [
   ...livingInBaliPrinciples,
   ikigai,
   valueFirst,
+  wealthRocketLaunch,
 ];
 
 export function getCarousel(slug: string): Carousel | undefined {
